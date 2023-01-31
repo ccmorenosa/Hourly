@@ -2,7 +2,7 @@
   "name": "hourly",
   "productName": "hourly",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "Work journal with hours counter and tasks descriptions",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
@@ -11,9 +11,9 @@
     "publish": "electron-forge publish",
     "lint": "eslint --ext .ts,.tsx ."
   },
-  "keywords": [],
+  "keywords": ["journal", "timer"],
   "author": {
-    "name": "Catalina Sarria",
+    "name": "C. Catalina M. Sarria",
     "email": "cimorenos@unal.edu.co"
   },
   "license": "MIT",
