@@ -11,7 +11,10 @@
     "publish": "electron-forge publish",
     "lint": "eslint --ext .ts,.tsx ."
   },
-  "keywords": ["journal", "timer"],
+  "keywords": [
+    "journal",
+    "timer"
+  ],
   "author": {
     "name": "C. Catalina M. Sarria",
     "email": "cimorenos@unal.edu.co"
