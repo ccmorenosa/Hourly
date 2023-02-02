@@ -5,15 +5,14 @@
 import * as ReactDOM from 'react-dom/client';
 
 window.addEventListener('DOMContentLoaded', () => {
+    let darkButton = ReactDOM.createRoot(
+        document.getElementById("b-dark-mode")
+    );
 
-    const replaceText = (selector: string, text: string): void => {
-        const target = ReactDOM.createRoot(document.getElementById(selector));
-
-        if (target) target.render(text);
-    }
-
-    for (const dependency of ['chrome', 'node', 'electron']) {
-        replaceText(`${dependency}-version`, process.versions[dependency])
-    }
+    darkButton.render(
+        <button className="rounded-full bg-gray-900 w-8">
+            <img className="m-2" src="icons/moon-dark.svg" alt="dark"/>
+        </button>
+    );
 
 })
