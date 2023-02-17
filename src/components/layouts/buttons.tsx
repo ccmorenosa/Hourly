@@ -32,11 +32,15 @@ class darkModeButton extends React.Component<{}, {isDark: boolean}> {
             btnClass = "rounded-full bg-gray-900";
             btnAction = this.handleDarkOffClick;
 
+            $("html").addClass("dark");
+
         } else {
 
             btnImage = "icons/sun.svg";
             btnClass = "rounded-full bg-gray-200";
             btnAction = this.handleDarkOnClick;
+
+            $("html").removeClass("dark");
 
         }
 

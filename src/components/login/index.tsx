@@ -1,15 +1,12 @@
 import * as ReactDOM from 'react-dom/client';
+import Layout from "../layouts";
 
-$("#b-dark-mode").on("click", () => {
 
-    if ($("html").hasClass("dark")) {
+window.addEventListener('DOMContentLoaded', () => {
+    let darkButton = ReactDOM.createRoot($("#b-dark-mode")[0]);
 
-        $("html").removeClass("dark");
+    darkButton.render(
+        <Layout.buttons.darkModeButton />
+    );
 
-    } else {
-
-        $("html").addClass("dark");
-
-    }
-
-});
+})

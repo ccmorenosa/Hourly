@@ -28,7 +28,6 @@
 
 import './index.css';
 
-import './components/layouts/buttons.tsx';
 import './components/login/index';
 
 console.log('Bye');
