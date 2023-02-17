@@ -61,9 +61,7 @@ class WelcomeBox extends React.Component<{}, {}> {
 
                 <div className={usersBandClass}>
 
-                    <div className="container text-right" id="b-dark-mode">
-                        <Layout.buttons.loginMenuButton isUser={true} />
-                    </div>
+                    <Layout.buttons.loginMenuButton isUser={true} />
 
                 </div>
                 <div className="grid grid-rows-1 gap-10 mt-10">

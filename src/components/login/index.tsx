@@ -42,7 +42,9 @@ class LogIn extends React.Component<{}, {}> {
         return (
             <div className={viewClass}>
 
-                <Layout.buttons.darkModeButton />
+                <div className="container text-right" id="b-dark-mode">
+                    <Layout.buttons.darkModeButton />
+                </div>
 
                 <WelcomeBox />
 
