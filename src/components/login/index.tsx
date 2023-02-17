@@ -1,12 +1,35 @@
-import * as ReactDOM from 'react-dom/client';
+import React from "react";
+import WelcomeBox from "./Welcome";
 import Layout from "../layouts";
 
 
-window.addEventListener('DOMContentLoaded', () => {
-    let darkButton = ReactDOM.createRoot($("#b-dark-mode")[0]);
+class LogIn extends React.Component<{}, {}> {
 
-    darkButton.render(
-        <Layout.buttons.darkModeButton />
-    );
+    constructor(props: {}) {
 
-})
+        super(props);
+
+    }
+
+    render(): React.ReactNode {
+
+        let viewClass = (
+            "h-screen flex flex-col justify-center bg-celeste-100 " +
+            "dark:bg-celeste-900 text-celeste-900 dark:text-celeste-100"
+        );
+
+        return (
+            <div className={viewClass}>
+
+                <Layout.buttons.darkModeButton />
+
+                <WelcomeBox />
+
+            </div>
+        );
+
+    }
+
+}
+
+export default LogIn;

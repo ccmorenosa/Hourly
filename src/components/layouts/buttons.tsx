@@ -13,15 +13,15 @@ class darkModeButton extends React.Component<{}, {isDark: boolean}> {
 
     }
 
-    handleDarkOnClick() {
+    handleDarkOnClick(): void {
         this.setState({isDark: true});
     }
 
-    handleDarkOffClick() {
+    handleDarkOffClick(): void {
         this.setState({isDark: false});
     }
 
-    render() {
+    render(): React.ReactNode {
 
         const isDark = this.state.isDark;
         let btnImage, btnClass, btnAction;
@@ -45,23 +45,44 @@ class darkModeButton extends React.Component<{}, {isDark: boolean}> {
         }
 
         return (
-            <button className={btnClass} onClick={btnAction}>
-                <img className="m-2 w-5" src={btnImage}/>
-            </button>
+            <div className="container text-right" id="b-dark-mode">
+                <button className={btnClass} onClick={btnAction}>
+                    <img className="m-2 w-5" src={btnImage}/>
+                </button>
+            </div>
         );
 
     }
 }
 
-class loginMenuButton extends React.Component {
+class loginMenuButton extends
+React.Component<{text?: string, isUser?: boolean}, {}> {
 
-    constructor(props: {}) {
+    constructor(
+        props: {text: string, isUser: boolean} = {text: "", isUser: false}
+    ) {
 
         super(props);
 
-        this.state = {
-            props: true
-        };
+    }
+
+    render(): React.ReactNode {
+
+        if (this.props.isUser) {
+
+            return (
+                <button className="shrink-0">
+                    <img className="w-28 rounded-full p-1 bg-celadon-100 dark:bg-celadon-700 hover:bg-celadon-0 hover:dark:bg-celadon-600 mx-2" src="icons/user.svg" />
+                </button>
+            );
+
+        }
+
+        return (
+            <button className="p-3 bg-celadon-100 dark:bg-celadon-700 hover:bg-celadon-0 hover:dark:bg-celadon-600 rounded-lg">
+                {this.props.text}
+            </button>
+        );
 
     }
 

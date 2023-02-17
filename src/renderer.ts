@@ -28,6 +28,6 @@
 
 import './index.css';
 
-import './components/login/index';
+import './App';
 
 console.log('Bye');
