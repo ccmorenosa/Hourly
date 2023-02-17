@@ -3,6 +3,8 @@
 
 // Import React Components.
 import * as ReactDOM from 'react-dom/client';
+import Layout from "./components/layouts";
+
 
 window.addEventListener('DOMContentLoaded', () => {
     let darkButton = ReactDOM.createRoot(
@@ -10,9 +12,7 @@ window.addEventListener('DOMContentLoaded', () => {
     );
 
     darkButton.render(
-        <button className="rounded-full bg-gray-900 w-8">
-            <img className="m-2" src="icons/moon-dark.svg" alt="dark"/>
-        </button>
+        <Layout.buttons.darkModeButton />
     );
 
 })

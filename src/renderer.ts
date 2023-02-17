@@ -28,6 +28,7 @@
 
 import './index.css';
 
-import './components/app';
+import './components/layouts/buttons.tsx';
+import './components/login/index';
 
-console.log('👋 This message is being logged by "renderer.js", included via webpack');
+console.log('Bye');

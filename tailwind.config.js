@@ -90,6 +90,7 @@ module.exports = {
     extend: {},
   },
   plugins: [
-      // require('@tailwindcss/forms'),
+    require('tailwind-scrollbar')({ nocompatible: true }),
+    // require('@tailwindcss/forms'),
   ],
 }
