@@ -29,5 +29,3 @@
 import './index.css';
 
 import './App';
-
-console.log('Bye');
