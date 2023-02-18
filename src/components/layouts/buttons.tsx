@@ -98,14 +98,14 @@ class darkModeButton extends React.Component<{}, {isDark: boolean}> {
  * @extends {React.Component}
  */
 class loginMenuButton extends
-React.Component<{text?: string, isUser?: boolean}, {}> {
+React.Component<{text?: string, user?: string}, {}> {
 
     /**
      * Create the component.
      * @param props {object} - Properties of the component.
      */
     constructor(
-        props: {text: string, isUser: boolean} = {text: "", isUser: false}
+        props: {text: string, user: string} = {text: "", user: ""}
     ) {
 
         // Create superior class.
@@ -119,13 +119,14 @@ React.Component<{text?: string, isUser?: boolean}, {}> {
      */
     render(): React.ReactNode {
 
-        // Check if the component has isUser prop.
-        if (this.props.isUser) {
+        // Check if the component has user prop.
+        if (this.props.user) {
 
             // Return the node for user button.
             return (
                 <button className="shrink-0">
-                    <img className="w-28 rounded-full p-1 bg-celadon-100 dark:bg-celadon-700 hover:bg-celadon-0 hover:dark:bg-celadon-600 mx-2" src="icons/user.svg" />
+                    <img className="lg:w-36 md:w-20 rounded-full p-1 bg-celadon-100 dark:bg-celadon-700 hover:bg-celadon-0 hover:dark:bg-celadon-600 mx-2" src="icons/user.svg" />
+                    {this.props.user}
                 </button>
             );
 

@@ -12,7 +12,7 @@ import Layout from "../layouts";
  * Class representing the welcome box.
  * @extends {React.Component}
  */
-class WelcomeBox extends React.Component<{}, {}> {
+class WelcomeBox extends React.Component<{}, {users: string[]}> {
 
     /**
      * Create the component.
@@ -23,6 +23,22 @@ class WelcomeBox extends React.Component<{}, {}> {
         // Create superior class.
         super(props);
 
+        // Set state.
+        this.state = {
+            users: []
+        };
+
+        // Get the user.
+        this.getUsers();
+
+    }
+
+    /**
+     * Get list of users in the database and store in the state.
+     */
+    async getUsers() {
+        let res = await window.UserAPI.getUsers();
+        this.setState({users: res});
     }
 
     /**
@@ -49,9 +65,21 @@ class WelcomeBox extends React.Component<{}, {}> {
             "overflow-x-scroll flex scrollbar scrollbar-thumb-celadon-700 "+
             "scrollbar-track-celadon-100 scrollbar-h-2 " +
             "scrollbar-thumb-rounded-full scrollbar-track-rounded-full " +
-            "mt-10 p-3 h-36 justify-center"
+            "mt-10 p-3 justify-center"
         );
 
+        /** @type {string[]} - Get the user from the state. */
+        let users: string[] = this.state.users;
+
+        /** @type {React.ReactNode[]} - List of user tags. */
+        let usersNodes: React.ReactNode[] = [];
+
+        // Create the user tags.
+        for (let i = 0; i < users.length; i++) {
+            usersNodes.push(
+                <Layout.buttons.loginMenuButton user={users[i]} key={i} />
+            );
+        }
 
         // Return the node.
         return (
@@ -61,7 +89,7 @@ class WelcomeBox extends React.Component<{}, {}> {
 
                 <div className={usersBandClass}>
 
-                    <Layout.buttons.loginMenuButton isUser={true} />
+                    {usersNodes}
 
                 </div>
                 <div className="grid grid-rows-1 gap-10 mt-10">
