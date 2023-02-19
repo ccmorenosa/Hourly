@@ -13,7 +13,7 @@ import Layout from "../layouts";
  * Class representing the LogIn component.
  * @extends {React.Component}
  */
-class LogIn extends React.Component<{}, {}> {
+class LogIn extends React.Component<{}, {content: React.ReactNode | null}> {
 
     /**
      * Create the component.
@@ -24,6 +24,38 @@ class LogIn extends React.Component<{}, {}> {
         // Create superior class.
         super(props);
 
+        // Set state.
+        this.state = {
+            content: <WelcomeBox
+                newUserBtn={
+                    < Layout.buttons.loginMenuButton text="New Profile"
+                        action={this.newUserForm}
+                    />
+                }
+            />
+        };
+
+        // Bind actions.
+        this.displayWelcomeBox = this.displayWelcomeBox.bind(this);
+
+    }
+
+    /**
+     * Set content state to welcome box.
+     */
+    displayWelcomeBox(): void {
+
+        this.setState({
+            content: (
+                <WelcomeBox
+                    newUserBtn={
+                        < Layout.buttons.loginMenuButton text="New Profile"
+                            action={this.newUserForm}
+                        />
+                    }
+                />
+            )
+        });
     }
 
     /**
@@ -38,6 +70,9 @@ class LogIn extends React.Component<{}, {}> {
             "dark:bg-celeste-900 text-celeste-900 dark:text-celeste-100"
         );
 
+        /** @typedef {React.ReactNode} - Box in the login view. */
+        let content = this.state.content;
+
         // Return the node.
         return (
             <div className={viewClass}>
@@ -46,7 +81,7 @@ class LogIn extends React.Component<{}, {}> {
                     <Layout.buttons.darkModeButton />
                 </div>
 
-                <WelcomeBox />
+                {content}
 
             </div>
         );

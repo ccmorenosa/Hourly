@@ -12,13 +12,14 @@ import Layout from "../layouts";
  * Class representing the welcome box.
  * @extends {React.Component}
  */
-class WelcomeBox extends React.Component<{}, {users: string[]}> {
+class WelcomeBox extends
+React.Component<{newUserBtn: React.ReactNode}, {users: string[]}> {
 
     /**
      * Create the component.
      * @param props {object} - Properties of the component.
      */
-    constructor(props: {}) {
+    constructor(props: {newUserBtn: React.ReactNode}) {
 
         // Create superior class.
         super(props);
@@ -46,8 +47,6 @@ class WelcomeBox extends React.Component<{}, {users: string[]}> {
      * @returns {React.ReactNode} the Welcome node.
      */
     render(): React.ReactNode {
-
-
         /** @typedef {string} - Class for the main div. */
         let boxClass = (
             "bg-celadon-500 dark:bg-celeste-1000 mx-auto w-1/3 " +
@@ -94,7 +93,7 @@ class WelcomeBox extends React.Component<{}, {users: string[]}> {
                 </div>
                 <div className="grid grid-rows-1 gap-10 mt-10">
 
-                    <Layout.buttons.loginMenuButton text="New Profile" />
+                    {this.props.newUserBtn}
 
                 </div>
 
