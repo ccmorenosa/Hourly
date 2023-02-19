@@ -43,7 +43,7 @@ class WelcomeBox extends React.Component<{}, {users: string[]}> {
 
     /**
      * Render the component.
-     * @returns {React.ReactNode} the LogIn node.
+     * @returns {React.ReactNode} the Welcome node.
      */
     render(): React.ReactNode {
 
