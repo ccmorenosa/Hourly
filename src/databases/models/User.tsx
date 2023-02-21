@@ -7,6 +7,10 @@ import bcrypt from "bcrypt";
 
 // Define attributes for User model.
 let UserAttributes = {
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
     username: {
         type: DataTypes.STRING,
         allowNull: false,
