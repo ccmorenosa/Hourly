@@ -101,8 +101,11 @@ class loginMenuButton extends
 React.Component<{
     text?: string,
     user?: string,
+    style?: string,
+    type?: "submit" | "button" | "reset",
     children?: any,
 }, {
+    btnStyle: string
 }> {
 
     /**
@@ -113,11 +116,44 @@ React.Component<{
         props: {
             text: string,
             user: string,
+            style: string,
+            type: "submit" | "button" | "reset",
             children: any,
         }
     ) {
         // Create superior class.
         super(props);
+
+        /** @typedef {string} - Button color and style. */
+        let btnStyle: string = "";
+
+        // Set button style.
+        switch (this.props.style) {
+            case "success":
+                btnStyle = (
+                    "bg-celadon-100 dark:bg-celadon-700 " +
+                    "hover:bg-celadon-0 hover:dark:bg-celadon-600 "
+                );
+                break;
+
+            case "danger":
+                btnStyle = (
+                    "bg-vermilion-500 hover:bg-vermilion-400 text-celeste-100 "
+                );
+                break;
+
+            default:
+                btnStyle = (
+                    "bg-celadon-100 dark:bg-celadon-700 hover:bg-celadon-0 " +
+                    "hover:dark:bg-celadon-600 "
+                );
+                break;
+        }
+
+        // Set state.
+        this.state = {
+            btnStyle: btnStyle
+        };
 
     }
 
@@ -126,23 +162,45 @@ React.Component<{
      * @returns {React.ReactNode} the button node.
      */
     render(): React.ReactNode {
+        /** @type {"submit" | "button" | "reset"} - Type of the button. */
+        let type: "submit" | "button" | "reset" = this.props.type;
+
+        // Check type value.
+        if (!type) {
+            type = "button";
+        }
+
+        /** @type {string} - Class for the button. */
+        let btnClass: string = this.state.btnStyle;
 
         // Check if the component has user prop.
         if (this.props.user) {
 
+            // Update the button (image) style.
+            /** @type {string} - Class for the image in the button. */
+            btnClass += "lg:w-36 md:w-20 rounded-full p-1 mx-2";
+
             // Return the node for user button.
             return (
-                <button className="shrink-0">
-                    <img className="lg:w-36 md:w-20 rounded-full p-1 bg-celadon-100 dark:bg-celadon-700 hover:bg-celadon-0 hover:dark:bg-celadon-600 mx-2" src="icons/user.svg" />
+                <button
+                    className="shrink-0"
+                    type={type}
+                >
+                    <img className={btnClass} src="icons/user.svg" />
                     {this.props.user}
                 </button>
             );
 
         }
 
+        // Update the button style.
+        btnClass += "p-3 rounded-lg";
+
         // Return the node for normal button.
         return (
-            <button className="p-3 bg-celadon-100 dark:bg-celadon-700 hover:bg-celadon-0 hover:dark:bg-celadon-600 rounded-lg">
+            <button
+                className={btnClass}
+                type={type}>
                 {this.props.text}
                 {this.props.children}
             </button>
