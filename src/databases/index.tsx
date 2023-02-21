@@ -30,7 +30,7 @@ UserModel.model.init(
 // Synchronize the tables.
 (async () => {
     await sequelize.sync({ alter: true })
-})();
+})().catch((e) => { console.log(e); });
 
 // Handle the event to request the users in the database.
 ipcMain.handle("database:getUser", async (event, ...args) => {
@@ -49,4 +49,15 @@ ipcMain.handle("database:getUser", async (event, ...args) => {
     }
 
     return usernames;
+});
+
+// Handle the event to create a new users in the database.
+ipcMain.handle("database:createUser", async (
+    event, ...args: {name: string, username: string, password: string
+    }[]
+) => {
+
+    // Create the new user.
+    UserModel.model.create(args[0]);
+
 });
