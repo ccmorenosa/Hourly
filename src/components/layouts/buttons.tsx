@@ -151,6 +151,15 @@ React.Component<PROPS, STATE> {
 
             case "option-1":
                 btnStyle = (
+                    "text-gray-1000 bg-celeste-300 dark:bg-celeste-700 " +
+                    "enabled:hover:bg-celeste-200 " +
+                    "enabled:hover:dark:bg-celeste-600 " +
+                    "disabled:bg-celeste-0 disabled:dark:bg-celeste-500 "
+                );
+                break;
+
+            case "option-2":
+                btnStyle = (
                     "bg-celeste-100 dark:bg-celeste-1000 " +
                     "enabled:hover:bg-celeste-0 " +
                     "enabled:hover:dark:bg-celeste-900 " +
@@ -158,11 +167,20 @@ React.Component<PROPS, STATE> {
                 );
                 break;
 
-            case "option-2":
+            case "option-3":
                 btnStyle = (
                     "bg-celadon-100 dark:bg-celadon-1000 " +
                     "enabled:hover:bg-celadon-0 " +
                     "enabled:hover:dark:bg-celadon-900 " +
+                    "disabled:bg-celadon-0 disabled:dark:bg-celadon-500 "
+                );
+                break;
+
+            case "option-4":
+                btnStyle = (
+                    "bg-celadon-300 dark:bg-celadon-700 " +
+                    "enabled:hover:bg-celadon-200 " +
+                    "enabled:hover:dark:bg-celadon-600 " +
                     "disabled:bg-celadon-0 disabled:dark:bg-celadon-500 "
                 );
                 break;
@@ -176,10 +194,10 @@ React.Component<PROPS, STATE> {
 
             default:
                 btnStyle = (
-                    "bg-celadon-100 dark:bg-celadon-700 " +
-                    "enabled:hover:bg-celadon-0 " +
-                    "enabled:hover:dark:bg-celadon-600 " +
-                    "disabled:bg-celadon-0 disabled:dark:bg-celadon-500 "
+                    "text-gray-1000 bg-celeste-300 dark:bg-celeste-700 " +
+                    "enabled:hover:bg-celeste-200 " +
+                    "enabled:hover:dark:bg-celeste-600 " +
+                    "disabled:bg-celeste-0 disabled:dark:bg-celeste-500 "
                 );
                 break;
         }
