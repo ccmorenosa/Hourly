@@ -31,6 +31,9 @@ import './index.css';
 // Export interface IUserAPI.
 export interface IUserAPI {
     getUsers: () => Promise<string[]>,
+    createUsers: (
+        name: string, username: string, password: string
+    ) => Promise<string[]>,
 }
 
 // Declare new attribute of window.
