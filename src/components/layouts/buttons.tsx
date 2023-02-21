@@ -98,16 +98,24 @@ class darkModeButton extends React.Component<{}, {isDark: boolean}> {
  * @extends {React.Component}
  */
 class loginMenuButton extends
-React.Component<{text?: string, user?: string}, {}> {
+React.Component<{
+    text?: string,
+    user?: string,
+    children?: any,
+}, {
+}> {
 
     /**
      * Create the component.
      * @param props {object} - Properties of the component.
      */
     constructor(
-        props: {text: string, user: string} = {text: "", user: ""}
+        props: {
+            text: string,
+            user: string,
+            children: any,
+        }
     ) {
-
         // Create superior class.
         super(props);
 
@@ -136,6 +144,7 @@ React.Component<{text?: string, user?: string}, {}> {
         return (
             <button className="p-3 bg-celadon-100 dark:bg-celadon-700 hover:bg-celadon-0 hover:dark:bg-celadon-600 rounded-lg">
                 {this.props.text}
+                {this.props.children}
             </button>
         );
 
