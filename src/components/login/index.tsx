@@ -9,13 +9,16 @@ import WelcomeBox from "./Welcome";
 import NewUserForm from "./NewUserForm";
 import Layout from "../layouts";
 
+interface ILogInState {
+    content: React.ReactNode;
+}
+
 
 /**
  * Class representing the LogIn component.
  * @extends {React.Component}
  */
-class LogIn extends React.Component
-<{}, {content: React.ReactNode | null}> {
+class LogIn extends React.Component<{}, ILogInState> {
 
     /**
      * Create the component.

@@ -6,12 +6,16 @@
 
 import React from "react";
 
+interface IDarkModeButtonState {
+    isDark: boolean;
+}
+
 
 /**
  * Class that represent a dark mode button.
  * @extends {React.Component}
  */
-class darkModeButton extends React.Component<{}, {isDark: boolean}> {
+class darkModeButton extends React.Component<{}, IDarkModeButtonState> {
 
     /**
      * Create the component.
@@ -93,36 +97,32 @@ class darkModeButton extends React.Component<{}, {isDark: boolean}> {
 }
 
 
+interface ILoginMenuButtonProps {
+    text?: string;
+    user?: string;
+    style?: string;
+    type?: "submit" | "button" | "reset";
+    children?: any;
+    action?: () => any;
+}
+
+interface ILoginMenuButtonState {
+    btnStyle: string;
+}
+
+
 /**
  * Class that represent a menu in the LogIn.
  * @extends {React.Component}
  */
 class loginMenuButton extends
-React.Component<{
-    text?: string,
-    user?: string,
-    style?: string,
-    type?: "submit" | "button" | "reset",
-    children?: any,
-    action?: () => any
-}, {
-    btnStyle: string
-}> {
+React.Component<ILoginMenuButtonProps, ILoginMenuButtonState> {
 
     /**
      * Create the component.
      * @param props {object} - Properties of the component.
      */
-    constructor(
-        props: {
-            text: string,
-            user: string,
-            style: string,
-            type: "submit" | "button" | "reset",
-            children: any,
-            action: () => any
-        }
-    ) {
+    constructor(props: ILoginMenuButtonProps) {
         // Create superior class.
         super(props);
 

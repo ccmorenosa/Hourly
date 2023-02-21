@@ -7,19 +7,26 @@
 import React from "react";
 import Layout from "../layouts";
 
+interface IWelcomeBoxProps {
+    newUserBtn: React.ReactNode;
+}
+interface IWelcomeBoxState {
+    users: string[]
+}
+
 
 /**
  * Class representing the welcome box.
  * @extends {React.Component}
  */
 class WelcomeBox extends
-React.Component<{newUserBtn: React.ReactNode}, {users: string[]}> {
+React.Component<IWelcomeBoxProps, IWelcomeBoxState> {
 
     /**
      * Create the component.
      * @param props {object} - Properties of the component.
      */
-    constructor(props: {newUserBtn: React.ReactNode}) {
+    constructor(props: IWelcomeBoxProps) {
 
         // Create superior class.
         super(props);
