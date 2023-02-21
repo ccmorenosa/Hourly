@@ -39,7 +39,7 @@ class LogIn extends React.Component<{}, ILogInState> {
                 <WelcomeBox
                     newUserBtn={
                         < Layout.buttons.SimpleButton
-                            text="New Profile" style="success"
+                            text="New Profile" style="option-1"
                             action={this.newUserForm}
                         />
                     }
@@ -59,7 +59,7 @@ class LogIn extends React.Component<{}, ILogInState> {
                 <WelcomeBox
                     newUserBtn={
                         < Layout.buttons.SimpleButton
-                            text="New Profile" style="success"
+                            text="New Profile" style="option-1"
                             action={this.newUserForm}
                         />
                     }
@@ -96,13 +96,13 @@ class LogIn extends React.Component<{}, ILogInState> {
     render(): React.ReactNode {
         /** @typedef {string} - Class for the main div. */
         let viewClass = (
-            "h-screen flex flex-col justify-center bg-celeste-100 " +
-            "dark:bg-celeste-900 text-gray-1000 dark:text-celeste-100"
+            "h-screen flex flex-col justify-center bg-gray-300 " +
+            "dark:bg-purple-600 text-gray-1000 dark:text-celeste-100"
         );
 
         /** @typedef {string} - Class for the box div. */
         let boxClass = (
-            "bg-celadon-500 dark:bg-celeste-1000 mx-auto w-1/3 " +
+            "bg-purple-500 dark:bg-purple-900 mx-auto w-1/3 " +
             "rounded-lg text-center p-10 sm:p-5 h-5/6 flex flex-col"
         );
 

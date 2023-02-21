@@ -32,7 +32,7 @@ class WorkspaceHeader extends React.Component<{}, {}> {
         /** @typedef {string} - Class for the main div. */
         let headerClass = (
             "text-lg h-12 flex font-semibold " +
-            "bg-celeste-400 dark:bg-celeste-800"
+            "bg-purple-400 dark:bg-purple-900"
         );
 
         /** @typedef {string} - Class for the main div. */
@@ -57,6 +57,24 @@ class WorkspaceHeader extends React.Component<{}, {}> {
                     <div className="my-auto grid grid-cols-2 gap-2">
                         <div>
                             <buttons.SimpleButton
+                                size="sm" style="option-4"
+                            >
+
+                                <img
+                                    className="w-6 hidden dark:inline"
+                                    src="icons/plus-dark.svg"
+                                />
+
+                                <img
+                                    className="w-6 dark:hidden inline"
+                                    src="icons/plus.svg"
+                                />
+
+                            </buttons.SimpleButton>
+                        </div>
+
+                        <div>
+                            <buttons.SimpleButton
                                 size="sm" style="option-1"
                             >
 
@@ -68,24 +86,6 @@ class WorkspaceHeader extends React.Component<{}, {}> {
                                 <img
                                     className="w-6 dark:hidden inline"
                                     src="icons/folder-open.svg"
-                                />
-
-                            </buttons.SimpleButton>
-                        </div>
-
-                        <div>
-                            <buttons.SimpleButton
-                                size="sm" style="option-2"
-                            >
-
-                                <img
-                                    className="w-6 hidden dark:inline"
-                                    src="icons/plus-dark.svg"
-                                />
-
-                                <img
-                                    className="w-6 dark:hidden inline"
-                                    src="icons/plus.svg"
                                 />
 
                             </buttons.SimpleButton>

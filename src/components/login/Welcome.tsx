@@ -62,8 +62,8 @@ React.Component<IWelcomeBoxProps, IWelcomeBoxState> {
 
         /** @typedef {string} - Class for the users band div. */
         let usersBandClass = (
-            "overflow-x-scroll flex scrollbar scrollbar-thumb-celadon-700 "+
-            "scrollbar-track-celadon-100 scrollbar-h-2 " +
+            "overflow-x-scroll flex scrollbar scrollbar-thumb-celeste-900 "+
+            "scrollbar-track-celeste-100 scrollbar-h-2 " +
             "scrollbar-thumb-rounded-full scrollbar-track-rounded-full " +
             "mt-10 p-3 justify-center pl-20"
         );
@@ -80,7 +80,7 @@ React.Component<IWelcomeBoxProps, IWelcomeBoxState> {
             usersNodes.push(
                 <Layout.buttons.UserButton
                     user={users[i]}
-                    style="success"
+                    style="option-1"
                     key={i}
                 />
             );
@@ -105,8 +105,8 @@ React.Component<IWelcomeBoxProps, IWelcomeBoxState> {
 
                 <div className="grid grid-cols-2 gap-10 mt-10">
 
-                    <Layout.buttons.SimpleButton text="a" style="success" />
-                    <Layout.buttons.SimpleButton text="b" style="success" />
+                    <Layout.buttons.SimpleButton text="a" style="option-1" />
+                    <Layout.buttons.SimpleButton text="b" style="option-1" />
 
                 </div>
             </span>

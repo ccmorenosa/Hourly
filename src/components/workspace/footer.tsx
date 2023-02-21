@@ -28,8 +28,13 @@ class WorkspaceFooter extends React.Component<{}, {}> {
      * @returns {React.ReactNode} the WorkspaceFooter node.
      */
     render(): React.ReactNode {
+        /** @typedef {string} - Class for the main div. */
+        let footerClass = (
+            "h-5 bg-purple-500 text-xs flex"
+        );
+
         return (
-            <div className="h-5 bg-celeste-500">
+            <div className={footerClass}>
 
             </div>
         );
