@@ -149,6 +149,24 @@ React.Component<PROPS, STATE> {
                 );
                 break;
 
+            case "option-1":
+                btnStyle = (
+                    "bg-celeste-100 dark:bg-celeste-1000 " +
+                    "enabled:hover:bg-celeste-0 " +
+                    "enabled:hover:dark:bg-celeste-900 " +
+                    "disabled:bg-celeste-0 disabled:dark:bg-celeste-500 "
+                );
+                break;
+
+            case "option-2":
+                btnStyle = (
+                    "bg-celadon-100 dark:bg-celadon-1000 " +
+                    "enabled:hover:bg-celadon-0 " +
+                    "enabled:hover:dark:bg-celadon-900 " +
+                    "disabled:bg-celadon-0 disabled:dark:bg-celadon-500 "
+                );
+                break;
+
             case "danger":
                 btnStyle = (
                     "bg-vermilion-500 enabled:hover:bg-vermilion-400 " +
