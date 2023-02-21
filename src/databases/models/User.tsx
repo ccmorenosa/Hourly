@@ -21,15 +21,15 @@ let UserAttributes = {
 
 // Define Hooks for User model.
 let UserHooks = {
-    beforeCreate: async (user: User) => {
+    beforeCreate: (user: User) => {
         if (user.password) {
-            const salt = await bcrypt.genSaltSync(10, 'a');
+            const salt = bcrypt.genSaltSync(10, 'a');
             user.password = bcrypt.hashSync(user.password, salt);
         }
     },
-    beforeUpdate:async (user: User) => {
+    beforeUpdate: (user: User) => {
         if (user.password) {
-            const salt = await bcrypt.genSaltSync(10, 'a');
+            const salt = bcrypt.genSaltSync(10, 'a');
             user.password = bcrypt.hashSync(user.password, salt);
         }
     }
