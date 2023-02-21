@@ -104,6 +104,7 @@ React.Component<{
     style?: string,
     type?: "submit" | "button" | "reset",
     children?: any,
+    action?: () => any
 }, {
     btnStyle: string
 }> {
@@ -119,6 +120,7 @@ React.Component<{
             style: string,
             type: "submit" | "button" | "reset",
             children: any,
+            action: () => any
         }
     ) {
         // Create superior class.
@@ -184,6 +186,7 @@ React.Component<{
             return (
                 <button
                     className="shrink-0"
+                    onClick={this.props.action}
                     type={type}
                 >
                     <img className={btnClass} src="icons/user.svg" />
@@ -200,6 +203,7 @@ React.Component<{
         return (
             <button
                 className={btnClass}
+                onClick={this.props.action}
                 type={type}>
                 {this.props.text}
                 {this.props.children}
