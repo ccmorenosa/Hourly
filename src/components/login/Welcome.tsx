@@ -76,7 +76,11 @@ React.Component<{newUserBtn: React.ReactNode}, {users: string[]}> {
         // Create the user tags.
         for (let i = 0; i < users.length; i++) {
             usersNodes.push(
-                <Layout.buttons.loginMenuButton user={users[i]} key={i} />
+                <Layout.buttons.loginMenuButton
+                    user={users[i]}
+                    style="success"
+                    key={i}
+                />
             );
         }
 
@@ -99,8 +103,8 @@ React.Component<{newUserBtn: React.ReactNode}, {users: string[]}> {
 
                 <div className="grid grid-cols-2 gap-10 mt-10">
 
-                    <Layout.buttons.loginMenuButton text="a" />
-                    <Layout.buttons.loginMenuButton text="b" />
+                    <Layout.buttons.loginMenuButton text="a" style="success" />
+                    <Layout.buttons.loginMenuButton text="b" style="success" />
 
                 </div>
 

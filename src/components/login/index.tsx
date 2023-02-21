@@ -26,13 +26,16 @@ class LogIn extends React.Component<{}, {content: React.ReactNode | null}> {
 
         // Set state.
         this.state = {
-            content: <WelcomeBox
-                newUserBtn={
-                    < Layout.buttons.loginMenuButton text="New Profile"
-                        action={this.newUserForm}
-                    />
-                }
-            />
+            content: (
+                <WelcomeBox
+                    newUserBtn={
+                        < Layout.buttons.loginMenuButton
+                            text="New Profile" style="success"
+                            action={this.newUserForm}
+                        />
+                    }
+                />
+            )
         };
 
         // Bind actions.
@@ -49,7 +52,8 @@ class LogIn extends React.Component<{}, {content: React.ReactNode | null}> {
             content: (
                 <WelcomeBox
                     newUserBtn={
-                        < Layout.buttons.loginMenuButton text="New Profile"
+                        < Layout.buttons.loginMenuButton
+                            text="New Profile" style="success"
                             action={this.newUserForm}
                         />
                     }
