@@ -58,7 +58,7 @@ React.Component<{newUserBtn: React.ReactNode}, {users: string[]}> {
             "overflow-x-scroll flex scrollbar scrollbar-thumb-celadon-700 "+
             "scrollbar-track-celadon-100 scrollbar-h-2 " +
             "scrollbar-thumb-rounded-full scrollbar-track-rounded-full " +
-            "mt-10 p-3 justify-center"
+            "mt-10 p-3 justify-center pl-20"
         );
 
         /** @type {string[]} - Get the user from the state. */
