@@ -91,6 +91,9 @@ React.Component<INewUserFormProps, INewUserFormState> {
       createNewUser(event: any): void {
           event.preventDefault();
 
+          // Block buttons.
+          $("button").prop('disabled', true);
+
           /** @typedef {INewUserFormState} - Value of the input tags. */
           let values: INewUserFormState = this.state;
 
@@ -136,7 +139,7 @@ React.Component<INewUserFormProps, INewUserFormState> {
               $("#invalid-confirm-password").addClass("hidden");
           }
 
-        //   Check if the form is valid.
+          // Check if the form is valid.
           if (is_valid) {
 
               // Create the new user in the database.
@@ -146,10 +149,13 @@ React.Component<INewUserFormProps, INewUserFormState> {
                   values.password
               );
 
-            //   Update users.
+              // Update users.
               this.getUsers();
 
           }
+
+          // Activate buttons.
+          $("button").prop('disabled', false);
 
       }
 

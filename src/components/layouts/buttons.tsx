@@ -26,11 +26,11 @@ class darkModeButton extends React.Component<{}, IDarkModeButtonState> {
         // Create superior class.
         super(props);
 
-        // Bind button actions.
+        // Bind actions.
         this.handleDarkOnClick = this.handleDarkOnClick.bind(this);
         this.handleDarkOffClick = this.handleDarkOffClick.bind(this);
 
-        // Set the state for dark mode.
+        // Set state.
         this.state = {isDark: true};
 
     }
@@ -134,20 +134,25 @@ React.Component<ILoginMenuButtonProps, ILoginMenuButtonState> {
             case "success":
                 btnStyle = (
                     "bg-celadon-100 dark:bg-celadon-700 " +
-                    "hover:bg-celadon-0 hover:dark:bg-celadon-600 "
+                    "enabled:hover:bg-celadon-0 " +
+                    "enabled:hover:dark:bg-celadon-600 " +
+                    "disabled:bg-celadon-0 disabled:dark:bg-celadon-500 "
                 );
                 break;
 
             case "danger":
                 btnStyle = (
-                    "bg-vermilion-500 hover:bg-vermilion-400 text-celeste-100 "
+                    "bg-vermilion-500 enabled:hover:bg-vermilion-400 " +
+                    "disabled:bg-vermilion-300 text-celeste-100 "
                 );
                 break;
 
             default:
                 btnStyle = (
-                    "bg-celadon-100 dark:bg-celadon-700 hover:bg-celadon-0 " +
-                    "hover:dark:bg-celadon-600 "
+                    "bg-celadon-100 dark:bg-celadon-700 " +
+                    "enabled:hover:bg-celadon-0 " +
+                    "enabled:hover:dark:bg-celadon-600 " +
+                    "disabled:bg-celadon-0 disabled:dark:bg-celadon-500 "
                 );
                 break;
         }
