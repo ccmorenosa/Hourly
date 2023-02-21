@@ -303,7 +303,7 @@ React.Component<INewUserFormProps, INewUserFormState> {
                     <div className="grid grid-cols-2 gap-10 mt-5">
                         {this.props.cancelBtn}
 
-                        <Layout.buttons.loginMenuButton
+                        <Layout.buttons.SimpleButton
                             style="success" type="submit" text="create"
                         />
                     </div>

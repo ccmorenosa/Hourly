@@ -38,7 +38,7 @@ class LogIn extends React.Component<{}, ILogInState> {
             content: (
                 <WelcomeBox
                     newUserBtn={
-                        < Layout.buttons.loginMenuButton
+                        < Layout.buttons.SimpleButton
                             text="New Profile" style="success"
                             action={this.newUserForm}
                         />
@@ -58,7 +58,7 @@ class LogIn extends React.Component<{}, ILogInState> {
             content: (
                 <WelcomeBox
                     newUserBtn={
-                        < Layout.buttons.loginMenuButton
+                        < Layout.buttons.SimpleButton
                             text="New Profile" style="success"
                             action={this.newUserForm}
                         />
@@ -78,7 +78,7 @@ class LogIn extends React.Component<{}, ILogInState> {
             content: (
                 <NewUserForm
                     cancelBtn={
-                        <Layout.buttons.loginMenuButton
+                        <Layout.buttons.SimpleButton
                             text="Cancel" style="danger"
                             action={this.welcomeBox}
                         />
@@ -114,7 +114,7 @@ class LogIn extends React.Component<{}, ILogInState> {
             <div className={viewClass}>
 
                 <div className="container text-right" id="b-dark-mode">
-                    <Layout.buttons.darkModeButton />
+                    <Layout.buttons.DarkModeButton />
                 </div>
 
                 <div className={boxClass}>

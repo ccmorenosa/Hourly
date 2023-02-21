@@ -6,6 +6,9 @@
 
 import React from "react";
 
+interface IDarkModeButtonProps {
+}
+
 interface IDarkModeButtonState {
     isDark: boolean;
 }
@@ -15,13 +18,14 @@ interface IDarkModeButtonState {
  * Class that represent a dark mode button.
  * @extends {React.Component}
  */
-class darkModeButton extends React.Component<{}, IDarkModeButtonState> {
+class DarkModeButton extends
+React.Component<IDarkModeButtonProps, IDarkModeButtonState> {
 
     /**
      * Create the component.
      * @param props {object} - Properties of the component.
      */
-    constructor(props: {}) {
+    constructor(props: IDarkModeButtonProps) {
 
         // Create superior class.
         super(props);
@@ -59,8 +63,11 @@ class darkModeButton extends React.Component<{}, IDarkModeButtonState> {
         /** @typedef {boolean} - Dark mode state. */
         const isDark = this.state.isDark;
 
-        /** @typedef {string} - Strings of the classes for the tags. */
-        let btnImage: string, btnClass: string;
+        /** @typedef {string} - Classes for the button. */
+        let btnClass: string;
+
+        /** @typedef {string} - Path of the image. */
+        let btnImage: string;
 
         /** @typedef {Function} - Button function. */
         let btnAction;
@@ -79,7 +86,7 @@ class darkModeButton extends React.Component<{}, IDarkModeButtonState> {
 
             // Config classes and actions for light mode.
             btnImage = "icons/sun.svg";
-            btnClass = "rounded-full bg-gray-200";
+            btnClass = "rounded-full bg-gray-100";
             btnAction = this.handleDarkOnClick;
 
             $("html").removeClass("dark");
@@ -97,32 +104,34 @@ class darkModeButton extends React.Component<{}, IDarkModeButtonState> {
 }
 
 
-interface ILoginMenuButtonProps {
+interface IBaseButtonProps {
     text?: string;
-    user?: string;
     style?: string;
     type?: "submit" | "button" | "reset";
+    size?: "sm" | "md" | "lg" | "";
     children?: any;
     action?: () => any;
 }
 
-interface ILoginMenuButtonState {
+interface IBaseButtonState {
     btnStyle: string;
 }
 
 
 /**
- * Class that represent a menu in the LogIn.
+ * Class that represent a base for the buttons.
  * @extends {React.Component}
  */
-class loginMenuButton extends
-React.Component<ILoginMenuButtonProps, ILoginMenuButtonState> {
+class BaseButton
+<PROPS extends IBaseButtonProps, STATE extends IBaseButtonState> extends
+React.Component<PROPS, STATE> {
 
     /**
      * Create the component.
      * @param props {object} - Properties of the component.
      */
-    constructor(props: ILoginMenuButtonProps) {
+    constructor(props: PROPS) {
+
         // Create superior class.
         super(props);
 
@@ -160,7 +169,47 @@ React.Component<ILoginMenuButtonProps, ILoginMenuButtonState> {
         // Set state.
         this.state = {
             btnStyle: btnStyle
-        };
+        } as STATE;
+
+    }
+
+    /**
+     * Render the component.
+     * @returns {React.ReactNode} the button node.
+     */
+    render(): React.ReactNode {
+
+        // Return the node for normal button.
+        return (
+            <button
+                className={this.state.btnStyle}
+                onClick={this.props.action}
+                type={this.props.type}>
+                {this.props.text}
+                {this.props.children}
+            </button>
+        );
+
+    }
+
+}
+
+
+/**
+ * Class that represent a button.
+ * @extends {React.Component}
+ */
+class SimpleButton extends
+BaseButton<IBaseButtonProps, IBaseButtonState> {
+
+    /**
+     * Create the component.
+     * @param props {object} - Properties of the component.
+     */
+    constructor(props: IBaseButtonProps) {
+
+        // Create superior class.
+        super(props);
 
     }
 
@@ -180,29 +229,24 @@ React.Component<ILoginMenuButtonProps, ILoginMenuButtonState> {
         /** @type {string} - Class for the button. */
         let btnClass: string = this.state.btnStyle;
 
-        // Check if the component has user prop.
-        if (this.props.user) {
+        // Get image class from the size.
+        switch (this.props.size) {
+            case "sm":
+                btnClass += "p-1 rounded-lg text-sm";
+                break;
 
-            // Update the button (image) style.
-            /** @type {string} - Class for the image in the button. */
-            btnClass += "lg:w-36 md:w-20 rounded-full p-1 mx-2";
+            case "md":
+                btnClass += "p-3 rounded-lg text-base";
+                break;
 
-            // Return the node for user button.
-            return (
-                <button
-                    className="shrink-0"
-                    onClick={this.props.action}
-                    type={type}
-                >
-                    <img className={btnClass} src="icons/user.svg" />
-                    {this.props.user}
-                </button>
-            );
+            case "lg":
+                btnClass += "p-5 rounded-lg text-lg";
+                break;
 
+            default:
+                btnClass += "p-3 rounded-lg text-base";
+                break;
         }
-
-        // Update the button style.
-        btnClass += "p-3 rounded-lg";
 
         // Return the node for normal button.
         return (
@@ -220,10 +264,76 @@ React.Component<ILoginMenuButtonProps, ILoginMenuButtonState> {
 }
 
 
+interface IUserButtonProps {
+    text?: string;
+    style?: string;
+    user?: string;
+    type?: "submit" | "button" | "reset";
+    size?: "sm" | "md" | "lg" | "";
+    children?: any;
+    action?: () => any;
+}
+
+
+/**
+ * Class that represent a user button in the LogIn.
+ * @extends {React.Component}
+ */
+class UserButton extends BaseButton<IUserButtonProps, IBaseButtonState> {
+
+    /**
+     * Create the component.
+     * @param props {object} - Properties of the component.
+     */
+    constructor(props: IBaseButtonProps) {
+
+        // Create superior class.
+        super(props);
+
+    }
+
+    /**
+     * Render the component.
+     * @returns {React.ReactNode} the button node.
+     */
+    render(): React.ReactNode {
+        /** @type {"submit" | "button" | "reset"} - Type of the button. */
+        let type: "submit" | "button" | "reset" = this.props.type;
+
+        // Check type value.
+        if (!type) {
+            type = "button";
+        }
+
+        /** @type {string} - Class for the button. */
+        let btnClass: string = this.state.btnStyle;
+
+        // Update the button (image) style.
+        /** @type {string} - Class for the image in the button. */
+        btnClass += "lg:w-36 md:w-20 rounded-full p-1 mx-2";
+
+        // Return the node for user button.
+        return (
+            <button
+                className="shrink-0"
+                onClick={this.props.action}
+                type={type}
+            >
+                <img className={btnClass} src="icons/user.svg" />
+                {this.props.user}
+            </button>
+        );
+
+    }
+
+}
+
+
 /** @typedef {object} - Group buttons components */
 const buttons = {
-    darkModeButton: darkModeButton,
-    loginMenuButton: loginMenuButton
+    DarkModeButton: DarkModeButton,
+    SimpleButton: SimpleButton,
+    UserButton: UserButton
 };
 
 // Export buttons.
