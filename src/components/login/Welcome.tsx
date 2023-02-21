@@ -47,12 +47,6 @@ React.Component<{newUserBtn: React.ReactNode}, {users: string[]}> {
      * @returns {React.ReactNode} the Welcome node.
      */
     render(): React.ReactNode {
-        /** @typedef {string} - Class for the main div. */
-        let boxClass = (
-            "bg-celadon-500 dark:bg-celeste-1000 mx-auto w-1/3 " +
-            "rounded-lg text-center p-10 h-5/6 flex flex-col"
-        );
-
         /** @typedef {string} - Class for the welcome div. */
         let welcomeClass = (
             "w-full lg:text-5xl md:text-3xl sm:text-xl pb-5 border-b-2 " +
@@ -75,6 +69,7 @@ React.Component<{newUserBtn: React.ReactNode}, {users: string[]}> {
 
         // Create the user tags.
         for (let i = 0; i < users.length; i++) {
+
             usersNodes.push(
                 <Layout.buttons.loginMenuButton
                     user={users[i]}
@@ -82,12 +77,12 @@ React.Component<{newUserBtn: React.ReactNode}, {users: string[]}> {
                     key={i}
                 />
             );
+
         }
 
         // Return the node.
         return (
-            <div className={boxClass}>
-
+            <span>
                 <h1 className={welcomeClass}>Welcome</h1>
 
                 <div className={usersBandClass}>
@@ -107,8 +102,7 @@ React.Component<{newUserBtn: React.ReactNode}, {users: string[]}> {
                     <Layout.buttons.loginMenuButton text="b" style="success" />
 
                 </div>
-
-            </div>
+            </span>
         );
 
     }

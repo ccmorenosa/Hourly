@@ -67,11 +67,16 @@ class LogIn extends React.Component<{}, {content: React.ReactNode | null}> {
      * @returns {React.ReactNode} the LogIn node.
      */
     render(): React.ReactNode {
-
         /** @typedef {string} - Class for the main div. */
         let viewClass = (
             "h-screen flex flex-col justify-center bg-celeste-100 " +
-            "dark:bg-celeste-900 text-celeste-900 dark:text-celeste-100"
+            "dark:bg-celeste-900 text-gray-1000 dark:text-celeste-100"
+        );
+
+        /** @typedef {string} - Class for the box div. */
+        let boxClass = (
+            "bg-celadon-500 dark:bg-celeste-1000 mx-auto w-1/3 " +
+            "rounded-lg text-center p-10 sm:p-5 h-5/6 flex flex-col"
         );
 
         /** @typedef {React.ReactNode} - Box in the login view. */
@@ -85,7 +90,9 @@ class LogIn extends React.Component<{}, {content: React.ReactNode | null}> {
                     <Layout.buttons.darkModeButton />
                 </div>
 
-                {content}
+                <div className={boxClass}>
+                    {content}
+                </div>
 
             </div>
         );
