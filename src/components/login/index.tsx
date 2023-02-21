@@ -6,6 +6,7 @@
 
 import React from "react";
 import WelcomeBox from "./Welcome";
+import NewUserForm from "./NewUserForm";
 import Layout from "../layouts";
 
 
@@ -13,7 +14,8 @@ import Layout from "../layouts";
  * Class representing the LogIn component.
  * @extends {React.Component}
  */
-class LogIn extends React.Component<{}, {content: React.ReactNode | null}> {
+class LogIn extends React.Component
+<{}, {content: React.ReactNode | null}> {
 
     /**
      * Create the component.
@@ -23,6 +25,10 @@ class LogIn extends React.Component<{}, {content: React.ReactNode | null}> {
 
         // Create superior class.
         super(props);
+
+        // Bind actions.
+        this.welcomeBox = this.welcomeBox.bind(this);
+        this.newUserForm = this.newUserForm.bind(this);
 
         // Set state.
         this.state = {
@@ -38,15 +44,12 @@ class LogIn extends React.Component<{}, {content: React.ReactNode | null}> {
             )
         };
 
-        // Bind actions.
-        this.displayWelcomeBox = this.displayWelcomeBox.bind(this);
-
     }
 
     /**
      * Set content state to welcome box.
      */
-    displayWelcomeBox(): void {
+    welcomeBox(): void {
 
         this.setState({
             content: (
@@ -60,6 +63,27 @@ class LogIn extends React.Component<{}, {content: React.ReactNode | null}> {
                 />
             )
         });
+
+    }
+
+    /**
+     * Set content view to new user form.
+     */
+    newUserForm(): void {
+
+        this.setState({
+            content: (
+                <NewUserForm
+                    cancelBtn={
+                        <Layout.buttons.loginMenuButton
+                            text="Cancel" style="danger"
+                            action={this.welcomeBox}
+                        />
+                    }
+                />
+            )
+        });
+
     }
 
     /**
