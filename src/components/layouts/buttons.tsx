@@ -151,7 +151,7 @@ React.Component<PROPS, STATE> {
 
             case "option-1":
                 btnStyle = (
-                    "text-gray-1000 bg-celeste-300 dark:bg-celeste-700 " +
+                    "bg-celeste-300 dark:bg-celeste-700 " +
                     "enabled:hover:bg-celeste-200 " +
                     "enabled:hover:dark:bg-celeste-600 " +
                     "disabled:bg-celeste-0 disabled:dark:bg-celeste-500 "
@@ -194,7 +194,7 @@ React.Component<PROPS, STATE> {
 
             default:
                 btnStyle = (
-                    "text-gray-1000 bg-celeste-300 dark:bg-celeste-700 " +
+                    "bg-celeste-300 dark:bg-celeste-700 " +
                     "enabled:hover:bg-celeste-200 " +
                     "enabled:hover:dark:bg-celeste-600 " +
                     "disabled:bg-celeste-0 disabled:dark:bg-celeste-500 "
@@ -233,7 +233,7 @@ React.Component<PROPS, STATE> {
 
 /**
  * Class that represent a button.
- * @extends {React.Component}
+ * @extends {BaseButton}
  */
 class SimpleButton extends
 BaseButton<IBaseButtonProps, IBaseButtonState> {
@@ -313,7 +313,7 @@ interface IUserButtonProps {
 
 /**
  * Class that represent a user button in the LogIn.
- * @extends {React.Component}
+ * @extends {BaseButton}
  */
 class UserButton extends BaseButton<IUserButtonProps, IBaseButtonState> {
 
