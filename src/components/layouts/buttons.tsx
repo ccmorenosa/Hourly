@@ -341,11 +341,10 @@ class UserButton extends BaseButton<IUserButtonProps, IBaseButtonState> {
             type = "button";
         }
 
-        /** @type {string} - Class for the button. */
+        /** @type {string} - Class for the image in the button. */
         let btnClass: string = this.state.btnStyle;
 
         // Update the button (image) style.
-        /** @type {string} - Class for the image in the button. */
         btnClass += "lg:w-36 md:w-20 rounded-full p-1 mx-2";
 
         // Return the node for user button.
@@ -365,11 +364,111 @@ class UserButton extends BaseButton<IUserButtonProps, IBaseButtonState> {
 }
 
 
+interface ISidebarButtonProps {
+    text?: string;
+    icon?: string;
+    style?: string;
+    type?: "submit" | "button" | "reset";
+    children?: any;
+    action?: () => any;
+}
+
+
+/**
+ * Class that represents a sidebar option.
+ * @extends {React.Component}
+ */
+class SidebarButton extends
+React.Component<ISidebarButtonProps, IBaseButtonState> {
+
+    /**
+     * Create the component.
+     * @param props {object} - Properties of the component.
+     */
+    constructor(props: ISidebarButtonProps) {
+
+        // Create superior class.
+        super(props);
+
+        /** @typedef {string} - Button color and style. */
+        let btnStyle: string = "w-full p-2 text-left ";
+
+        // Set button style.
+        switch (this.props.style) {
+            case "danger":
+                btnStyle += (
+                    "bg-vermilion-300 dark:bg-vermilion-600 " +
+                    "enabled:hover:bg-vermilion-200 " +
+                    "enabled:hover:dark:bg-vermilion-500 " +
+                    "disabled:bg-vermilion-0 disabled:dark:bg-vermilion-300 "
+                );
+                break;
+
+            default:
+                btnStyle += (
+                    "hover:bg-gray-400 hover:dark:bg-gray-700 "
+                );
+                break;
+        }
+
+        // Set state.
+        this.state = {
+            btnStyle: btnStyle
+        };
+
+    }
+
+    /**
+     * Render the component.
+     * @returns {React.ReactNode} the option node.
+     */
+    render(): React.ReactNode {
+        /** @type {"submit" | "button" | "reset"} - Type of the button. */
+        let type: "submit" | "button" | "reset" = this.props.type;
+
+        // Check type value.
+        if (!type) {
+            type = "button";
+        }
+
+        /** @typedef {string} - Source for the button image. */
+        let btnImage: string = "icons/" + this.props.icon;
+
+        /** @type {string} - Class for the button. */
+        let btnClass: string = this.state.btnStyle;
+
+        // Return the node for option button button.
+        return (
+            <button
+                className={btnClass}
+                onClick={this.props.action}
+                type={this.props.type}>
+
+                <img
+                    className="w-6 mr-2 hidden dark:inline"
+                    src={btnImage + "-dark.svg"}
+                />
+                <img
+                    className="w-6 mr-2 dark:hidden inline"
+                    src={btnImage + ".svg"}
+                />
+
+                {this.props.text}
+                {this.props.children}
+            </button>
+        );
+
+    }
+
+}
+
+
 /** @typedef {object} - Group buttons components */
 const buttons = {
     DarkModeButton: DarkModeButton,
     SimpleButton: SimpleButton,
-    UserButton: UserButton
+    UserButton: UserButton,
+    SidebarButton: SidebarButton,
 };
 
 // Export buttons.
