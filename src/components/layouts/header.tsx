@@ -8,6 +8,10 @@ import Layout from ".";
 
 interface IHeaderProps {
     user: string;
+    username: string;
+    project: string;
+    newProject: () => any;
+    openProject: () => any;
 }
 
 
@@ -44,14 +48,20 @@ class Header extends React.Component<IHeaderProps, {}> {
             "h-full flex flex-col px-5"
         );
 
+        /** @typedef {string} - Project name. */
+        let activeProject: string = (
+            this.props.project ?
+            ("Working on '" + this.props.project + "' project") :
+            "No project currently opened"
+        );
+
         return (
             <div className={headerClass}>
 
                 <div className={itemsClass}>
 
                     <div className="my-auto">
-                        Welcome {this.props.user} | No project currently opened
-
+                        Welcome {this.props.user} | {activeProject}
                     </div>
 
                 </div>
@@ -62,6 +72,7 @@ class Header extends React.Component<IHeaderProps, {}> {
                         <div>
                             <Layout.buttons.SimpleButton
                                 size="sm" style="option-4"
+                                action={this.props.newProject}
                             >
 
                                 New project
@@ -82,6 +93,7 @@ class Header extends React.Component<IHeaderProps, {}> {
                         <div>
                             <Layout.buttons.SimpleButton
                                 size="sm" style="option-1"
+                                action={this.props.openProject}
                             >
 
                                 Open project

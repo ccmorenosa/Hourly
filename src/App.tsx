@@ -10,6 +10,7 @@ import Workspace from './components/workspace';
 interface IAppState {
     isLogged: boolean;
     user: string;
+    username: string;
 }
 
 
@@ -36,6 +37,7 @@ class App extends React.Component<{}, IAppState> {
         this.state = {
             isLogged: false,
             user: "",
+            username: "",
         }
 
     }
@@ -49,12 +51,13 @@ class App extends React.Component<{}, IAppState> {
     async handleLogIn(
         user:string, username: string, password: string
     ): Promise<boolean> {
-        // If the uasername/password is valid, login.
+        // If the username/password is valid, login.
         if (await window.UserAPI.validateUserLogIn(username, password)) {
 
             this.setState({
                 isLogged: true,
-                user: user
+                user: user,
+                username: username
             });
 
             this.render();
@@ -90,6 +93,7 @@ class App extends React.Component<{}, IAppState> {
             return <Workspace
                 handleLogOut={this.handleLogOut}
                 user={this.state.user}
+                username={this.state.username}
             />;
         }
         return <LogIn handleLogIn={this.handleLogIn} />;

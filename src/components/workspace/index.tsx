@@ -11,11 +11,13 @@ import Layout from "../layouts";
 interface IWorkSpaceProps {
     handleLogOut: () => void;
     user: string;
+    username: string;
 }
 
 interface IWorkSpaceState {
     warningZ: string;
     opacity: string;
+    project?: string;
     modal?: React.ReactNode;
 }
 
@@ -37,7 +39,11 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
 
         // Bind actions.
         this.handleLogOut = this.handleLogOut.bind(this);
+        this.handleNewProject = this.handleNewProject.bind(this);
+        this.handleOpenProject = this.handleOpenProject.bind(this);
         this.closeModal = this.closeModal.bind(this);
+        this.createProject = this.createProject.bind(this);
+        this.getProjects = this.getProjects.bind(this);
 
         // Set state.
         this.state = {
@@ -58,9 +64,108 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
             modal: (
                 <Layout.modals.DangerModal
                     title="Caution"
-                    message={"Are you sure you want to logout."}
+                    message={"Are you sure you want to logout?"}
                     cancel={this.closeModal}
                     proceed={this.props.handleLogOut}
+                />
+            ),
+        });
+
+        this.render();
+    }
+
+    /**
+     * Show modal to create a new project.
+     */
+    handleNewProject() {
+        /** @typedef {string} - Class for the input tags. */
+        let inputClass = (
+            "w-full form-input px-4 py-3 rounded-full " +
+            "bg-celeste-100 dark:bg-celadon-300 text-gray-1000"
+        );
+
+       this.setState({
+            warningZ: "z-[2]",
+            opacity: "opacity-80",
+            modal: (
+                <Layout.modals.FormModal
+                    title="Create new project"
+                    invalid="Project already exists."
+                    inputs={[
+                        <div id="input-name" key="0">
+                            <div className="mb-2 text-left w-full flex">
+                                Project Name:
+                            </div>
+
+                            <input
+                                type="text" className={inputClass}
+                                name="name"
+                                required
+                            />
+                        </div>,
+                    ]}
+                    cancel={this.closeModal}
+                    proceed={this.createProject}
+                />
+            ),
+        });
+
+        this.render();
+    }
+
+    /**
+     * Show warning if logout button is clicked.
+     */
+    async handleOpenProject() {
+        /** @typedef {string} - Class for the input tags. */
+        let inputClass = (
+            "w-full form-input px-4 py-3 rounded-full " +
+            "bg-celeste-100 dark:bg-celadon-300 text-gray-1000"
+        );
+
+        /** @typedef {string[]} - List of projects for the active user. */
+        let projects: string[] = await this.getProjects();
+
+        // Get options.
+        let projectsOptions: React.ReactNode = projects.map((proj, i) => {
+            return <option value={proj} key={i}>{proj}</option>
+        });
+
+        this.setState({
+            warningZ: "z-[2]",
+            opacity: "opacity-80",
+            modal: (
+                <Layout.modals.FormModal
+                    title="Open project"
+                    invalid="Project already exists."
+                    inputs={[
+                        <div id="input-name" key="0">
+                            <div className="mb-2 text-left w-full flex">
+                                Select project:
+                            </div>
+
+                            <select
+                                name="project" id="project"
+                                className={inputClass} required
+                            >
+                                {projectsOptions}
+                            </select>
+                        </div>,
+                    ]}
+                    cancel={this.closeModal}
+                    proceed={
+                        async (event: {value: string}[]): Promise<boolean> => {
+
+                            // Set project.
+                            this.setProject(event[0].value);
+
+                            // Close modal.
+                            this.closeModal();
+
+                            return true;
+
+                        }
+                    }
                 />
             ),
         });
@@ -79,6 +184,56 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
         });
 
         this.render();
+    }
+
+    /**
+     * Set the project.
+     * @param proj {string} - Project name.
+     */
+    setProject(proj: string) {
+        // Set project.
+        this.setState({
+            project: proj,
+        });
+    }
+
+    /**
+     * Create a new project in the database.
+     */
+    async createProject(event: {value: string}[]): Promise<boolean> {
+
+        // Check if the project does not exists.
+        if (
+            event[0].value != "" &&
+            !(await this.getProjects()).includes(event[0].value)
+        ) {
+
+            // Create project.
+            window.ProjectAPI.createProject(
+                this.props.username, event[0].value
+            );
+
+            // Set project.
+            this.setProject(event[0].value);
+
+            // Close modal.
+            this.closeModal();
+
+            return true;
+
+        } else {
+            return false;
+        }
+
+    }
+
+    /**
+     * Get the projects stores in the database.
+     */
+    async getProjects(): Promise<string[]> {
+
+        return await window.ProjectAPI.getProjects(this.props.username);
+
     }
 
     /**
@@ -106,7 +261,13 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
                 <div className={viewClass}>
 
 
-                    <Layout.Header user={this.props.user}/>
+                    <Layout.Header
+                        user={this.props.user}
+                        username={this.props.username}
+                        project={this.state.project}
+                        newProject={this.handleNewProject}
+                        openProject={this.handleOpenProject}
+                    />
                     <WorkspaceDashboard
                         handleLogOut={this.handleLogOut}
                     />
