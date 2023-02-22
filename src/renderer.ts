@@ -31,7 +31,7 @@ import './index.css';
 // Export interface IUserAPI.
 export interface IUserAPI {
     getUsers: () => Promise<string[]>,
-    createUsers: (
+    createUser: (
         name: string, username: string, password: string
     ) => Promise<string[]>,
     validateUserLogIn: (

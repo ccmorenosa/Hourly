@@ -143,7 +143,7 @@ React.Component<INewUserFormProps, INewUserFormState> {
           if (is_valid) {
 
               // Create the new user in the database.
-              window.UserAPI.createUsers(
+              window.UserAPI.createUser(
                   values.name,
                   values.username,
                   values.password
