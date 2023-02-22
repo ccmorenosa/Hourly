@@ -12,5 +12,12 @@ contextBridge.exposeInMainWorld('UserAPI', {
         "database:createUser",
         {name: name, username: username, password: password
     }
+    ),
+    validateUserLogIn: (
+        username: string, password: string
+    ) => ipcRenderer.invoke(
+        "database:validateUserLogIn",
+        {username: username, password: password
+    }
     )
 })

@@ -34,6 +34,9 @@ export interface IUserAPI {
     createUsers: (
         name: string, username: string, password: string
     ) => Promise<string[]>,
+    validateUserLogIn: (
+        username: string, password: string
+    ) => Promise<string[]>,
 }
 
 // Declare new attribute of window.

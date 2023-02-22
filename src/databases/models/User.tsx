@@ -80,6 +80,25 @@ ipcMain.handle("database:createUser", async (
 
 });
 
+// Handle the event to create a new users in the database.
+ipcMain.handle("database:validateUserLogIn", async (
+    event, ...args: {username: string, password: string
+    }[]
+) => {
+
+    // Get user.
+    let queryUser = await User.findOne({
+        where: {
+            username: args[0].username
+        }
+    });
+
+    console.log(queryUser, queryUser.validPassword(args[0].password));
+
+    return queryUser.validPassword(args[0].password);
+
+});
+
 /** @typedef {object} - Group User variables for the model */
 const UserModel = {
     model: User,
