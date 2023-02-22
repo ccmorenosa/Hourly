@@ -6,9 +6,9 @@ import Footer from "./footer";
 
 /** @typedef {object} - Group layout components */
 const Layout = {
-  buttons: buttons,
-  Header: Header,
-  Footer: Footer,
+    buttons: buttons,
+    Header: Header,
+    Footer: Footer,
 };
 
 // Export layouts.

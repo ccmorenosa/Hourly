@@ -11,7 +11,7 @@ import Layout from ".";
  * Class representing the header of the workspace.
  * @extends {React.Component}
  */
-class LayoutHeader extends React.Component<{}, {}> {
+class Header extends React.Component<{}, {}> {
 
     /**
      * Create the component.
@@ -26,7 +26,7 @@ class LayoutHeader extends React.Component<{}, {}> {
 
     /**
      * Render the component.
-     * @returns {React.ReactNode} the LayoutHeader node.
+     * @returns {React.ReactNode} the Header node.
      */
     render(): React.ReactNode {
         /** @typedef {string} - Class for the main div. */
@@ -113,5 +113,5 @@ class LayoutHeader extends React.Component<{}, {}> {
 }
 
 
-// Export LayoutHeader.
-export default LayoutHeader;
+// Export Header.
+export default Header;
