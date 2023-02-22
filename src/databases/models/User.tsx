@@ -51,6 +51,7 @@ class User extends Model {
 
 // Handle the event to request the users in the database.
 ipcMain.handle("database:getUser", async (event, ...args) => {
+
     // Query the users.
     let users = await User.findAll({
         attributes: ["username"]
@@ -69,10 +70,25 @@ ipcMain.handle("database:getUser", async (event, ...args) => {
 
 });
 
+// Handle the event to request the users in the database.
+ipcMain.handle("database:getName", async (event, ...args: {username: string}[]
+) => {
+
+    // Query the user.
+    let queryUser = await User.findOne({
+        attributes: ["name"],
+        where: {
+            username: args[0].username
+        }
+    });
+
+    return queryUser.name;
+
+});
+
 // Handle the event to create a new users in the database.
 ipcMain.handle("database:createUser", async (
-    event, ...args: {name: string, username: string, password: string
-    }[]
+    event, ...args: {name: string, username: string, password: string}[]
 ) => {
 
     // Create the new user.
@@ -82,8 +98,7 @@ ipcMain.handle("database:createUser", async (
 
 // Handle the event to create a new users in the database.
 ipcMain.handle("database:validateUserLogIn", async (
-    event, ...args: {username: string, password: string
-    }[]
+    event, ...args: {username: string, password: string}[]
 ) => {
 
     // Get user.

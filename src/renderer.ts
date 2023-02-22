@@ -31,12 +31,13 @@ import './index.css';
 // Export interface IUserAPI.
 export interface IUserAPI {
     getUsers: () => Promise<string[]>,
+    getName: (username: string) => Promise<string>,
     createUser: (
         name: string, username: string, password: string
-    ) => Promise<string[]>,
+    ) => Promise<void>,
     validateUserLogIn: (
         username: string, password: string
-    ) => Promise<string[]>,
+    ) => Promise<boolean>,
 }
 
 // Declare new attribute of window.
