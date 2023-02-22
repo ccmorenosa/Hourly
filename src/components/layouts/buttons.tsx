@@ -110,7 +110,7 @@ interface IBaseButtonProps {
     type?: "submit" | "button" | "reset";
     size?: "sm" | "md" | "lg" | "";
     children?: any;
-    action?: () => any;
+    action?: (event?: any) => any;
 }
 
 interface IBaseButtonState {
@@ -307,7 +307,7 @@ interface IUserButtonProps {
     type?: "submit" | "button" | "reset";
     size?: "sm" | "md" | "lg" | "";
     children?: any;
-    action?: () => any;
+    action?: (event?: any) => any;
 }
 
 
@@ -350,6 +350,7 @@ class UserButton extends BaseButton<IUserButtonProps, IBaseButtonState> {
         // Return the node for user button.
         return (
             <button
+                id={this.props.user}
                 className="shrink-0"
                 onClick={this.props.action}
                 type={type}
@@ -370,7 +371,7 @@ interface ISidebarButtonProps {
     style?: string;
     type?: "submit" | "button" | "reset";
     children?: any;
-    action?: () => any;
+    action?: (event?: any) => any;
 }
 
 
