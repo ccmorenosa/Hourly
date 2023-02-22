@@ -4,7 +4,7 @@
  * It renders the header of the workspace.
  */
 import React from "react";
-import buttons from "../layouts/buttons";
+import Layout from "../layouts";
 
 
 /**
@@ -55,8 +55,8 @@ class WorkspaceHeader extends React.Component<{}, {}> {
                 <div className={itemsClass}>
 
                     <div className="my-auto grid grid-cols-2 gap-2">
-                    <div>
-                            <buttons.SimpleButton
+                        <div>
+                            <Layout.buttons.SimpleButton
                                 size="sm" style="option-4"
                             >
 
@@ -72,11 +72,11 @@ class WorkspaceHeader extends React.Component<{}, {}> {
                                     src="icons/plus.svg"
                                 />
 
-                            </buttons.SimpleButton>
+                            </Layout.buttons.SimpleButton>
                         </div>
 
                         <div>
-                            <buttons.SimpleButton
+                            <Layout.buttons.SimpleButton
                                 size="sm" style="option-1"
                             >
 
@@ -92,7 +92,7 @@ class WorkspaceHeader extends React.Component<{}, {}> {
                                     src="icons/folder-open.svg"
                                 />
 
-                            </buttons.SimpleButton>
+                            </Layout.buttons.SimpleButton>
                         </div>
                     </div>
 
@@ -101,7 +101,7 @@ class WorkspaceHeader extends React.Component<{}, {}> {
                 <div className={itemsClass + " ml-auto"}>
 
                     <div className="my-auto grid grid-cols-1">
-                        <buttons.DarkModeButton />
+                        <Layout.buttons.DarkModeButton />
                     </div>
 
                 </div>
