@@ -4,6 +4,7 @@
  * It renders the dashboard of the workspace.
  */
 import React from "react";
+import Layout from "../layouts";
 
 
 /**
@@ -36,7 +37,39 @@ class WorkspaceDashboard extends React.Component<{}, {}> {
         return (
             <div className={headerClass}>
 
-                <div className="w-52 bg-gray-300 dark:bg-gray-800">
+                <div className={
+                    "w-52 bg-gray-300 dark:bg-gray-800 flex flex-col"
+                }>
+
+                    <Layout.buttons.SidebarButton
+                        text="Home" icon="home"
+                    />
+
+                    <Layout.buttons.SidebarButton
+                        text="New entry" icon="stopwatch"
+                    />
+
+                    <Layout.buttons.SidebarButton
+                        text="History" icon="history"
+                    />
+
+                    <Layout.buttons.SidebarButton
+                        text="Print" icon="print"
+                    />
+
+                    <Layout.buttons.SidebarButton
+                        text="Settings" icon="setting"
+                    />
+
+                    <div className="mt-auto"></div>
+
+                    <Layout.buttons.SidebarButton
+                        text="Logout" icon="logout" style="danger"
+                    />
+
+                </div>
+
+                <div className="w-full p-2">
 
                 </div>
 
