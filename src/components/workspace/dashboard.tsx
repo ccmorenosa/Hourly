@@ -5,9 +5,14 @@
  */
 import React from "react";
 import Layout from "../layouts";
+import NewEntryView from "./NewEntry";
 
 interface IWorkspaceDashboardProps {
     handleLogOut: () => void;
+}
+
+interface IWorkspaceDashboardState {
+    view: string;
 }
 
 
@@ -16,7 +21,7 @@ interface IWorkspaceDashboardProps {
  * @extends {React.Component}
  */
 class WorkspaceDashboard extends
-React.Component<IWorkspaceDashboardProps, {}> {
+React.Component<IWorkspaceDashboardProps, IWorkspaceDashboardState> {
 
     /**
      * Create the component.
@@ -26,6 +31,11 @@ React.Component<IWorkspaceDashboardProps, {}> {
 
         // Create superior class.
         super(props);
+
+        // Set state.
+        this.state = {
+            view: "newEntry"
+        };
 
     }
 
@@ -39,6 +49,7 @@ React.Component<IWorkspaceDashboardProps, {}> {
             "h-full text-lg flex bg-gray-100 dark:bg-gray-900 "
         );
 
+        // Return the node.
         return (
             <div className={headerClass}>
 
@@ -75,8 +86,8 @@ React.Component<IWorkspaceDashboardProps, {}> {
 
                 </div>
 
-                <div className="w-full p-2">
-
+                <div className="w-full">
+                    <NewEntryView />
                 </div>
 
             </div>
