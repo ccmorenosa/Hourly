@@ -5,9 +5,8 @@
  */
 
 import React from "react";
-import WorkspaceHeader from "./header";
 import WorkspaceDashboard from "./dashboard";
-import WorkspaceFooter from "./footer";
+import Layout from "../layouts";
 
 
 /**
@@ -42,9 +41,9 @@ class Workspace extends React.Component<{}, {}> {
         return (
             <div className={viewClass}>
 
-                <WorkspaceHeader />
+                <Layout.Header />
                 <WorkspaceDashboard />
-                <WorkspaceFooter />
+                <Layout.Footer />
 
             </div>
         );

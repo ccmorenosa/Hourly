@@ -10,7 +10,7 @@ import React from "react";
  * Class representing the footer of the workspace.
  * @extends {React.Component}
  */
-class WorkspaceFooter extends React.Component<{}, {}> {
+class Footer extends React.Component<{}, {}> {
 
     /**
      * Create the component.
@@ -25,7 +25,7 @@ class WorkspaceFooter extends React.Component<{}, {}> {
 
     /**
      * Render the component.
-     * @returns {React.ReactNode} the WorkspaceFooter node.
+     * @returns {React.ReactNode} the Footer node.
      */
     render(): React.ReactNode {
         /** @typedef {string} - Class for the main div. */
@@ -56,5 +56,5 @@ class WorkspaceFooter extends React.Component<{}, {}> {
 }
 
 
-// Export WorkspaceFooter.
-export default WorkspaceFooter;
+// Export Footer.
+export default Footer;

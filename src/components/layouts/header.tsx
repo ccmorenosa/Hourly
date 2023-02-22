@@ -4,14 +4,14 @@
  * It renders the header of the workspace.
  */
 import React from "react";
-import Layout from "../layouts";
+import Layout from ".";
 
 
 /**
  * Class representing the header of the workspace.
  * @extends {React.Component}
  */
-class WorkspaceHeader extends React.Component<{}, {}> {
+class LayoutHeader extends React.Component<{}, {}> {
 
     /**
      * Create the component.
@@ -26,7 +26,7 @@ class WorkspaceHeader extends React.Component<{}, {}> {
 
     /**
      * Render the component.
-     * @returns {React.ReactNode} the WorkspaceHeader node.
+     * @returns {React.ReactNode} the LayoutHeader node.
      */
     render(): React.ReactNode {
         /** @typedef {string} - Class for the main div. */
@@ -113,5 +113,5 @@ class WorkspaceHeader extends React.Component<{}, {}> {
 }
 
 
-// Export WorkspaceHeader.
-export default WorkspaceHeader;
+// Export LayoutHeader.
+export default LayoutHeader;
