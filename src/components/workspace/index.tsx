@@ -13,7 +13,7 @@ interface IWorkSpaceProps {
     user: string;
 }
 
-interface IWorkSpaceSate {
+interface IWorkSpaceState {
     warningZ: string;
     opacity: string;
 }
@@ -23,7 +23,7 @@ interface IWorkSpaceSate {
  * Class representing the Workspace component.
  * @extends {React.Component}
  */
-class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceSate> {
+class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
 
     /**
      * Create the component.
