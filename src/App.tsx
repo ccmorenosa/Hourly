@@ -49,6 +49,7 @@ class App extends React.Component<{}, IAppState> {
     async handleLogIn(
         user:string, username: string, password: string
     ): Promise<boolean> {
+        // If the uasername/password is valid, login.
         if (await window.UserAPI.validateUserLogIn(username, password)) {
 
             this.setState({
@@ -86,7 +87,10 @@ class App extends React.Component<{}, IAppState> {
     render(): React.ReactNode {
 
         if (this.state.isLogged) {
-            return <Workspace user={this.state.user} />;
+            return <Workspace
+                handleLogOut={this.handleLogOut}
+                user={this.state.user}
+            />;
         }
         return <LogIn handleLogIn={this.handleLogIn} />;
 

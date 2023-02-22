@@ -6,18 +6,23 @@
 import React from "react";
 import Layout from "../layouts";
 
+interface IWorkspaceDashboardProps {
+    handleLogOut: () => void;
+}
+
 
 /**
  * Class representing the dashboard of the workspace.
  * @extends {React.Component}
  */
-class WorkspaceDashboard extends React.Component<{}, {}> {
+class WorkspaceDashboard extends
+React.Component<IWorkspaceDashboardProps, {}> {
 
     /**
      * Create the component.
      * @param props {object} - Properties of the component.
      */
-    constructor(props: {}) {
+    constructor(props: IWorkspaceDashboardProps) {
 
         // Create superior class.
         super(props);
@@ -65,6 +70,7 @@ class WorkspaceDashboard extends React.Component<{}, {}> {
 
                     <Layout.buttons.SidebarButton
                         text="Logout" icon="logout" style="danger"
+                        action={this.props.handleLogOut}
                     />
 
                 </div>
