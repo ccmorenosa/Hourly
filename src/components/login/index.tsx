@@ -6,16 +6,20 @@
 
 import React from "react";
 import WelcomeBox from "./Welcome";
+import LogInForm from "./LogInForm";
 import NewUserForm from "./NewUserForm";
 import Layout from "../layouts";
 
 interface ILogInProps {
-    handleLogIn: (user:string, username: string, password: string) => boolean;
+    handleLogIn: (
+        user:string, username: string, password: string
+    ) => Promise<boolean>;
 }
 
 interface ILogInState {
     content: string;
     welcome: React.ReactNode;
+    logInForm?: React.ReactNode;
     newUserForm: React.ReactNode;
 }
 
@@ -37,6 +41,7 @@ class LogIn extends React.Component<ILogInProps, ILogInState> {
 
         // Bind actions.
         this.welcomeBox = this.welcomeBox.bind(this);
+        this.logInForm = this.logInForm.bind(this);
         this.newUserForm = this.newUserForm.bind(this);
 
         // Set state.
@@ -44,6 +49,7 @@ class LogIn extends React.Component<ILogInProps, ILogInState> {
             content: "welcome",
             welcome: (
                 <WelcomeBox
+                    logInForm={this.logInForm}
                     newUserBtn={
                         < Layout.buttons.SimpleButton
                             text="New Profile" style="option-1"
@@ -74,6 +80,30 @@ class LogIn extends React.Component<ILogInProps, ILogInState> {
 
         this.setState({
             content: "welcome"
+        });
+
+        this.render();
+
+    }
+
+    /**
+     * Set content view to login form.
+     */
+    logInForm(user: string, username: string): void {
+
+        this.setState({
+            content: "logInForm",
+            logInForm: <LogInForm
+                handleLogIn={this.props.handleLogIn}
+                user={user}
+                username={username}
+                cancelBtn={
+                    <Layout.buttons.SimpleButton
+                        text="Cancel" style="danger"
+                        action={this.welcomeBox}
+                    />
+                }
+            />
         });
 
         this.render();
@@ -118,8 +148,12 @@ class LogIn extends React.Component<ILogInProps, ILogInState> {
                 content = this.state.welcome;
                 break;
 
-                default:
+            case "newUserForm":
                 content = this.state.newUserForm;
+                break;
+
+            case "logInForm":
+                content = this.state.logInForm;
                 break;
         }
 

@@ -8,6 +8,7 @@ import React from "react";
 import Layout from "../layouts";
 
 interface IWelcomeBoxProps {
+    logInForm: (user: string, username: string) => void;
     newUserBtn: React.ReactNode;
 }
 interface IWelcomeBoxState {
@@ -31,6 +32,10 @@ React.Component<IWelcomeBoxProps, IWelcomeBoxState> {
         // Create superior class.
         super(props);
 
+        // Bind actions.
+        this.getUsers = this.getUsers.bind(this);
+        this.selectUser = this.selectUser.bind(this);
+
         // Set state.
         this.state = {
             users: []
@@ -47,6 +52,23 @@ React.Component<IWelcomeBoxProps, IWelcomeBoxState> {
     async getUsers() {
         let res = await window.UserAPI.getUsers();
         this.setState({users: res});
+    }
+
+    /**
+     * Action when an user is selected.
+     */
+    async selectUser(event: any) {
+        /** @typedef {string} - Username in the button. */
+        let username: string = event.currentTarget.id;
+
+        /** @typedef {string} - Name of the user selected. */
+        let name: string = (
+            await window.UserAPI.getName(username)
+        );
+
+        // Change to LogInForm.
+        this.props.logInForm(name, username);
+
     }
 
     /**
@@ -81,6 +103,7 @@ React.Component<IWelcomeBoxProps, IWelcomeBoxState> {
                 <Layout.buttons.UserButton
                     user={users[i]}
                     style="option-1"
+                    action={this.selectUser}
                     key={i}
                 />
             );

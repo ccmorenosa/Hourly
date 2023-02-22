@@ -9,7 +9,9 @@ import Layout from "../layouts";
 
 /** Create the state interface */
 interface INewUserFormProps {
-    handleLogIn: (user:string, username: string, password: string) => boolean;
+    handleLogIn: (
+        user:string, username: string, password: string
+    ) => Promise<boolean>;
     cancelBtn: React.ReactNode;
 };
 
@@ -89,7 +91,7 @@ React.Component<INewUserFormProps, INewUserFormState> {
        * Create new user.
        * @param event {any} - Event when submitting the form.
        */
-      createNewUser(event: any): void {
+      async createNewUser(event: any): Promise<void> {
           event.preventDefault();
 
           // Block buttons.
@@ -153,7 +155,7 @@ React.Component<INewUserFormProps, INewUserFormState> {
               // Update users.
               this.getUsers();
 
-              this.props.handleLogIn(
+              await this.props.handleLogIn(
                   values.name,
                   values.username,
                   values.password

@@ -46,8 +46,10 @@ class App extends React.Component<{}, IAppState> {
      * @param username {string} - Username.
      * @param password {string} - Password to ve validated.
      */
-    handleLogIn(user:string, username: string, password: string): boolean {
-        if (window.UserAPI.validateUserLogIn(username, password)) {
+    async handleLogIn(
+        user:string, username: string, password: string
+    ): Promise<boolean> {
+        if (await window.UserAPI.validateUserLogIn(username, password)) {
 
             this.setState({
                 isLogged: true,
