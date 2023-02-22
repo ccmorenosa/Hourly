@@ -14,7 +14,9 @@ interface ILogInProps {
 }
 
 interface ILogInState {
-    content: React.ReactNode;
+    content: string;
+    welcome: React.ReactNode;
+    newUserForm: React.ReactNode;
 }
 
 
@@ -39,12 +41,24 @@ class LogIn extends React.Component<ILogInProps, ILogInState> {
 
         // Set state.
         this.state = {
-            content: (
+            content: "welcome",
+            welcome: (
                 <WelcomeBox
                     newUserBtn={
                         < Layout.buttons.SimpleButton
                             text="New Profile" style="option-1"
                             action={this.newUserForm}
+                        />
+                    }
+                />
+            ),
+            newUserForm: (
+                <NewUserForm
+                    handleLogIn={this.props.handleLogIn}
+                    cancelBtn={
+                        <Layout.buttons.SimpleButton
+                            text="Cancel" style="danger"
+                            action={this.welcomeBox}
                         />
                     }
                 />
@@ -59,16 +73,7 @@ class LogIn extends React.Component<ILogInProps, ILogInState> {
     welcomeBox(): void {
 
         this.setState({
-            content: (
-                <WelcomeBox
-                    newUserBtn={
-                        < Layout.buttons.SimpleButton
-                            text="New Profile" style="option-1"
-                            action={this.newUserForm}
-                        />
-                    }
-                />
-            )
+            content: "welcome"
         });
 
         this.render();
@@ -81,18 +86,10 @@ class LogIn extends React.Component<ILogInProps, ILogInState> {
     newUserForm(): void {
 
         this.setState({
-            content: (
-                <NewUserForm
-                    handleLogIn={this.props.handleLogIn}
-                    cancelBtn={
-                        <Layout.buttons.SimpleButton
-                            text="Cancel" style="danger"
-                            action={this.welcomeBox}
-                        />
-                    }
-                />
-            )
+            content: "newUserForm"
         });
+
+        this.render();
 
     }
 
@@ -114,7 +111,17 @@ class LogIn extends React.Component<ILogInProps, ILogInState> {
         );
 
         /** @typedef {React.ReactNode} - Box in the login view. */
-        let content = this.state.content;
+        let content: React.ReactNode;
+
+        switch (this.state.content) {
+            case "welcome":
+                content = this.state.welcome;
+                break;
+
+                default:
+                content = this.state.newUserForm;
+                break;
+        }
 
         // Return the node.
         return (
