@@ -5,9 +5,11 @@
 import * as ReactDOM from 'react-dom/client';
 import React from "react";
 import LogIn from "./components/login";
+import Workspace from './components/workspace';
 
 interface IAppState {
     isLogged: boolean;
+    user: string;
 }
 
 
@@ -33,19 +35,33 @@ class App extends React.Component<{}, IAppState> {
         // Set state.
         this.state = {
             isLogged: false,
+            user: "",
         }
 
     }
 
     /**
      * Validate that the login info is correct.
-     * @param username {string} - Given username.
+     * @param user {string} - The name of the user.
+     * @param username {string} - Username.
      * @param password {string} - Password to ve validated.
      */
-    handleLogIn(username: string, password: string) {
-        this.setState({
-            isLogged: true
-        });
+    handleLogIn(user:string, username: string, password: string): boolean {
+        if (window.UserAPI.validateUserLogIn(username, password)) {
+
+            this.setState({
+                isLogged: true,
+                user: user
+            });
+
+            this.render();
+
+            return true;
+
+        }
+
+        return false;
+
     }
 
     /**
@@ -53,8 +69,11 @@ class App extends React.Component<{}, IAppState> {
      */
     handleLogOut() {
         this.setState({
-            isLogged: false
+            isLogged: false,
+            user: "",
         });
+
+        this.render();
     }
 
     /**
@@ -64,7 +83,10 @@ class App extends React.Component<{}, IAppState> {
      */
     render(): React.ReactNode {
 
-        return <LogIn />;
+        if (this.state.isLogged) {
+            return <Workspace user={this.state.user} />;
+        }
+        return <LogIn handleLogIn={this.handleLogIn} />;
 
     }
 }

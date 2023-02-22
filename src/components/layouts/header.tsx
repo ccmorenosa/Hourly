@@ -6,18 +6,22 @@
 import React from "react";
 import Layout from ".";
 
+interface IHeaderProps {
+    user: string;
+}
+
 
 /**
  * Class representing the header of the workspace.
  * @extends {React.Component}
  */
-class Header extends React.Component<{}, {}> {
+class Header extends React.Component<IHeaderProps, {}> {
 
     /**
      * Create the component.
      * @param props {object} - Properties of the component.
      */
-    constructor(props: {}) {
+    constructor(props: IHeaderProps) {
 
         // Create superior class.
         super(props);
@@ -46,7 +50,7 @@ class Header extends React.Component<{}, {}> {
                 <div className={itemsClass}>
 
                     <div className="my-auto">
-                        Welcome | No project currently opened
+                        Welcome {this.props.user} | No project currently opened
 
                     </div>
 

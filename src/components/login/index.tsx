@@ -9,6 +9,10 @@ import WelcomeBox from "./Welcome";
 import NewUserForm from "./NewUserForm";
 import Layout from "../layouts";
 
+interface ILogInProps {
+    handleLogIn: (user:string, username: string, password: string) => boolean;
+}
+
 interface ILogInState {
     content: React.ReactNode;
 }
@@ -18,13 +22,13 @@ interface ILogInState {
  * Class representing the LogIn component.
  * @extends {React.Component}
  */
-class LogIn extends React.Component<{}, ILogInState> {
+class LogIn extends React.Component<ILogInProps, ILogInState> {
 
     /**
      * Create the component.
      * @param props {object} - Properties of the component.
      */
-    constructor(props: {}) {
+    constructor(props: ILogInProps) {
 
         // Create superior class.
         super(props);
@@ -67,6 +71,8 @@ class LogIn extends React.Component<{}, ILogInState> {
             )
         });
 
+        this.render();
+
     }
 
     /**
@@ -77,6 +83,7 @@ class LogIn extends React.Component<{}, ILogInState> {
         this.setState({
             content: (
                 <NewUserForm
+                    handleLogIn={this.props.handleLogIn}
                     cancelBtn={
                         <Layout.buttons.SimpleButton
                             text="Cancel" style="danger"

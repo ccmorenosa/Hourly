@@ -8,18 +8,22 @@ import React from "react";
 import WorkspaceDashboard from "./dashboard";
 import Layout from "../layouts";
 
+interface IWorkSpaceProps {
+    user: string;
+}
+
 
 /**
  * Class representing the Workspace component.
  * @extends {React.Component}
  */
-class Workspace extends React.Component<{}, {}> {
+class Workspace extends React.Component<IWorkSpaceProps, {}> {
 
     /**
      * Create the component.
      * @param props {object} - Properties of the component.
      */
-    constructor(props: {}) {
+    constructor(props: IWorkSpaceProps) {
 
         // Create superior class.
         super(props);
@@ -41,7 +45,7 @@ class Workspace extends React.Component<{}, {}> {
         return (
             <div className={viewClass}>
 
-                <Layout.Header />
+                <Layout.Header user={this.props.user}/>
                 <WorkspaceDashboard />
                 <Layout.Footer />
 
