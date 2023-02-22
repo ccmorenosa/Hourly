@@ -291,6 +291,7 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
                     />
                     <WorkspaceDashboard
                         handleLogOut={this.handleLogOut}
+                        setStatus={this.setStatus}
                     />
                     <Layout.Footer
                         username={this.props.username}

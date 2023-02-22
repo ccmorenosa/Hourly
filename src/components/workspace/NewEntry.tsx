@@ -8,6 +8,7 @@ import Layout from "../layouts";
 import moment from 'moment';
 
 interface INewEntryViewProps {
+    setStatus: (newStatus: string) => void;
 }
 
 interface INewEntryViewState {
@@ -85,6 +86,9 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
      */
     initStopwatch() {
 
+        // Update status.
+        this.props.setStatus("Working...");
+
         // Get actual time.
         let actual: number = Date.now();
 
@@ -119,6 +123,10 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
      */
     pauseStopwatch() {
 
+        // Update status.
+        this.props.setStatus("Paused...");
+
+        // Clear interval that updates the stopwatch.
         clearInterval(this.state.update);
 
         // Update state.
@@ -135,6 +143,10 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
      */
     stopStopwatch() {
 
+        // Update status.
+        this.props.setStatus("Ready");
+
+        // Clear interval that updates the stopwatch.
         clearInterval(this.state.update);
 
         // Update state.
