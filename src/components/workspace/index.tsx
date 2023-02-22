@@ -18,6 +18,7 @@ interface IWorkSpaceState {
     warningZ: string;
     opacity: string;
     project?: string;
+    status?: string;
     modal?: React.ReactNode;
 }
 
@@ -49,6 +50,7 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
         this.state = {
             warningZ: "z-0",
             opacity: "opacity-100",
+            status: "Ready",
             modal: <></>,
         };
 
@@ -61,6 +63,7 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
        this.setState({
             warningZ: "z-[2]",
             opacity: "opacity-80",
+            status: "Logging out",
             modal: (
                 <Layout.modals.DangerModal
                     title="Caution"
@@ -87,6 +90,7 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
        this.setState({
             warningZ: "z-[2]",
             opacity: "opacity-80",
+            status: "Creating a new project",
             modal: (
                 <Layout.modals.FormModal
                     title="Create new project"
@@ -134,6 +138,7 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
         this.setState({
             warningZ: "z-[2]",
             opacity: "opacity-80",
+            status: "Opening project",
             modal: (
                 <Layout.modals.FormModal
                     title="Open project"
@@ -180,6 +185,7 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
        this.setState({
             warningZ: "z-0",
             opacity: "opacity-100",
+            status: "Ready",
             modal: <></>,
         });
 
@@ -271,7 +277,11 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
                     <WorkspaceDashboard
                         handleLogOut={this.handleLogOut}
                     />
-                    <Layout.Footer />
+                    <Layout.Footer
+                        username={this.props.username}
+                        project={this.state.project}
+                        status={this.state.status}
+                    />
 
                 </div>
 
