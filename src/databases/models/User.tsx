@@ -93,8 +93,7 @@ ipcMain.handle("database:validateUserLogIn", async (
         }
     });
 
-    console.log(queryUser, queryUser.validPassword(args[0].password));
-
+    // Return validation.
     return queryUser.validPassword(args[0].password);
 
 });
