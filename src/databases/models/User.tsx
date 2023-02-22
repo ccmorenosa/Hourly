@@ -70,7 +70,7 @@ ipcMain.handle("database:user:getUser", async (event, ...args) => {
 
 });
 
-// Handle the event to request the users in the database.
+// Handle the event to request the user name according to username.
 ipcMain.handle("database:user:getName", async (
     event, ...args: {username: string}[]
 ) => {
@@ -97,7 +97,7 @@ ipcMain.handle("database:user:createUser", async (
 
 });
 
-// Handle the event to create a new users in the database.
+// Handle the event to create validate username/password.
 ipcMain.handle("database:user:validateUserLogIn", async (
     event, ...args: {username: string, password: string}[]
 ) => {
