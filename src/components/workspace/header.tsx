@@ -55,18 +55,20 @@ class WorkspaceHeader extends React.Component<{}, {}> {
                 <div className={itemsClass}>
 
                     <div className="my-auto grid grid-cols-2 gap-2">
-                        <div>
+                    <div>
                             <buttons.SimpleButton
                                 size="sm" style="option-4"
                             >
 
+                                New project
+
                                 <img
-                                    className="w-6 hidden dark:inline"
+                                    className="w-4 mx-2 hidden dark:inline"
                                     src="icons/plus-dark.svg"
                                 />
 
                                 <img
-                                    className="w-6 dark:hidden inline"
+                                    className="w-4 mx-2 dark:hidden inline"
                                     src="icons/plus.svg"
                                 />
 
@@ -78,13 +80,15 @@ class WorkspaceHeader extends React.Component<{}, {}> {
                                 size="sm" style="option-1"
                             >
 
+                                Open project
+
                                 <img
-                                    className="w-6 hidden dark:inline"
+                                    className="w-4 mx-2 hidden dark:inline"
                                     src="icons/folder-open-dark.svg"
                                 />
 
                                 <img
-                                    className="w-6 dark:hidden inline"
+                                    className="w-4 mx-2 dark:hidden inline"
                                     src="icons/folder-open.svg"
                                 />
 
