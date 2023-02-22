@@ -50,7 +50,7 @@ class User extends Model {
 }
 
 // Handle the event to request the users in the database.
-ipcMain.handle("database:user:getUser", async (event, ...args) => {
+ipcMain.handle("database:user:getUsers", async (event, ...args) => {
 
     // Query the users.
     let users = await User.findAll({
@@ -62,8 +62,7 @@ ipcMain.handle("database:user:getUser", async (event, ...args) => {
 
     // Store the usernames.
     for (let i = 0; i < users.length; i++) {
-        usernames.push(users[i].username)
-
+        usernames.push(users[i].username);
     }
 
     return usernames;
