@@ -43,6 +43,8 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
         this.handleNewProject = this.handleNewProject.bind(this);
         this.handleOpenProject = this.handleOpenProject.bind(this);
         this.closeModal = this.closeModal.bind(this);
+        this.setProject = this.setProject.bind(this);
+        this.setStatus = this.setStatus.bind(this);
         this.createProject = this.createProject.bind(this);
         this.getProjects = this.getProjects.bind(this);
 
@@ -201,6 +203,19 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
         this.setState({
             project: proj,
         });
+    }
+
+    /**
+     * Set the status.
+     * @param newNtatus {string} - Status.
+     */
+    setStatus(newNtatus: string) {
+        // Set project.
+        this.setState({
+            status: newNtatus,
+        });
+
+        this.render();
     }
 
     /**
