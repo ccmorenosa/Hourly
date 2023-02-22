@@ -16,6 +16,7 @@ interface IWorkSpaceProps {
 interface IWorkSpaceState {
     warningZ: string;
     opacity: string;
+    modal?: React.ReactNode;
 }
 
 
@@ -36,13 +37,14 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
 
         // Bind actions.
         this.handleLogOut = this.handleLogOut.bind(this);
-        this.cancelLogOut = this.cancelLogOut.bind(this);
+        this.closeModal = this.closeModal.bind(this);
 
         // Set state.
         this.state = {
             warningZ: "z-0",
             opacity: "opacity-100",
-        }
+            modal: <></>,
+        };
 
     }
 
@@ -53,18 +55,27 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
        this.setState({
             warningZ: "z-[2]",
             opacity: "opacity-80",
+            modal: (
+                <Layout.modals.DangerModal
+                    title="Caution"
+                    message={"Are you sure you want to logout."}
+                    cancel={this.closeModal}
+                    proceed={this.props.handleLogOut}
+                />
+            ),
         });
 
         this.render();
     }
 
     /**
-     * Cancel logout.
+     * Close the modal box.
      */
-    cancelLogOut() {
+    closeModal() {
        this.setState({
             warningZ: "z-0",
             opacity: "opacity-100",
+            modal: <></>,
         });
 
         this.render();
@@ -76,22 +87,16 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
      */
     render(): React.ReactNode {
         /** @typedef {string} - Class for the main div. */
-        let viewClass = (
+        let viewClass: string = (
             "h-screen w-screen flex flex-col justify-center " +
             "text-gray-1000 dark:text-celeste-100 z-[1] fixed " +
             this.state.opacity
         );
 
         /** @typedef {string} - Class for the warning main div. */
-        let warningClass = (
+        let warningClass: string = (
             this.state.warningZ + " h-screen w-screen flex fixed inset-0 " +
             "text-gray-1000 dark:text-celeste-100 font-bold "
-        );
-
-        /** @typedef {string} - Class for the warning main div. */
-        let warningBoxClass = (
-            "bg-gray-200 m-auto rounded-2xl py-5 px-16 " +
-            "flex flex-col text-center"
         );
 
         // Return the node.
@@ -111,47 +116,7 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
 
                 <div className={warningClass}>
 
-                    <div className={warningBoxClass}>
-                        <div className={
-                                "my-5 mx-auto p-2 bg-vermilion-500 " +
-                                "text-lg rounded-lg text-gray-0"
-                            }>
-                            <img
-                                className="w-7 inline mx-2"
-                                src="icons/exclamation-octagon-dark.svg"
-                            />
-                            Warning
-                            <img
-                                className="w-7 inline mx-2"
-                                src="icons/exclamation-octagon-dark.svg"
-                            />
-                        </div>
-
-                        <div className={
-                            "my-5 dark:text-gray-1000 text-celeste-100"
-                        }>
-                            Are you sure you want to logout.
-                        </div>
-
-
-
-                        <div className="grid grid-cols-2 gap-10 mt-10">
-
-                            <Layout.buttons.SimpleButton
-                                text="cancel" style="option-4"
-                                action={this.cancelLogOut}
-                                />
-                            <Layout.buttons.SimpleButton
-                                text="Ok!" style="danger"
-                                action={this.props.handleLogOut}
-                            />
-
-                        </div>
-
-
-                    </div>
-
-                    <div className="w-7"></div>
+                    {this.state.modal}
 
                 </div>
 
