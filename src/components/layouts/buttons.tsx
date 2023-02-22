@@ -268,7 +268,7 @@ BaseButton<IBaseButtonProps, IBaseButtonState> {
         // Get image class from the size.
         switch (this.props.size) {
             case "sm":
-                btnClass += "p-1 rounded-lg text-sm";
+                btnClass += "p-1 px-3 rounded-lg text-sm";
                 break;
 
             case "md":

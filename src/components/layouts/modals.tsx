@@ -45,25 +45,25 @@ class ModalBase extends React.Component<IModalBaseProps, IModalBaseState> {
         // Set button style.
         switch (this.props.style) {
             case "info":
-                titleStyle += "bg-celeste-500 text-lg text-gray-1000";
+                titleStyle += "bg-celeste-500 text-lg px-5 text-gray-1000";
                 cancelStyle = "danger";
                 proceedStyle = "success";
                 break;
 
             case "warning":
-                titleStyle += "bg-honey-500 text-lg text-gray-1000";
+                titleStyle += "bg-honey-500 text-lg px-5 text-gray-1000";
                 cancelStyle = "danger";
                 proceedStyle = "success";
                 break;
 
             case "danger":
-                titleStyle += "bg-vermilion-500 text-lg text-gray-0";
+                titleStyle += "bg-vermilion-500 text-lg px-5 text-gray-0";
                 cancelStyle = "option-4";
                 proceedStyle = "danger";
                 break;
 
             default:
-                titleStyle += "bg-celeste-500 text-lg text-gray-1000";
+                titleStyle += "bg-celeste-500 text-lg px-5 text-gray-1000";
                 cancelStyle = "danger";
                 proceedStyle = "success";
                 break;

@@ -44,9 +44,7 @@ class Header extends React.Component<IHeaderProps, {}> {
         );
 
         /** @typedef {string} - Class for the main div. */
-        let itemsClass = (
-            "h-full flex flex-col px-5"
-        );
+        let itemsClass = "h-full flex flex-col px-2";
 
         /** @typedef {string} - Project name. */
         let activeProject: string = (
@@ -61,15 +59,20 @@ class Header extends React.Component<IHeaderProps, {}> {
                 <div className={itemsClass}>
 
                     <div className="my-auto">
-                        Welcome {this.props.user} | {activeProject}
+                        <span className="md:hidden lg:inline">
+                            Welcome {this.props.user} | {activeProject}
+                        </span>
+                        <span className="md:inline lg:hidden">
+                            {this.props.project}
+                        </span>
                     </div>
 
                 </div>
 
                 <div className={itemsClass}>
 
-                    <div className="my-auto grid grid-cols-2 gap-2">
-                        <div>
+                    <div className="my-auto grid grid-cols-2 gap-1">
+                        <div className="col-auto">
                             <Layout.buttons.SimpleButton
                                 size="sm" style="option-4"
                                 action={this.props.newProject}
@@ -78,19 +81,19 @@ class Header extends React.Component<IHeaderProps, {}> {
                                 New project
 
                                 <img
-                                    className="w-4 mx-2 hidden dark:inline"
+                                    className="w-4 ml-2 hidden dark:inline"
                                     src="icons/plus-dark.svg"
                                 />
 
                                 <img
-                                    className="w-4 mx-2 dark:hidden inline"
+                                    className="w-4 ml-2 dark:hidden inline"
                                     src="icons/plus.svg"
                                 />
 
                             </Layout.buttons.SimpleButton>
                         </div>
 
-                        <div>
+                        <div className="col-auto">
                             <Layout.buttons.SimpleButton
                                 size="sm" style="option-1"
                                 action={this.props.openProject}
