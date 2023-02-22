@@ -1,7 +1,7 @@
 // See the Electron documentation for details on how to use preload scripts:
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 
-const { contextBridge, ipcRenderer } = require('electron')
+import { contextBridge, ipcRenderer } from 'electron';
 
 //  Set the User API to communicate with the database.
 contextBridge.exposeInMainWorld('UserAPI', {
@@ -20,5 +20,34 @@ contextBridge.exposeInMainWorld('UserAPI', {
     ) => ipcRenderer.invoke(
         "database:user:validateUserLogIn",
         {username: username, password: password}
-    )
-})
+    ),
+});
+
+//  Set the Project API to communicate with the database.
+contextBridge.exposeInMainWorld('ProjectAPI', {
+    getProjects: (
+        username: string
+    ) => ipcRenderer.invoke("database:project:getProjects", {username: username}),
+    createProject: (
+        username: string, name: string
+    ) => ipcRenderer.invoke(
+        "database:project:createProject", {username: username, name: name}
+    ),
+});
+
+//  Set the Entries API to communicate with the database.
+contextBridge.exposeInMainWorld('EntriesAPI', {
+    getEntries: (
+        project: string
+    ) => ipcRenderer.invoke("database:entries:getEntries", {project: project}),
+    createEntry: (
+        initTime: string, finalTime: string, elapsedTime: string,
+        task: string, name: string
+    ) => ipcRenderer.invoke(
+        "database:entries:createEntry",
+        {
+            initTime: initTime, finalTime: finalTime,
+            elapsedTime: elapsedTime, task: task, name: name
+        }
+    ),
+});

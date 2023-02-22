@@ -6,7 +6,8 @@ const { Sequelize } = require('sequelize');
 import { app } from 'electron';
 import path from "path";
 import UserModel from './models/User';
-
+import ProjectModel from './models/Project';
+import EntriesModel from './models/Entries';
 
 // Database variable.
 const sequelize = new Sequelize({
@@ -26,6 +27,40 @@ UserModel.model.init(
         hooks: UserModel.hooks
     }
 );
+
+// Init project model.
+ProjectModel.model.init(
+    ProjectModel.Attr,
+    {
+        sequelize,
+        modelName: 'Project'
+    }
+);
+
+// Associate Users to Projects with One-To-Many model.
+UserModel.model.hasMany(ProjectModel.model, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+    foreignKey: 'username',
+});
+ProjectModel.model.belongsTo(UserModel.model);
+
+// Init entries model.
+EntriesModel.model.init(
+    EntriesModel.Attr,
+    {
+        sequelize,
+        modelName: 'Entries'
+    }
+);
+
+// Associate Users to Projects with One-To-Many model.
+ProjectModel.model.hasMany(EntriesModel.model, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+    foreignKey: 'name',
+});
+EntriesModel.model.belongsTo(ProjectModel.model);
 
 // Synchronize the tables.
 (async () => {

@@ -40,10 +40,27 @@ export interface IUserAPI {
     ) => Promise<boolean>,
 }
 
+// Export interface IProjectAPI.
+export interface IProjectAPI {
+    getProjects: (username: string) => Promise<string[]>,
+    createProject: (username: string, name: string) => Promise<void>,
+}
+
+// Export interface IEntriesAPI.
+export interface IEntriesAPI {
+    getEntries: (project: string) => Promise<{}[]>,
+    createEntry: (
+        initTime: string, finalTime: string, elapsedTime: string,
+        task: string, name: string
+    ) => Promise<void>,
+}
+
 // Declare new attribute of window.
 declare global {
     interface Window {
         UserAPI: IUserAPI
+        ProjectAPI: IProjectAPI
+        EntriesAPI: IEntriesAPI
     }
 }
 
