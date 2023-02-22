@@ -16,7 +16,9 @@ interface IModalBaseProps {
 }
 
 interface IModalBaseState {
-    style: string;
+    titleStyle: string;
+    cancelStyle: string;
+    proceedStyle: string;
 }
 
 
@@ -36,30 +38,42 @@ class ModalBase extends React.Component<IModalBaseProps, IModalBaseState> {
         super(props);
 
         /** @typedef {string} - Title color and style. */
-        let style: string = "my-5 mx-auto p-2 rounded-lg ";
+        let titleStyle: string = "my-5 mx-auto p-2 rounded-lg ";
+        let cancelStyle: string;
+        let proceedStyle: string;
 
         // Set button style.
         switch (this.props.style) {
             case "info":
-                style += "bg-celeste-500 text-lg text-gray-1000";
+                titleStyle += "bg-celeste-500 text-lg text-gray-1000";
+                cancelStyle = "danger";
+                proceedStyle = "success";
                 break;
 
             case "warning":
-                style += "bg-honey-500 text-lg text-gray-1000";
+                titleStyle += "bg-honey-500 text-lg text-gray-1000";
+                cancelStyle = "danger";
+                proceedStyle = "success";
                 break;
 
             case "danger":
-                style += "bg-vermilion-500 text-lg text-gray-0";
+                titleStyle += "bg-vermilion-500 text-lg text-gray-0";
+                cancelStyle = "option-4";
+                proceedStyle = "danger";
                 break;
 
             default:
-                style += "bg-celeste-500 text-lg text-gray-1000";
+                titleStyle += "bg-celeste-500 text-lg text-gray-1000";
+                cancelStyle = "danger";
+                proceedStyle = "success";
                 break;
         }
 
         // Set state.
         this.state = {
-            style: style
+            titleStyle: titleStyle,
+            cancelStyle: cancelStyle,
+            proceedStyle: proceedStyle,
         };
 
     }
@@ -71,28 +85,28 @@ class ModalBase extends React.Component<IModalBaseProps, IModalBaseState> {
     render(): React.ReactNode {
         /** @typedef {string} - Class for the modal div. */
         let modalClass: string = (
-            "bg-gray-200 m-auto rounded-2xl py-5 px-16 " +
-            "flex flex-col text-center"
+            "bg-gray-300 dark:bg-gray-900 m-auto rounded-2xl py-5 px-16 " +
+            "border-4 border-gray-500 dark:border-0 flex flex-col text-center"
         );
 
         return (
             <div className={modalClass}>
 
-                <div className={this.state.style}>
+                <div className={this.state.titleStyle}>
                     {this.props.title}
                 </div>
 
-                <div className="my-5 dark:text-gray-1000 text-celeste-100">
+                <div className="my-5">
                     {this.props.message}
                 </div>
 
                 <div className="grid grid-cols-2 gap-10 mt-10">
                     <Layout.buttons.SimpleButton
-                        text="cancel" style="option-4"
+                        text="cancel" style={this.state.cancelStyle}
                         action={this.props.cancel}
                     />
                     <Layout.buttons.SimpleButton
-                        text="Ok!" style="danger"
+                        text="Ok!" style={this.state.proceedStyle}
                         action={this.props.proceed}
                     />
                 </div>
