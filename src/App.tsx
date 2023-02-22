@@ -28,6 +28,7 @@ class App extends React.Component<{}, IAppState> {
 
         // Bind actions.
         this.handleLogIn = this.handleLogIn.bind(this);
+        this.handleLogOut = this.handleLogOut.bind(this);
 
         // Set state.
         this.state = {
@@ -44,6 +45,15 @@ class App extends React.Component<{}, IAppState> {
     handleLogIn(username: string, password: string) {
         this.setState({
             isLogged: true
+        });
+    }
+
+    /**
+     * Logout.
+     */
+    handleLogOut() {
+        this.setState({
+            isLogged: false
         });
     }
 
