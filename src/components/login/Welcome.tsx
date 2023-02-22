@@ -65,7 +65,7 @@ React.Component<IWelcomeBoxProps, IWelcomeBoxState> {
             "overflow-x-scroll flex scrollbar scrollbar-thumb-celeste-900 "+
             "scrollbar-track-celeste-100 scrollbar-h-2 " +
             "scrollbar-thumb-rounded-full scrollbar-track-rounded-full " +
-            "mt-10 p-3 justify-center pl-20"
+            "mt-10 p-3 justify-center scroll-pl-20"
         );
 
         /** @type {string[]} - Get the user from the state. */
