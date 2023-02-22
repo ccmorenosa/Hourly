@@ -112,8 +112,7 @@ interface IInfoModalProps {
     proceed: (event: any) => any;
 }
 
-interface IInfoModalState {
-}
+interface IInfoModalState { }
 
 
 /**
@@ -170,8 +169,7 @@ interface IWarningModalProps {
     proceed: (event: any) => any;
 }
 
-interface IWarningModalState {
-}
+interface IWarningModalState { }
 
 
 /**
@@ -232,8 +230,7 @@ interface IDangerModalProps {
     proceed: (event: any) => any;
 }
 
-interface IDangerModalState {
-}
+interface IDangerModalState { }
 
 
 /**
@@ -287,12 +284,139 @@ React.Component<IDangerModalProps, IDangerModalState> {
 }
 
 
+interface IFormModalProps {
+    style?: "info" | "warning" | "danger";
+    title: string | React.ReactNode;
+    inputs: string[] | React.ReactNode[];
+    invalid?: string;
+    cancel: (event: any) => any;
+    proceed: (event: any) => Promise<boolean>;
+}
+
+interface IFormModalState {
+    values: {}
+}
+
+
+/**
+ * Class representing a modal for form modal.
+ * @extends {React.Component}
+ */
+class FormModal<PROPS extends IFormModalProps, STATE extends IFormModalState>
+extends React.Component<PROPS, STATE> {
+
+    /**
+     * Create the component.
+     * @param props {object} - Properties of the component.
+     */
+    constructor(props: PROPS) {
+
+        // Create superior class.
+        super(props);
+
+        // Bind actions.
+        this.submit = this.submit.bind(this);
+
+        // Set state.
+        this.state = {
+            values: {}
+         } as STATE;
+
+    }
+
+    /**
+     * Create new user.
+     * @param event {any} - Event when submitting the form.
+     */
+    async submit(event: any): Promise<void> {
+        event.preventDefault();
+
+        // Block buttons.
+        $("#form-modal button").prop('disabled', true);
+
+        // Collect values.
+        let values = $("#form-modal .form-input").map((i, inputTag) => {
+
+            return {
+                name: (inputTag.getAttribute("name") as string),
+                value: (inputTag as HTMLInputElement).value,
+            };
+
+        });
+
+        // Check if the form is valid.
+        if (
+            ! await this.props.proceed(values)
+        ) {
+
+            $("#invalid").removeClass("hidden");
+
+        } else {
+
+            $("#invalid").addClass("hidden");
+
+        }
+
+        // Activate buttons.
+        $("#form-modal button").prop('disabled', false);
+
+        this.render();
+
+    }
+
+    /**
+     * Render the component.
+     * @returns {React.ReactNode} the modal node.
+     */
+    render(): React.ReactNode {
+
+        /** @typedef {string} - Warning class. */
+        let warnClass: string = (
+            "hidden text-vermilion-500 dark:text-vermilion-300 ml-1 font-bold"
+        );
+
+        /** @typedef {React.ReactNode} - Form base to show in the modal. */
+        let form: React.ReactNode = (<>
+            <form
+                id="form-modal"
+                name="form-modal"
+                className="w-full lg:text-sm md:text-xs"
+                onSubmit={this.submit}
+            >
+
+                <span
+                    id="invalid"
+                    className={warnClass}
+                >
+                    {this.props.invalid}
+                </span>
+                {this.props.inputs}
+
+            </form>
+        </>);
+
+        return (
+            <ModalBase
+                style={this.props.style}
+                title={this.props.title}
+                message={form}
+                cancel={this.props.cancel}
+                proceed={this.submit}
+            />
+        );
+
+    }
+
+}
+
+
 /** @typedef {object} - Group modals components */
 const modals = {
     ModalBase: ModalBase,
     InfoModal: InfoModal,
     WarningModal: WarningModal,
     DangerModal: DangerModal,
+    FormModal: FormModal,
 };
 
 // Export ModalBase.
