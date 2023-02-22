@@ -5,20 +5,20 @@ const { contextBridge, ipcRenderer } = require('electron')
 
 //  Set the User API to communicate with the database.
 contextBridge.exposeInMainWorld('UserAPI', {
-    getUsers: () => ipcRenderer.invoke("database:getUser"),
+    getUsers: () => ipcRenderer.invoke("database:user:getUser"),
     getName: (
         username: string
-    ) => ipcRenderer.invoke("database:getName", {username: username}),
+    ) => ipcRenderer.invoke("database:user:getName", {username: username}),
     createUser: (
         name: string, username: string, password: string
     ) => ipcRenderer.invoke(
-        "database:createUser",
+        "database:user:createUser",
         {name: name, username: username, password: password}
     ),
     validateUserLogIn: (
         username: string, password: string
     ) => ipcRenderer.invoke(
-        "database:validateUserLogIn",
+        "database:user:validateUserLogIn",
         {username: username, password: password}
     )
 })

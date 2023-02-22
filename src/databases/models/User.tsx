@@ -1,5 +1,5 @@
 /**
- * User model containing username and password.
+ * User model containing name username and password.
  */
 
 const { DataTypes, Model } = require('sequelize');
@@ -50,7 +50,7 @@ class User extends Model {
 }
 
 // Handle the event to request the users in the database.
-ipcMain.handle("database:getUser", async (event, ...args) => {
+ipcMain.handle("database:user:getUser", async (event, ...args) => {
 
     // Query the users.
     let users = await User.findAll({
@@ -71,7 +71,8 @@ ipcMain.handle("database:getUser", async (event, ...args) => {
 });
 
 // Handle the event to request the users in the database.
-ipcMain.handle("database:getName", async (event, ...args: {username: string}[]
+ipcMain.handle("database:user:getName", async (
+    event, ...args: {username: string}[]
 ) => {
 
     // Query the user.
@@ -87,7 +88,7 @@ ipcMain.handle("database:getName", async (event, ...args: {username: string}[]
 });
 
 // Handle the event to create a new users in the database.
-ipcMain.handle("database:createUser", async (
+ipcMain.handle("database:user:createUser", async (
     event, ...args: {name: string, username: string, password: string}[]
 ) => {
 
@@ -97,7 +98,7 @@ ipcMain.handle("database:createUser", async (
 });
 
 // Handle the event to create a new users in the database.
-ipcMain.handle("database:validateUserLogIn", async (
+ipcMain.handle("database:user:validateUserLogIn", async (
     event, ...args: {username: string, password: string}[]
 ) => {
 
