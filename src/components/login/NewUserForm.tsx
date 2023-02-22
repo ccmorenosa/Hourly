@@ -85,88 +85,88 @@ React.Component<INewUserFormProps, INewUserFormState> {
             } as Pick<INewUserFormState, keyof INewUserFormState>
         );
 
-      }
+    }
 
-      /**
-       * Create new user.
-       * @param event {any} - Event when submitting the form.
-       */
-      async createNewUser(event: any): Promise<void> {
-          event.preventDefault();
+    /**
+     * Create new user.
+     * @param event {any} - Event when submitting the form.
+     */
+    async createNewUser(event: any): Promise<void> {
+        event.preventDefault();
 
-          // Block buttons.
-          $("button").prop('disabled', true);
+        // Block buttons.
+        $("button").prop('disabled', true);
 
-          /** @typedef {INewUserFormState} - Value of the input tags. */
-          let values: INewUserFormState = this.state;
+        /** @typedef {INewUserFormState} - Value of the input tags. */
+        let values: INewUserFormState = this.state;
 
-          // Define vals regex.
-          const usernameRegex = new RegExp("^[A-Za-z][\\w]{7,29}$");
-          const passwordRegex = new RegExp(
-              "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&_])[\\w@$!%*?&]{8,}$"
-          );
+        // Define vals regex.
+        const usernameRegex = new RegExp("^[A-Za-z][\\w]{7,29}$");
+        const passwordRegex = new RegExp(
+            "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&_])[\\w@$!%*?&]{8,}$"
+        );
 
-          /** @typedef {boolean} - Flag indicating state of the form */
-          let is_valid: boolean = true;
+        /** @typedef {boolean} - Flag indicating state of the form */
+        let is_valid: boolean = true;
 
-          // Check username regex.
-          if (! usernameRegex.test(values.username)) {
-              is_valid = false;
-              $("#invalid-username").removeClass("hidden");
+        // Check username regex.
+        if (! usernameRegex.test(values.username)) {
+            is_valid = false;
+            $("#invalid-username").removeClass("hidden");
+        } else {
+            $("#invalid-username").addClass("hidden");
+
+            // Check if username exists.
+            if (values.users.includes(values.username)) {
+                is_valid = false;
+                $("#existing-username").removeClass("hidden");
             } else {
-                $("#invalid-username").addClass("hidden");
+                $("#existing-username").addClass("hidden");
+            }
 
-                // Check if username exists.
-                if (values.users.includes(values.username)) {
-                    is_valid = false;
-                    $("#existing-username").removeClass("hidden");
-                } else {
-                    $("#existing-username").addClass("hidden");
-                }
+        }
 
-          }
+        // Check password regex.
+        if (! passwordRegex.test(values.password)) {
+            is_valid = false;
+            $("#invalid-password").removeClass("hidden");
+        } else {
+            $("#invalid-password").addClass("hidden");
+        }
 
-          // Check password regex.
-          if (! passwordRegex.test(values.password)) {
-              is_valid = false;
-              $("#invalid-password").removeClass("hidden");
-          } else {
-              $("#invalid-password").addClass("hidden");
-          }
+        // Check password regex.
+        if (! (values.password === values.confirmPassword)) {
+            is_valid = false;
+            $("#invalid-confirm-password").removeClass("hidden");
+        } else {
+            $("#invalid-confirm-password").addClass("hidden");
+        }
 
-          // Check password regex.
-          if (! (values.password === values.confirmPassword)) {
-              is_valid = false;
-              $("#invalid-confirm-password").removeClass("hidden");
-          } else {
-              $("#invalid-confirm-password").addClass("hidden");
-          }
+        // Check if the form is valid.
+        if (is_valid) {
 
-          // Check if the form is valid.
-          if (is_valid) {
+            // Create the new user in the database.
+            window.UserAPI.createUser(
+                values.name,
+                values.username,
+                values.password
+            );
 
-              // Create the new user in the database.
-              window.UserAPI.createUser(
-                  values.name,
-                  values.username,
-                  values.password
-              );
+            // Update users.
+            this.getUsers();
 
-              // Update users.
-              this.getUsers();
+            await this.props.handleLogIn(
+                values.name,
+                values.username,
+                values.password
+            );
 
-              await this.props.handleLogIn(
-                  values.name,
-                  values.username,
-                  values.password
-              );
+        }
 
-          }
+        // Activate buttons.
+        $("button").prop('disabled', false);
 
-          // Activate buttons.
-          $("button").prop('disabled', false);
-
-      }
+    }
 
     /**
      * Render the component.
