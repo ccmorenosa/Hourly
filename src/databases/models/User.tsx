@@ -3,6 +3,7 @@
  */
 
 const { DataTypes, Model } = require('sequelize');
+import { ipcMain } from "electron";
 import bcrypt from "bcrypt";
 
 // Define attributes for User model.
@@ -47,6 +48,37 @@ class User extends Model {
         return bcrypt.compareSync(password, this.password);
     }
 }
+
+// Handle the event to request the users in the database.
+ipcMain.handle("database:getUser", async (event, ...args) => {
+    // Query the users.
+    let users = await User.findAll({
+        attributes: ["username"]
+    });
+
+    /** @type {string[]} - List of usernames. */
+    let usernames: string[] = [];
+
+    // Store the usernames.
+    for (let i = 0; i < users.length; i++) {
+        usernames.push(users[i].username)
+
+    }
+
+    return usernames;
+
+});
+
+// Handle the event to create a new users in the database.
+ipcMain.handle("database:createUser", async (
+    event, ...args: {name: string, username: string, password: string
+    }[]
+) => {
+
+    // Create the new user.
+    User.create(args[0]);
+
+});
 
 /** @typedef {object} - Group User variables for the model */
 const UserModel = {

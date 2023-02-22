@@ -3,7 +3,7 @@
  */
 
 const { Sequelize } = require('sequelize');
-import { app, ipcMain } from 'electron';
+import { app } from 'electron';
 import path from "path";
 import UserModel from './models/User';
 
@@ -31,33 +31,3 @@ UserModel.model.init(
 (async () => {
     await sequelize.sync({ alter: true })
 })().catch((e) => { console.log(e); });
-
-// Handle the event to request the users in the database.
-ipcMain.handle("database:getUser", async (event, ...args) => {
-    // Query the users.
-    let users = await UserModel.model.findAll({
-        attributes: ["username"]
-    });
-
-    /** @type {string[]} - List of usernames. */
-    let usernames: string[] = [];
-
-    // Store the usernames.
-    for (let i = 0; i < users.length; i++) {
-        usernames.push(users[i].username)
-
-    }
-
-    return usernames;
-});
-
-// Handle the event to create a new users in the database.
-ipcMain.handle("database:createUser", async (
-    event, ...args: {name: string, username: string, password: string
-    }[]
-) => {
-
-    // Create the new user.
-    UserModel.model.create(args[0]);
-
-});
