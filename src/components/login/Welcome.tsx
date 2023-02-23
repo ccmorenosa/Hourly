@@ -84,7 +84,7 @@ React.Component<IWelcomeBoxProps, IWelcomeBoxState> {
 
         /** @typedef {string} - Class for the users band div. */
         let usersBandClass = (
-            "overflow-x-scroll flex scrollbar scrollbar-thumb-celeste-900 "+
+            "overflow-x-scroll flex scrollbar scrollbar-thumb-celeste-900 " +
             "scrollbar-track-celeste-100 scrollbar-h-2 " +
             "scrollbar-thumb-rounded-full scrollbar-track-rounded-full " +
             "mt-10 p-3 justify-center scroll-pl-20"

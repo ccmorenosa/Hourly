@@ -273,7 +273,7 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
 
         /** @typedef {string} - Class for the input tags. */
         let inputClass = (
-            "w-full form-input px-4 py-3 rounded-full select-none " +
+            "form-input px-4 py-3 rounded-full select-none " +
             "bg-gray-100 dark:bg-gray-300 text-gray-1000 disabled"
         );
 
@@ -292,7 +292,7 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
 
                 <div className="w-full h-full grid grid-cols-2 gap-5">
 
-                    <div className="w-full h-full flex flex-col">
+                    <div className="flex flex-col">
 
                         <div className="mb-5 text-2xl font-bold" >
                             New Entry
