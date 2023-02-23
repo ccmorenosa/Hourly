@@ -64,14 +64,14 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
     render(): React.ReactNode {
         /** @typedef {string} - Class for the textarea. */
         let textAreaClass: string = (
-            "h-full text-gray-1000 dark:text-gray-1000 rounded-xl p-3 " +
+            "h-4/6 text-gray-1000 dark:text-gray-1000 rounded-xl p-3 " +
             "bg-gray-100 border-4 border-gray-500"
         );
 
         /** @typedef {string} - Class for the entries of the table. */
         let tableClass: string = (
-            "md:h-[26.5rem] lg:h-[27rem] justify-center mb-auto  scrollbar " +
-            "overflow-y-scroll overflow-x-scroll scrollbar-w-2 " +
+            "lg:h-60 md:h-44 lg:w-[70rem] md:w-[40rem] justify-center " +
+            "overflow-y-scroll overflow-x-scroll scrollbar-w-2 scrollbar " +
             "scrollbar-h-2 scrollbar-thumb-celeste-900 " +
             "scrollbar-track-celeste-100 scrollbar-thumb-rounded-full " +
             "scrollbar-track-rounded-full grid grid-cols-1 "
@@ -79,7 +79,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
 
         /** @typedef {string} - Class for the rows of the table. */
         let rowClass: string = (
-            "grid grid-cols-12 border-b w-[48rem] text-center"
+            "grid grid-cols-12 border-b min-w-[50rem] text-center"
         );
 
         /** @typedef {string[]} - List of projects for the active user. */
@@ -107,8 +107,17 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
                         id={entry.id.toString()}
                         key={i}
                     >
-                        <div className="p-2 border-x">
-                            {entry.id}
+                        <div className="p-2 border-r">
+                            <input
+                                className="mr-2"
+                                type="checkbox"
+                                name="entry"
+                                value={entry.id.toString()}
+                                id={"checkbox-" + entry.id.toString()}
+                            />
+                            <div className="inline">
+                                {entry.id}
+                            </div>
                         </div>
                         <div className="p-2 col-span-3 border-r">
                             {initTime}
@@ -161,12 +170,31 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
         return (
             <div className="h-full p-4">
 
-                <div className="h-full grid grid-cols-2 gap-5">
+                <div className="grid grid-rows-2 gap-5">
 
-                    <div className="flex flex-col">
+                    <form
+                        id="entries-table"
+                        className="flex flex-col"
+                    >
 
-                        <div className="mb-5 text-2xl font-bold">
-                            History
+                        <div className="mb-5 flex">
+                            <div
+                                className="text-2xl font-bold mr-auto">
+                                    History
+                            </div>
+
+                            <Layout.buttons.SimpleButton
+                                size="md"
+                                style="danger"
+                            >
+
+                                <img
+                                    className="w-6 inline"
+                                    src="icons/minus-circle-dark.svg"
+                                />
+
+                            </Layout.buttons.SimpleButton>
+
                         </div>
 
                         <div id="table-rows" className={tableClass}>
@@ -174,7 +202,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
                             <div
                                 className={rowClass}
                             >
-                                <div className="p-2 border-x">
+                                <div className="p-2 border-r">
                                     ID
                                 </div>
                                 <div className="p-2 col-span-3 border-r">
@@ -198,15 +226,17 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
 
                         </div>
 
-                    </div>
+                    </form>
 
-                    <form className="flex flex-col">
+                    <form
+                        id="tasks-edit"
+                        className="flex flex-col"
+                    >
                         <div className="mb-5 flex">
                             <div className="mr-auto">Tasks:</div>
 
                             <Layout.buttons.SimpleButton
                                 size="md"
-                                type="submit"
                                 style="option-1"
                                 disabled
                             >
@@ -232,13 +262,8 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
                             >
 
                                 <img
-                                    className="w-6 hidden dark:inline"
+                                    className="w-6 inline"
                                     src="icons/times-circle-dark.svg"
-                                />
-
-                                <img
-                                    className="w-6 dark:hidden inline"
-                                    src="icons/times-circle.svg"
                                 />
 
                             </Layout.buttons.SimpleButton>
@@ -250,7 +275,6 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
                             value={this.state.tasks}
                             name="tasks"
                             id="tasks"
-                            cols={80}
                             disabled
                         />
                     </form>

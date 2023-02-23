@@ -94,13 +94,17 @@ React.Component<IWorkspaceDashboardProps, IWorkspaceDashboardState> {
      */
     render(): React.ReactNode {
         /** @typedef {string} - Class for the main div. */
-        let headerClass = (
-            "h-full text-lg flex bg-gray-100 dark:bg-gray-900 "
+        let dashClass = (
+            "h-full text-lg flex bg-gray-100 dark:bg-gray-900 " +
+            "scrollbar overflow-x-scroll scrollbar-h-2 " +
+            "overflow-y-scroll scrollbar-w-2 " +
+            "scrollbar-thumb-celeste-900 scrollbar-track-rounded-full " +
+            "scrollbar-track-celeste-100 scrollbar-thumb-rounded-full "
         );
 
         // Return the node.
         return (
-            <div className={headerClass}>
+            <div className={dashClass}>
 
                 <div className={
                     "w-52 bg-gray-300 dark:bg-gray-800 flex flex-col"
@@ -145,7 +149,7 @@ React.Component<IWorkspaceDashboardProps, IWorkspaceDashboardState> {
 
                 </div>
 
-                <div className="w-full">
+                <div className="w-auto">
 
                     {this.state[this.state.view]}
 
