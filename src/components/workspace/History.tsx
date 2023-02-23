@@ -68,13 +68,18 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
             "bg-gray-100 border-4 border-gray-500"
         );
 
-        /** @typedef {string} - Class for the entries table. */
+        /** @typedef {string} - Class for the entries of the table. */
         let tableClass: string = (
-            "md:h-[26.5rem] lg:h-[27rem] justify-center my-auto " +
-            "overflow-y-scroll overflow-x-scroll scrollbar-w-2" +
-            "scrollbar-h-2 scrollbar scrollbar-thumb-celeste-900 " +
+            "md:h-[26.5rem] lg:h-[27rem] justify-center mb-auto  scrollbar " +
+            "overflow-y-scroll overflow-x-scroll scrollbar-w-2 " +
+            "scrollbar-h-2 scrollbar-thumb-celeste-900 " +
             "scrollbar-track-celeste-100 scrollbar-thumb-rounded-full " +
-            "scrollbar-track-rounded-full "
+            "scrollbar-track-rounded-full grid grid-cols-1 "
+        );
+
+        /** @typedef {string} - Class for the rows of the table. */
+        let rowClass: string = (
+            "grid grid-cols-12 border-b w-[48rem] text-center"
         );
 
         /** @typedef {string[]} - List of projects for the active user. */
@@ -98,15 +103,55 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
 
                 return (
                     <div
-                        className="flex border-b w-[36rem] text-center"
+                        className={rowClass}
+                        id={entry.id.toString()}
                         key={i}
                     >
-                        <div className="px-2 border-r w-12">
+                        <div className="p-2 border-x">
                             {entry.id}
                         </div>
-                        <div className="px-2 border-r">{initTime}</div>
-                        <div className="px-2 border-r">{finalTime}</div>
-                        <div className="px-2">{elapsedTime}</div>
+                        <div className="p-2 col-span-3 border-r">
+                            {initTime}
+                        </div>
+                        <div className="p-2 col-span-3 border-r">
+                            {finalTime}
+                        </div>
+                        <div className="p-2 col-span-3 border-r">
+                            {elapsedTime}
+                        </div>
+                        <div className="p-2 border-r">
+                            <Layout.buttons.SimpleButton
+                                size="sm"
+                                type="submit"
+                                style="option-1"
+                            >
+
+                                <img
+                                    className="w-6 hidden dark:inline"
+                                    src="icons/eye-dark.svg"
+                                />
+
+                                <img
+                                    className="w-6 dark:hidden inline"
+                                    src="icons/eye.svg"
+                                />
+
+                            </Layout.buttons.SimpleButton>
+                        </div>
+                        <div className="p-2">
+                            <Layout.buttons.SimpleButton
+                                size="sm"
+                                type="submit"
+                                style="option-6"
+                            >
+
+                                <img
+                                    className="w-6 disabled:hidden inline"
+                                    src="icons/edit.svg"
+                                />
+
+                            </Layout.buttons.SimpleButton>
+                        </div>
                     </div>
                 );
             }
@@ -124,7 +169,30 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
                             History
                         </div>
 
-                        <div className={tableClass}>
+                        <div id="table-rows" className={tableClass}>
+
+                            <div
+                                className={rowClass}
+                            >
+                                <div className="p-2 border-x">
+                                    ID
+                                </div>
+                                <div className="p-2 col-span-3 border-r">
+                                    Initial Time
+                                </div>
+                                <div className="p-2 col-span-3 border-r">
+                                    Final Time
+                                </div>
+                                <div className="p-2 col-span-3 border-r">
+                                    Elapsed Time
+                                </div>
+                                <div className="p-2 border-r">
+                                    Tasks
+                                </div>
+                                <div className="p-2">
+                                    Edit
+                                </div>
+                            </div>
 
                             {entriesRows}
 
@@ -132,8 +200,50 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
 
                     </div>
 
-                    <div className="flex flex-col">
-                        <div className="mb-5">Tasks: </div>
+                    <form className="flex flex-col">
+                        <div className="mb-5 flex">
+                            <div className="mr-auto">Tasks:</div>
+
+                            <Layout.buttons.SimpleButton
+                                size="md"
+                                type="submit"
+                                style="option-1"
+                                disabled
+                            >
+
+                                <img
+                                    className="w-6 hidden dark:inline"
+                                    src="icons/save-dark.svg"
+                                />
+
+                                <img
+                                    className="w-6 dark:hidden inline"
+                                    src="icons/save.svg"
+                                />
+
+                            </Layout.buttons.SimpleButton>
+
+                            <div className="w-3"></div>
+
+                            <Layout.buttons.SimpleButton
+                                size="md"
+                                style="danger"
+                                disabled
+                            >
+
+                                <img
+                                    className="w-6 hidden dark:inline"
+                                    src="icons/times-circle-dark.svg"
+                                />
+
+                                <img
+                                    className="w-6 dark:hidden inline"
+                                    src="icons/times-circle.svg"
+                                />
+
+                            </Layout.buttons.SimpleButton>
+
+                        </div>
 
                         <textarea
                             className={textAreaClass}
@@ -143,7 +253,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
                             cols={80}
                             disabled
                         />
-                    </div>
+                    </form>
 
                 </div>
 
