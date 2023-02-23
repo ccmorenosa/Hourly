@@ -9,6 +9,9 @@ import NewEntryView from "./NewEntry";
 
 interface IWorkspaceDashboardProps {
     handleLogOut: () => void;
+    handleNewEntry: (
+        initTime: string, finalTime: string, elapsedTime: string, task: string
+    ) => void;
     setStatus: (newStatus: string) => void;
 }
 
@@ -88,7 +91,10 @@ React.Component<IWorkspaceDashboardProps, IWorkspaceDashboardState> {
                 </div>
 
                 <div className="w-full">
-                    <NewEntryView setStatus={this.props.setStatus}/>
+                    <NewEntryView
+                        setStatus={this.props.setStatus}
+                        handleNewEntry={this.props.handleNewEntry}
+                    />
                 </div>
 
             </div>

@@ -42,6 +42,7 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
         this.handleLogOut = this.handleLogOut.bind(this);
         this.handleNewProject = this.handleNewProject.bind(this);
         this.handleOpenProject = this.handleOpenProject.bind(this);
+        this.handleNewEntry = this.handleNewEntry.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.setProject = this.setProject.bind(this);
         this.setStatus = this.setStatus.bind(this);
@@ -181,6 +182,32 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
     }
 
     /**
+     * Create a new entry if arguments are ok.
+     * @param initTime {string} - Initial time of the entry.
+     * @param finalTime {string} - Final time of the entry.
+     * @param elapsedTime {string} - Elapsed time of the entry.
+     * @param task {string} - Task done on the entry.
+     */
+    handleNewEntry(
+        initTime: string, finalTime: string, elapsedTime: string, task: string
+    ) {
+
+        // Check that a project is selected.
+        if (!this.state.project) {
+
+            this.handleOpenProject();
+            return;
+
+        }
+
+        // Create new entry.
+        window.EntriesAPI.createEntry(
+            initTime, finalTime, elapsedTime, task, this.state.project
+        );
+
+    }
+
+    /**
      * Close the modal box.
      */
     closeModal() {
@@ -291,6 +318,7 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
                     />
                     <WorkspaceDashboard
                         handleLogOut={this.handleLogOut}
+                        handleNewEntry={this.handleNewEntry}
                         setStatus={this.setStatus}
                     />
                     <Layout.Footer

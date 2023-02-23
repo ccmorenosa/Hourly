@@ -8,6 +8,9 @@ import Layout from "../layouts";
 import moment from 'moment';
 
 interface INewEntryViewProps {
+    handleNewEntry: (
+        initTime: string, finalTime: string, elapsedTime: string, task: string
+    ) => void;
     setStatus: (newStatus: string) => void;
 }
 
@@ -17,6 +20,7 @@ interface INewEntryViewState {
     finalTime: string;
     elapsedTime: string;
     update: number;
+    tasks: string;
 }
 
 
@@ -42,6 +46,8 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
         this.pauseStopwatch = this.pauseStopwatch.bind(this);
         this.stopStopwatch = this.stopStopwatch.bind(this);
         this.updateStopwatch = this.updateStopwatch.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.validate = this.validate.bind(this);
 
         // Set state.
         this.state = {
@@ -50,6 +56,7 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
             finalTime: "",
             elapsedTime: "",
             update: -1,
+            tasks: "",
         };
 
     }
@@ -64,7 +71,7 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
         let diff: number = finalTime - this.state.initDateNum;
 
         return (
-            "HH:mm:ss.SSS".replace(
+            "HH:mm:ss".replace(
                 "HH",
                 Math.floor(diff / 1000 / 60 / 60).toString().padStart(2, '0')
             ).replace(
@@ -73,9 +80,6 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
             ).replace(
                 "ss",
                 Math.floor(diff / 1000 % 60).toString().padStart(2, '0')
-            ).replace(
-                "SSS",
-                Math.floor(diff % 1000).toString().padStart(3, '0')
             )
         );
 
@@ -96,7 +100,7 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
 
             // Update state.
             this.setState({
-                finalTime: moment().format("DD/MM/YYYY HH:mm:ss.SSS"),
+                finalTime: moment().format("YYYY-MM-DD HH:mm:ss"),
                 elapsedTime: this.getElapsedTime(actual),
                 // Set the interval to update the stopwatch.
                 update: window.setInterval(this.updateStopwatch, 10),
@@ -107,8 +111,8 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
             // Update state.
             this.setState({
                 initDateNum: actual,
-                initTime: moment().format("DD/MM/YYYY HH:mm:ss.SSS"),
-                finalTime: moment().format("DD/MM/YYYY HH:mm:ss.SSS"),
+                initTime: moment().format("YYYY-MM-DD HH:mm:ss"),
+                finalTime: moment().format("YYYY-MM-DD HH:mm:ss"),
                 elapsedTime: "00:00:00",
                 // Set the interval to update the stopwatch.
                 update: window.setInterval(this.updateStopwatch, 10),
@@ -172,9 +176,82 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
 
         // Update state.
         this.setState({
-            finalTime: moment().format("DD/MM/YYYY HH:mm:ss.SSS"),
+            finalTime: moment().format("YYYY-MM-DD HH:mm:ss"),
             elapsedTime: this.getElapsedTime(actual),
         });
+
+    }
+
+    /**
+     * Update value when changing task input.
+     * @param event {any} - Event when changing an input.
+     */
+    handleInputChange(event: any) {
+
+        // Update state with the new value.
+        this.setState({
+            tasks: event.target.value
+        });
+
+    }
+
+    /**
+     * Validate the inputs.
+     * @param event {any} - Event when submitting the form.
+     */
+    validate(event: any): void {
+        event.preventDefault();
+
+        // Block buttons.
+        $("#new-entry-form button").prop('disabled', true);
+
+        /** @typedef {INewEntryViewState} - Value of the input tags. */
+        let values: INewEntryViewState = this.state;
+
+        // Define vals regex.
+        const taskRegex = new RegExp("^[\\n ]+$");
+
+        /** @typedef {boolean} - Flag indicating state of the form */
+        let is_valid: boolean = true;
+
+        // Check username regex.
+        if (taskRegex.test(values.tasks)) {
+            is_valid = false;
+            $("#empty-tasks").removeClass("hidden");
+        } else {
+            $("#empty-tasks").addClass("hidden");
+        }
+
+        // Check username regex.
+        if (values.initDateNum == -1) {
+            is_valid = false;
+            $("#empty-time").removeClass("hidden");
+        } else {
+            $("#empty-time").addClass("hidden");
+        }
+
+        // Check username regex.
+        if (values.update != -1) {
+            is_valid = false;
+            $("#not-stopped").removeClass("hidden");
+        } else {
+            $("#not-stopped").addClass("hidden");
+        }
+
+        // Check if the form is valid.
+        if (is_valid) {
+
+            this.props.handleNewEntry(
+                values.initTime,
+                values.finalTime,
+                "2000-01-01 " + values.elapsedTime,
+                values.tasks
+            )
+
+        }
+
+        // Activate buttons.
+        $("#new-entry-form button").prop('disabled', false);
 
     }
 
@@ -200,8 +277,17 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
             "bg-gray-100 dark:bg-gray-300 text-gray-1000 disabled"
         );
 
+        /** @typedef {string} - Warning class. */
+        let warnClass: string = (
+            "hidden text-vermilion-500 dark:text-vermilion-300 ml-1 font-bold"
+        );
+
         return (
-            <form className="w-full h-full p-4">
+            <form
+                id="new-entry-form"
+                className="w-full h-full p-4"
+                onSubmit={this.validate}
+            >
 
                 <div className="w-full h-full grid grid-cols-2 gap-5">
 
@@ -269,6 +355,7 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
 
                             <Layout.buttons.SimpleButton
                                 size="sm" style="option-1"
+                                type="submit"
                             >
 
                                 <img
@@ -329,6 +416,37 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
                                 />
                             </div>
 
+                            <div className="mt-auto">
+
+                                <span
+                                    id="empty-time"
+                                    className={warnClass}
+                                >
+                                    Stopwatch haven't being started.
+                                </span>
+                            </div>
+
+                            <div>
+
+                                <span
+                                    id="not-stopped"
+                                    className={warnClass}
+                                >
+                                    Stopwatch still running.
+                                </span>
+                            </div>
+
+                            <div>
+
+                                <span
+                                    id="empty-tasks"
+                                    className={warnClass}
+                                >
+                                    Tasks is empty.
+                                </span>
+
+                            </div>
+
                         </div>
 
                     </div>
@@ -338,8 +456,13 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
 
                         <textarea
                             className={textAreaClass}
-                            name="tasks" id="tasks" cols={80}
+                            value={this.state.tasks}
+                            onChange={this.handleInputChange}
+                            name="tasks"
+                            id="tasks"
+                            cols={80}
                             placeholder="Describe what did you did."
+                            required
                         />
                     </div>
 
