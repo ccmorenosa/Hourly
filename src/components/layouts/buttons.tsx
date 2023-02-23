@@ -106,6 +106,7 @@ React.Component<IDarkModeButtonProps, IDarkModeButtonState> {
 
 interface IBaseButtonProps {
     text?: string;
+    disabled?: boolean;
     style?: string;
     type?: "submit" | "button" | "reset";
     size?: "sm" | "md" | "lg" | "";
@@ -154,7 +155,7 @@ React.Component<PROPS, STATE> {
                     "bg-celeste-300 dark:bg-celeste-700 " +
                     "enabled:hover:bg-celeste-200 " +
                     "enabled:hover:dark:bg-celeste-600 " +
-                    "disabled:bg-celeste-0 disabled:dark:bg-celeste-500 "
+                    "disabled:bg-celeste-100 disabled:dark:bg-celeste-100 "
                 );
                 break;
 
@@ -220,7 +221,9 @@ React.Component<PROPS, STATE> {
             <button
                 className={this.state.btnStyle}
                 onClick={this.props.action}
-                type={this.props.type}>
+                type={this.props.type}
+                disabled={this.props.disabled}
+            >
                 {this.props.text}
                 {this.props.children}
             </button>
@@ -289,7 +292,9 @@ BaseButton<IBaseButtonProps, IBaseButtonState> {
             <button
                 className={btnClass}
                 onClick={this.props.action}
-                type={type}>
+                type={type}
+                disabled={this.props.disabled}
+            >
                 {this.props.text}
                 {this.props.children}
             </button>
@@ -302,6 +307,7 @@ BaseButton<IBaseButtonProps, IBaseButtonState> {
 
 interface IUserButtonProps {
     text?: string;
+    disabled?: boolean;
     style?: string;
     user?: string;
     type?: "submit" | "button" | "reset";
@@ -354,6 +360,7 @@ class UserButton extends BaseButton<IUserButtonProps, IBaseButtonState> {
                 className="shrink-0"
                 onClick={this.props.action}
                 type={type}
+                disabled={this.props.disabled}
             >
                 <img className={btnClass} src="icons/user.svg" />
                 {this.props.user}
@@ -367,6 +374,7 @@ class UserButton extends BaseButton<IUserButtonProps, IBaseButtonState> {
 
 interface ISidebarButtonProps {
     text?: string;
+    disabled?: boolean;
     id?: string;
     icon?: string;
     style?: string;
@@ -445,7 +453,9 @@ React.Component<ISidebarButtonProps, IBaseButtonState> {
                 id={this.props.id}
                 className={btnClass}
                 onClick={this.props.action}
-                type={this.props.type}>
+                type={this.props.type}
+                disabled={this.props.disabled}
+            >
 
                 <img
                     className="w-6 mr-2 hidden dark:inline"
