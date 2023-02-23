@@ -235,12 +235,12 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
 
     /**
      * Set the status.
-     * @param newNtatus {string} - Status.
+     * @param newStatus {string} - Status.
      */
-    setStatus(newNtatus: string) {
+    setStatus(newStatus: string) {
         // Set project.
         this.setState({
-            status: newNtatus,
+            status: newStatus,
         });
 
         this.render();
