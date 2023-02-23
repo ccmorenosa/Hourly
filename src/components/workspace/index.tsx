@@ -48,6 +48,7 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
         this.setStatus = this.setStatus.bind(this);
         this.createProject = this.createProject.bind(this);
         this.getProjects = this.getProjects.bind(this);
+        this.getEntries = this.getEntries.bind(this);
 
         // Set state.
         this.state = {
@@ -134,7 +135,7 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
         let projects: string[] = await this.getProjects();
 
         // Get options.
-        let projectsOptions: React.ReactNode = projects.map((proj, i) => {
+        let projectsOptions: React.ReactNode[] = projects.map((proj, i) => {
             return <option value={proj} key={i}>{proj}</option>
         });
 
@@ -285,6 +286,13 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
     }
 
     /**
+     * Get list of entries.
+     */
+    async getEntries(): Promise<IEntriesDB[]> {
+        return await window.EntriesAPI.getEntries(this.state.project);
+    }
+
+    /**
      * Render the component.
      * @returns {React.ReactNode} the Workspace node.
      */
@@ -315,12 +323,16 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
                         project={this.state.project}
                         newProject={this.handleNewProject}
                         openProject={this.handleOpenProject}
-                    />
+                        />
+
                     <WorkspaceDashboard
                         handleLogOut={this.handleLogOut}
                         handleNewEntry={this.handleNewEntry}
+                        getEntries={this.getEntries}
                         setStatus={this.setStatus}
+                        project={this.state.project}
                     />
+
                     <Layout.Footer
                         username={this.props.username}
                         project={this.state.project}

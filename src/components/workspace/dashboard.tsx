@@ -6,13 +6,16 @@
 import React from "react";
 import Layout from "../layouts";
 import NewEntryView from "./NewEntry";
+import HistoryView from "./History";
 
 interface IWorkspaceDashboardProps {
     handleLogOut: () => void;
     handleNewEntry: (
         initTime: string, finalTime: string, elapsedTime: string, task: string
     ) => void;
+    getEntries: () => Promise<IEntriesDB[]>;
     setStatus: (newStatus: string) => void;
+    project: string;
 }
 
 interface IWorkspaceDashboardState {
@@ -46,15 +49,25 @@ React.Component<IWorkspaceDashboardProps, IWorkspaceDashboardState> {
 
         // Set state.
         this.state = {
-            view: "newEntry",
+            view: "history",
+
             home: <></>,
+
             newEntry: (
                 <NewEntryView
                     setStatus={this.props.setStatus}
                     handleNewEntry={this.props.handleNewEntry}
                 />
             ),
-            history: <></>,
+
+            history: (
+                <HistoryView
+                    setStatus={this.props.setStatus}
+                    getEntries={this.props.getEntries}
+                    project={this.props.project}
+                />
+            ),
+
             print: <></>,
             settings: <></>,
         };
