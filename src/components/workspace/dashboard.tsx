@@ -15,16 +15,8 @@ interface IWorkspaceDashboardProps {
     setStatus: (newStatus: string) => void;
 }
 
-interface IActive {
-    home: string | React.ReactNode;
-    newEntry: string | React.ReactNode;
-    history: string | React.ReactNode;
-    print: string | React.ReactNode;
-    settings: string | React.ReactNode;
-}
-
-interface IWorkspaceDashboardState extends IActive {
-    view: keyof IActive;
+interface IWorkspaceDashboardState {
+    view: "home" | "newEntry" | "history" | "print" | "settings" ;
     home: React.ReactNode;
     newEntry: React.ReactNode;
     history: React.ReactNode;
@@ -76,7 +68,7 @@ React.Component<IWorkspaceDashboardProps, IWorkspaceDashboardState> {
     setView(event: any): void {
 
         this.setState({
-            view: event.target.id
+            view: event.target.id,
         });
 
         this.render();
@@ -93,17 +85,6 @@ React.Component<IWorkspaceDashboardProps, IWorkspaceDashboardState> {
             "h-full text-lg flex bg-gray-100 dark:bg-gray-900 "
         );
 
-        /** @typedef {IActive} - Classes for the sidebar buttons. */
-        let activeView: IActive = {
-            home: "inactive",
-            newEntry: "inactive",
-            history: "inactive",
-            print: "inactive",
-            settings: "inactive",
-        }
-
-        activeView[this.state.view] = "active";
-
         // Return the node.
         return (
             <div className={headerClass}>
@@ -115,35 +96,30 @@ React.Component<IWorkspaceDashboardProps, IWorkspaceDashboardState> {
                     <Layout.buttons.SidebarButton
                         text="Home" icon="home"
                         id="home"
-                        style={activeView.home as string}
                         action={this.setView}
                     />
 
                     <Layout.buttons.SidebarButton
                         text="New entry" icon="stopwatch"
                         id="newEntry"
-                        style={activeView.newEntry as string}
                         action={this.setView}
                     />
 
                     <Layout.buttons.SidebarButton
                         text="History" icon="history"
                         id="history"
-                        style={activeView.history as string}
                         action={this.setView}
                     />
 
                     <Layout.buttons.SidebarButton
                         text="Print" icon="print"
                         id="print"
-                        style={activeView.print as string}
                         action={this.setView}
                     />
 
                     <Layout.buttons.SidebarButton
                         text="Settings" icon="setting"
                         id="settings"
-                        style={activeView.settings as string}
                         action={this.setView}
                     />
 

@@ -406,15 +406,6 @@ React.Component<ISidebarButtonProps, IBaseButtonState> {
                 );
                 break;
 
-            case "active":
-                btnStyle += (
-                    "bg-gray-500 dark:bg-gray-600 " +
-                    "enabled:hover:bg-gray-400 " +
-                    "enabled:hover:dark:bg-gray-700 " +
-                    "disabled:bg-gray-00 disabled:dark:bg-gray-300 "
-                );
-                break;
-
             default:
                 btnStyle += (
                     "hover:bg-gray-400 hover:dark:bg-gray-700 "
