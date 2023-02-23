@@ -367,6 +367,7 @@ class UserButton extends BaseButton<IUserButtonProps, IBaseButtonState> {
 
 interface ISidebarButtonProps {
     text?: string;
+    id?: string;
     icon?: string;
     style?: string;
     type?: "submit" | "button" | "reset";
@@ -450,6 +451,7 @@ React.Component<ISidebarButtonProps, IBaseButtonState> {
         // Return the node for option button button.
         return (
             <button
+                id={this.props.id}
                 className={btnClass}
                 onClick={this.props.action}
                 type={this.props.type}>
