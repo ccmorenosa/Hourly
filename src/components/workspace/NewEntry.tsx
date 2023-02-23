@@ -45,6 +45,7 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
         this.initStopwatch = this.initStopwatch.bind(this);
         this.pauseStopwatch = this.pauseStopwatch.bind(this);
         this.stopStopwatch = this.stopStopwatch.bind(this);
+        this.resetForm = this.resetForm.bind(this);
         this.updateStopwatch = this.updateStopwatch.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.validate = this.validate.bind(this);
@@ -163,6 +164,24 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
             update: -1,
         });
 
+    }
+
+    /**
+     * Reset the stopwatch and the tasks.
+     */
+    resetForm() {
+
+        // Update status.
+        this.props.setStatus("Ready");
+
+        // Update state.
+        this.setState({
+            initDateNum: -1,
+            initTime: "",
+            finalTime: "",
+            elapsedTime: "",
+            tasks: "",
+        });
 
     }
 
@@ -246,7 +265,9 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
                 values.finalTime,
                 "2000-01-01 " + values.elapsedTime,
                 values.tasks
-            )
+            );
+
+            this.resetForm();
 
         }
 
