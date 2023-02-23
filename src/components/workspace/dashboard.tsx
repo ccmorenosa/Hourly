@@ -66,7 +66,7 @@ React.Component<IWorkspaceDashboardProps, IWorkspaceDashboardState> {
                     />
 
                     <Layout.buttons.SidebarButton
-                        text="New entry" icon="stopwatch"
+                        text="New entry" icon="stopwatch" style="active"
                     />
 
                     <Layout.buttons.SidebarButton
