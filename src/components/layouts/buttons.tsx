@@ -448,7 +448,7 @@ React.Component<ISidebarButtonProps, IBaseButtonState> {
         /** @type {string} - Class for the button. */
         let btnClass: string = this.state.btnStyle;
 
-        // Return the node for option button button.
+        // Return the node for option button.
         return (
             <button
                 id={this.props.id}

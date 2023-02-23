@@ -53,6 +53,7 @@ class Header extends React.Component<IHeaderProps, {}> {
             "No project currently opened"
         );
 
+        // return the node.
         return (
             <div className={headerClass}>
 

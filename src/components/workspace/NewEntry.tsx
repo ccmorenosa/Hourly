@@ -282,6 +282,7 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
             "hidden text-vermilion-500 dark:text-vermilion-300 ml-1 font-bold"
         );
 
+        // return the node.
         return (
             <form
                 id="new-entry-form"

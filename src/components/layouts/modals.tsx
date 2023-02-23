@@ -89,6 +89,7 @@ class ModalBase extends React.Component<IModalBaseProps, IModalBaseState> {
             "border-4 border-gray-500 dark:border-0 flex flex-col text-center"
         );
 
+        // return the node.
         return (
             <div className={modalClass}>
 
@@ -157,6 +158,7 @@ class InfoModal extends React.Component<IInfoModalProps, IInfoModalState> {
             <img className="w-7 inline mx-2" src="icons/info-circle.svg" />
         );
 
+        // return the node.
         return (
             <ModalBase
                 style="info"
@@ -218,6 +220,7 @@ React.Component<IWarningModalProps, IWarningModalState> {
             />
         );
 
+        // return the node.
         return (
             <ModalBase
                 style="warning"
@@ -279,6 +282,7 @@ React.Component<IDangerModalProps, IDangerModalState> {
             />
         );
 
+        // return the node.
         return (
             <ModalBase
                 style="danger"
@@ -409,6 +413,7 @@ extends React.Component<PROPS, STATE> {
             </form>
         </>);
 
+        // return the node.
         return (
             <ModalBase
                 style={this.props.style}

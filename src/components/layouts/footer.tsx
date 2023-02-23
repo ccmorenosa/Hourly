@@ -40,6 +40,7 @@ class Footer extends React.Component<IFooterProps, {}> {
             "font-semibold bg-purple-800"
         );
 
+        // return the node.
         return (
             <div className={footerClass}>
 
