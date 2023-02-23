@@ -137,68 +137,78 @@ React.Component<PROPS, STATE> {
         super(props);
 
         /** @typedef {string} - Button color and style. */
-        let btnStyle: string = "";
+        let btnStyle: string = "disabled:opacity-50 disabled:dark:opacity-30 ";
 
         // Set button style.
         switch (this.props.style) {
             case "success":
-                btnStyle = (
+                btnStyle += (
                     "bg-celadon-100 dark:bg-celadon-700 " +
                     "enabled:hover:bg-celadon-0 " +
-                    "enabled:hover:dark:bg-celadon-600 " +
-                    "disabled:bg-celadon-0 disabled:dark:bg-celadon-500 "
+                    "enabled:hover:dark:bg-celadon-600 "
                 );
                 break;
 
             case "option-1":
-                btnStyle = (
+                btnStyle += (
                     "bg-celeste-300 dark:bg-celeste-700 " +
                     "enabled:hover:bg-celeste-200 " +
-                    "enabled:hover:dark:bg-celeste-600 " +
-                    "disabled:bg-celeste-100 disabled:dark:bg-celeste-100 "
+                    "enabled:hover:dark:bg-celeste-600 "
                 );
                 break;
 
             case "option-2":
-                btnStyle = (
+                btnStyle += (
                     "bg-celeste-100 dark:bg-celeste-1000 " +
                     "enabled:hover:bg-celeste-0 " +
-                    "enabled:hover:dark:bg-celeste-900 " +
-                    "disabled:bg-celeste-0 disabled:dark:bg-celeste-500 "
+                    "enabled:hover:dark:bg-celeste-900 "
                 );
                 break;
 
             case "option-3":
-                btnStyle = (
+                btnStyle += (
                     "bg-celadon-100 dark:bg-celadon-1000 " +
                     "enabled:hover:bg-celadon-0 " +
-                    "enabled:hover:dark:bg-celadon-900 " +
-                    "disabled:bg-celadon-0 disabled:dark:bg-celadon-500 "
+                    "enabled:hover:dark:bg-celadon-900 "
                 );
                 break;
 
             case "option-4":
-                btnStyle = (
+                btnStyle += (
                     "bg-celadon-300 dark:bg-celadon-700 " +
                     "enabled:hover:bg-celadon-200 " +
-                    "enabled:hover:dark:bg-celadon-600 " +
-                    "disabled:bg-celadon-0 disabled:dark:bg-celadon-500 "
+                    "enabled:hover:dark:bg-celadon-600 "
+                );
+                break;
+
+            case "option-5":
+                btnStyle += (
+                    "bg-honey-100 dark:bg-honey-1000 " +
+                    "enabled:hover:bg-honey-0 " +
+                    "enabled:hover:dark:bg-honey-900 "
+                );
+                break;
+
+            case "option-6":
+                btnStyle += (
+                    "bg-honey-300 dark:bg-honey-500 " +
+                    "enabled:hover:bg-honey-200 " +
+                    "enabled:hover:dark:bg-honey-600 "
                 );
                 break;
 
             case "danger":
-                btnStyle = (
+                btnStyle += (
                     "bg-vermilion-500 enabled:hover:bg-vermilion-400 " +
-                    "disabled:bg-vermilion-300 text-celeste-100 "
+                        "text-celeste-100 "
                 );
                 break;
 
             default:
-                btnStyle = (
+                btnStyle += (
                     "bg-celeste-300 dark:bg-celeste-700 " +
                     "enabled:hover:bg-celeste-200 " +
-                    "enabled:hover:dark:bg-celeste-600 " +
-                    "disabled:bg-celeste-0 disabled:dark:bg-celeste-500 "
+                    "enabled:hover:dark:bg-celeste-600 "
                 );
                 break;
         }
@@ -401,7 +411,10 @@ React.Component<ISidebarButtonProps, IBaseButtonState> {
         super(props);
 
         /** @typedef {string} - Button color and style. */
-        let btnStyle: string = "w-full p-2 text-left ";
+        let btnStyle: string = (
+            "w-full p-2 text-left disabled:opacity-50 " +
+            "disabled:dark:opacity-30 "
+        );
 
         // Set button style.
         switch (this.props.style) {
@@ -409,8 +422,7 @@ React.Component<ISidebarButtonProps, IBaseButtonState> {
                 btnStyle += (
                     "bg-vermilion-300 dark:bg-vermilion-600 " +
                     "enabled:hover:bg-vermilion-200 " +
-                    "enabled:hover:dark:bg-vermilion-500 " +
-                    "disabled:bg-vermilion-0 disabled:dark:bg-vermilion-300 "
+                    "enabled:hover:dark:bg-vermilion-500 "
                 );
                 break;
 
