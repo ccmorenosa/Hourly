@@ -19,11 +19,11 @@ interface IWorkspaceDashboardProps {
 }
 
 interface IWorkspaceDashboardState {
-    view: "home" | "newEntry" | "history" | "print" | "settings" ;
+    view: "home" | "newEntry" | "history" | "report" | "settings" ;
     home: React.ReactNode;
     newEntry: React.ReactNode;
     history: React.ReactNode;
-    print: React.ReactNode;
+    report: React.ReactNode;
     settings: React.ReactNode;
 }
 
@@ -67,7 +67,7 @@ React.Component<IWorkspaceDashboardProps, IWorkspaceDashboardState> {
                 />
             ),
 
-            print: <></>,
+            report: <></>,
             settings: <></>,
         };
 
@@ -133,8 +133,8 @@ React.Component<IWorkspaceDashboardProps, IWorkspaceDashboardState> {
                     />
 
                     <Layout.buttons.SidebarButton
-                        text="Print" icon="print"
-                        id="print"
+                        text="Report" icon="file"
+                        id="report"
                         action={this.setView}
                     />
 

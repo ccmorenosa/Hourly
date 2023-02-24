@@ -62,7 +62,7 @@ ProjectModel.model.hasMany(EntriesModel.model, {
 });
 EntriesModel.model.belongsTo(ProjectModel.model);
 
-// Synchronize the tables.
-(async () => {
-    await sequelize.sync({ alter: true })
-})().catch((e) => { console.log(e); });
+// // Synchronize the tables.
+// (async () => {
+//     await sequelize.sync({ alter: true })
+// })().catch((e) => { console.log(e); });
