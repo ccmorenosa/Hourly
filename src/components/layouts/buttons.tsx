@@ -405,7 +405,7 @@ interface ISidebarButtonProps {
  * @extends {React.Component}
  */
 class SidebarButton extends
-React.Component<ISidebarButtonProps, IBaseButtonState> {
+React.Component<ISidebarButtonProps, {}> {
 
     /**
      * Create the component.
@@ -415,34 +415,6 @@ React.Component<ISidebarButtonProps, IBaseButtonState> {
 
         // Create superior class.
         super(props);
-
-        /** @typedef {string} - Button color and style. */
-        let btnStyle: string = (
-            "w-full p-2 text-left disabled:opacity-50 " +
-            "disabled:dark:opacity-30 "
-        );
-
-        // Set button style.
-        switch (this.props.style) {
-            case "danger":
-                btnStyle += (
-                    "bg-vermilion-300 dark:bg-vermilion-600 " +
-                    "enabled:hover:bg-vermilion-200 " +
-                    "enabled:hover:dark:bg-vermilion-500 "
-                );
-                break;
-
-            default:
-                btnStyle += (
-                    "hover:bg-gray-400 hover:dark:bg-gray-700 "
-                );
-                break;
-        }
-
-        // Set state.
-        this.state = {
-            btnStyle: btnStyle
-        };
 
     }
 
@@ -462,14 +434,42 @@ React.Component<ISidebarButtonProps, IBaseButtonState> {
         /** @typedef {string} - Source for the button image. */
         let btnImage: string = "icons/" + this.props.icon;
 
-        /** @type {string} - Class for the button. */
-        let btnClass: string = this.state.btnStyle;
+        /** @typedef {string} - Button color and style. */
+        let btnStyle: string = (
+            "w-full p-2 text-left disabled:opacity-50 " +
+            "disabled:dark:opacity-30 "
+        );
+
+        // Set button style.
+        switch (this.props.style) {
+            case "active":
+                btnStyle += (
+                    "bg-gray-300 dark:bg-gray-700 " +
+                    "enabled:hover:bg-gray-400 " +
+                    "enabled:hover:dark:bg-gray-600 "
+                );
+                break;
+
+            case "danger":
+                btnStyle += (
+                    "bg-vermilion-300 dark:bg-vermilion-600 " +
+                    "enabled:hover:bg-vermilion-200 " +
+                    "enabled:hover:dark:bg-vermilion-500 "
+                );
+                break;
+
+            default:
+                btnStyle += (
+                    "hover:bg-gray-400 hover:dark:bg-gray-600 "
+                );
+                break;
+        }
 
         // Return the node for option button.
         return (
             <button
                 id={this.props.id}
-                className={btnClass}
+                className={btnStyle}
                 onClick={this.props.action}
                 type={this.props.type}
                 disabled={this.props.disabled}
