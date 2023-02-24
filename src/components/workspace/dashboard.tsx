@@ -89,6 +89,22 @@ React.Component<IWorkspaceDashboardProps, IWorkspaceDashboardState> {
             "scrollbar-track-celeste-100 scrollbar-thumb-rounded-full "
         );
 
+        /**
+         * @typedef {"home" | "newEntry" | "history" | "report" | "settings"}
+         * Active view. */
+        let view = this.props.getView();
+
+        // Active status buttons.
+        let isActive = {
+            home: "inactive",
+            newEntry: "inactive",
+            history: "inactive",
+            report: "inactive",
+            settings: "inactive",
+        }
+
+        isActive[view] = "active";
+
         // Return the node.
         return (
             <div className={dashClass}>
@@ -100,30 +116,35 @@ React.Component<IWorkspaceDashboardProps, IWorkspaceDashboardState> {
                     <Layout.buttons.SidebarButton
                         text="Home" icon="home"
                         id="home"
+                        style={isActive["home"]}
                         action={this.props.setView}
                     />
 
                     <Layout.buttons.SidebarButton
                         text="New entry" icon="stopwatch"
                         id="newEntry"
+                        style={isActive["newEntry"]}
                         action={this.props.setView}
                     />
 
                     <Layout.buttons.SidebarButton
                         text="History" icon="history"
                         id="history"
+                        style={isActive["history"]}
                         action={this.props.setView}
                     />
 
                     <Layout.buttons.SidebarButton
                         text="Report" icon="file"
                         id="report"
+                        style={isActive["report"]}
                         action={this.props.setView}
                     />
 
                     <Layout.buttons.SidebarButton
                         text="Settings" icon="setting"
                         id="settings"
+                        style={isActive["settings"]}
                         action={this.props.setView}
                     />
 
@@ -138,7 +159,7 @@ React.Component<IWorkspaceDashboardProps, IWorkspaceDashboardState> {
 
                 <div className="w-full">
 
-                    {this.state[this.props.getView()]}
+                    {this.state[view]}
 
                 </div>
 
