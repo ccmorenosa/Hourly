@@ -36,6 +36,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
 
         // Bind actions.
         this.getEntries = this.getEntries.bind(this);
+        this.showTasks = this.showTasks.bind(this);
 
         // Set state.
         this.state = {
@@ -57,13 +58,28 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
     }
 
     /**
+     * Show the tasks of the entry in the tasks box.
+     */
+    showTasks(event: any) {
+
+        // Get entry ID.
+        let entryId: number = event.currentTarget.parentNode.parentNode.id;
+
+        // Show the tasks.
+        this.setState({
+            tasks: this.state.entries[entryId - 1].task}
+        );
+
+    }
+
+    /**
      * Render the component.
      * @returns {React.ReactNode} the HistoryView node.
      */
     render(): React.ReactNode {
         /** @typedef {string} - Class for the textarea. */
         let textAreaClass: string = (
-            "h-4/6 text-gray-1000 dark:text-gray-1000 rounded-xl p-3 " +
+            "h-full text-gray-1000 dark:text-gray-1000 rounded-xl p-3 " +
             "bg-gray-100 border-4 border-gray-500"
         );
 
@@ -81,7 +97,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
             "grid grid-cols-12 border-b min-w-[50rem] text-center"
         );
 
-        /** @typedef {string[]} - List of entires for the active user. */
+        /** @typedef {IEntriesDB[]} - List of entires for the active user. */
         let entries: IEntriesDB[] = this.state.entries;
 
         // Get options.
@@ -130,8 +146,8 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
                         <div className="p-2 border-r">
                             <Layout.buttons.SimpleButton
                                 size="sm"
-                                type="submit"
                                 style="option-1"
+                                action={this.showTasks}
                             >
 
                                 <img
@@ -149,7 +165,6 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
                         <div className="p-2">
                             <Layout.buttons.SimpleButton
                                 size="sm"
-                                type="submit"
                                 style="option-6"
                             >
 
@@ -169,7 +184,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
         return (
             <div className="h-full p-4">
 
-                <div className="grid grid-rows-2 gap-5">
+                <div className="h-full grid grid-rows-2 gap-5">
 
                     <form
                         id="entries-table"
