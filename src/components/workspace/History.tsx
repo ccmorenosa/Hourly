@@ -320,6 +320,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
                             <Layout.buttons.SimpleButton
                                 size="sm"
                                 style="option-1"
+                                title="Show tasks."
                                 action={this.showTasks}
                             >
 
@@ -340,6 +341,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
                                 id={entry.id.toString()}
                                 size="sm"
                                 style="option-6"
+                                title="Edit tasks."
                                 action={this.showTasks}
                             >
 
@@ -375,6 +377,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
                             <Layout.buttons.SimpleButton
                                 size="md"
                                 style="danger"
+                                title="Remove selected entries."
                                 action={this.removeEntries}
                             >
 
@@ -438,6 +441,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
                             <Layout.buttons.SimpleButton
                                 size="md"
                                 style="option-1"
+                                title="Save edition."
                                 action={this.editTask}
                             >
 
@@ -458,6 +462,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
                             <Layout.buttons.SimpleButton
                                 size="md"
                                 style="danger"
+                                title="Cancel edition."
                                 action={this.disableEdit}
                             >
 

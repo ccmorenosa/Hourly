@@ -341,6 +341,7 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
 
                             <Layout.buttons.SimpleButton
                                 size="sm" style="option-4"
+                                title="Start stopwatch."
                                 action={this.initStopwatch}
                             >
 
@@ -358,6 +359,7 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
 
                             <Layout.buttons.SimpleButton
                                 size="sm" style="option-4"
+                                title="Pause stopwatch."
                                 action={this.pauseStopwatch}
                             >
 
@@ -375,6 +377,7 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
 
                             <Layout.buttons.SimpleButton
                                 size="sm" style="danger"
+                                title="Stop stopwatch."
                                 action={this.stopStopwatch}
                             >
 
@@ -392,6 +395,7 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
 
                             <Layout.buttons.SimpleButton
                                 size="sm" style="option-1"
+                                title="Save entry."
                                 type="submit"
                             >
 
