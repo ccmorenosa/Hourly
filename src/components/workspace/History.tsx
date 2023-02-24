@@ -16,6 +16,8 @@ interface IHistoryViewProps {
 
 interface IHistoryViewState {
     tasks: string;
+    tasksID?: number;
+    editing?: boolean;
     entries: IEntriesDB[];
 }
 
@@ -39,6 +41,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
         // Bind actions.
         this.getEntries = this.getEntries.bind(this);
         this.showTasks = this.showTasks.bind(this);
+        this.editTask = this.editTask.bind(this);
         this.enableEdit = this.enableEdit.bind(this);
         this.disableEdit = this.disableEdit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -67,6 +70,11 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
      */
     enableEdit() {
         $("#tasks-edit textarea").prop('disabled', false);
+
+        // Change edit state.
+        this.setState({
+            editing: true,
+        });
     }
 
     /**
@@ -74,10 +82,16 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
      */
     disableEdit() {
         $("#tasks-edit textarea").prop('disabled', true);
+
+        // Change edit state.
+        this.setState({
+            editing: false,
+        });
     }
 
     /**
      * Show the tasks of the entry in the tasks box.
+     * @param event {any} - Button that was clicked.
      */
     showTasks(event: any) {
 
@@ -87,10 +101,8 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
         // Get entry ID.
         let entryId: number = target.parentNode.parentNode.id;
 
-        // Show the tasks.
-        this.setState({
-            tasks: this.state.entries[entryId].task}
-        );
+        // Get task id.
+        let id: number = target.id;
 
         if (target.parentNode.classList.contains("edit-btn")) {
 
@@ -99,6 +111,58 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
         } else {
 
             this.disableEdit();
+
+        }
+
+        // Show the tasks.
+        this.setState({
+            tasks: this.state.entries[entryId].task,
+            tasksID: id,
+        });
+
+    }
+
+    /**
+     * Edit task.
+     */
+    editTask() {
+
+        // Define vals regex.
+        const taskRegex = new RegExp("^[\\n ]*$");
+
+        // Check username regex.
+        if (taskRegex.test(this.state.tasks)) {
+            $("#empty-tasks").removeClass("hidden");
+            return;
+        } else {
+            $("#empty-tasks").addClass("hidden");
+        }
+
+        if (this.state.editing) {
+
+            this.props.createModal(
+                <Layout.modals.WarningModal
+                    title="Editing an item"
+                    message="Are you sure you want to edit the entry's task?"
+                    cancel={this.props.closeModal}
+                    proceed={() =>{
+                        // Change item.
+                        window.EntriesAPI.editEntryTask(
+                            this.state.tasksID,
+                            this.state.tasks
+                        );
+
+                        // Disable edit.
+                        this.disableEdit();
+
+                        // Update entries.
+                        this.getEntries();
+
+                        // Close modal.
+                        this.props.closeModal();
+                    }}
+                />, "Saving edition..."
+            );
 
         }
 
@@ -141,6 +205,12 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
         /** @typedef {string} - Class for the rows of the table. */
         let rowClass: string = (
             "grid grid-cols-12 border-b min-w-[50rem] text-center"
+        );
+
+        /** @typedef {string} - Warning class. */
+        let warnClass: string = (
+            "hidden text-vermilion-500 dark:text-vermilion-300 mb-0.5 " +
+            "font-bold text-sm ml-3"
         );
 
         /** @typedef {IEntriesDB[]} - List of entires for the active user. */
@@ -210,6 +280,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
                         </div>
                         <div className="p-2 edit-btn">
                             <Layout.buttons.SimpleButton
+                                id={entry.id.toString()}
                                 size="sm"
                                 style="option-6"
                                 action={this.showTasks}
@@ -294,11 +365,22 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
                         className="flex flex-col"
                     >
                         <div className="mb-5 flex">
-                            <div className="mr-auto">Tasks:</div>
+                            <div className="mr-auto">
+                                Tasks:
+
+                                <span
+                                    id="empty-tasks"
+                                    className={warnClass}
+                                >
+                                    Tasks is empty.
+                                </span>
+
+                            </div>
 
                             <Layout.buttons.SimpleButton
                                 size="md"
                                 style="option-1"
+                                action={this.editTask}
                             >
 
                                 <img
