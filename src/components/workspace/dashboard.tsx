@@ -16,6 +16,8 @@ interface IWorkspaceDashboardProps {
     checkProject: () => Promise<boolean>;
     getEntries: () => Promise<IEntriesDB[]>;
     setStatus: (newStatus: string) => void;
+    createModal: (modal: React.ReactNode, status: string) => void;
+    closeModal: () => void;
 }
 
 interface IWorkspaceDashboardState {
@@ -64,6 +66,8 @@ React.Component<IWorkspaceDashboardProps, IWorkspaceDashboardState> {
                 <HistoryView
                     setStatus={this.props.setStatus}
                     getEntries={this.props.getEntries}
+                    createModal={this.props.createModal}
+                    closeModal={this.props.closeModal}
                 />
             ),
 

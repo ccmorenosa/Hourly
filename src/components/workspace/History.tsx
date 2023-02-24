@@ -10,6 +10,8 @@ import moment from 'moment';
 interface IHistoryViewProps {
     getEntries: () => Promise<IEntriesDB[]>;
     setStatus: (newStatus: string) => void;
+    createModal: (modal: React.ReactNode, status: string) => void;
+    closeModal: () => void;
 }
 
 interface IHistoryViewState {

@@ -39,6 +39,7 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
         super(props);
 
         // Bind actions.
+        this.createModal = this.createModal.bind(this);
         this.handleLogOut = this.handleLogOut.bind(this);
         this.handleNewProject = this.handleNewProject.bind(this);
         this.handleOpenProject = this.handleOpenProject.bind(this);
@@ -59,6 +60,20 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
             modal: <></>,
         };
 
+    }
+
+    /**
+     * Show a custom modal.
+     * @param modal {React.ReactNode} - Modal to be shown.
+     * @param status {string} - Status of the footer.
+     */
+    createModal(modal: React.ReactNode, status: string) {
+       this.setState({
+            warningZ: "z-[2]",
+            opacity: "opacity-80",
+            status: status,
+            modal: modal,
+        });
     }
 
     /**
@@ -352,6 +367,8 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
                         checkProject={this.checkProject}
                         getEntries={this.getEntries}
                         setStatus={this.setStatus}
+                        createModal={this.createModal}
+                        closeModal={this.closeModal}
                     />
 
                     <Layout.Footer
