@@ -191,8 +191,8 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
         if (IDs.length > 0) {
 
             this.props.createModal(
-                <Layout.modals.WarningModal
-                    title="Remove items item"
+                <Layout.modals.DangerModal
+                    title="Remove items"
                     message={message}
                     cancel={this.props.closeModal}
                     proceed={() =>{
