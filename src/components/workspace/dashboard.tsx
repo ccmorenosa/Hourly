@@ -153,7 +153,7 @@ React.Component<IWorkspaceDashboardProps, IWorkspaceDashboardState> {
 
                 </div>
 
-                <div className="w-auto">
+                <div className="w-full">
 
                     {this.state[this.state.view]}
 

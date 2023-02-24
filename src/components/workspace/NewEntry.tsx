@@ -91,6 +91,9 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
      */
     initStopwatch() {
 
+        // Hide success.
+        $("#success").addClass("hidden");
+
         // Update status.
         this.props.setStatus("Working...");
 
@@ -224,6 +227,9 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
         // Block buttons.
         $("#new-entry-form button").prop('disabled', true);
 
+        // Hide success.
+        $("#success").addClass("hidden");
+
         /** @typedef {INewEntryViewState} - Value of the input tags. */
         let values: INewEntryViewState = this.state;
 
@@ -267,6 +273,9 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
                 values.tasks
             );
 
+            // Show success and reset form.
+            $("#success").removeClass("hidden");
+
             this.resetForm();
 
         }
@@ -288,40 +297,46 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
 
         /** @typedef {string} - Class for the textarea. */
         let timeInputsClass: string = (
-            "w-full h-full rounded-2xl p-3 flex flex-col " +
-            "bg-gray-300 dark:bg-gray-700"
+            "w-full rounded-2xl py-5 bg-gray-300 dark:bg-gray-700 flex"
         );
 
         /** @typedef {string} - Class for the input tags. */
         let inputClass = (
-            "form-input px-4 py-3 rounded-full select-none " +
-            "bg-gray-100 dark:bg-gray-300 text-gray-1000 disabled"
+            "form-input px-4 rounded-full select-none " +
+            "bg-gray-100 dark:bg-gray-300 text-gray-1000 w-56"
         );
 
         /** @typedef {string} - Warning class. */
         let warnClass: string = (
-            "hidden text-vermilion-500 dark:text-vermilion-300 ml-1 font-bold"
+            "hidden text-vermilion-500 dark:text-vermilion-300 mb-0.5 " +
+            "font-bold text-sm"
+        );
+
+        /** @typedef {string} - Success class. */
+        let successClass: string = (
+            "hidden text-celadon-1000 dark:text-celadon-300 mb-0.5 " +
+            "font-bold text-sm"
         );
 
         // return the node.
         return (
             <form
                 id="new-entry-form"
-                className="w-full h-full p-4"
+                className="h-full p-4"
                 onSubmit={this.validate}
             >
 
-                <div className="w-full h-full grid grid-cols-2 gap-5">
+                <div className="h-full grid grid-rows-2 gap-5">
 
                     <div className="flex flex-col">
 
-                        <div className="mb-5 text-2xl font-bold" >
+                        <div className="mb-2 text-2xl font-bold" >
                             New Entry
                         </div>
 
                         <div
                             id="buttons-menu"
-                            className="grid grid-cols-4 gap-2 mb-5"
+                            className="grid grid-cols-10 gap-2 mb-5"
                         >
 
                             <Layout.buttons.SimpleButton
@@ -394,10 +409,42 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
 
                         </div>
 
+                        <div className="flex flex-col">
+
+                            <span
+                                id="empty-time"
+                                className={warnClass}
+                            >
+                                Stopwatch haven't being started.
+                            </span>
+
+                            <span
+                                id="not-stopped"
+                                className={warnClass}
+                            >
+                                Stopwatch still running.
+                            </span>
+
+                            <span
+                                id="empty-tasks"
+                                className={warnClass}
+                            >
+                                Tasks is empty.
+                            </span>
+
+                            <span
+                                id="success"
+                                className={successClass}
+                            >
+                                Saved!
+                            </span>
+
+                        </div>
+
                         <div className={timeInputsClass}>
 
-                            <div id="input-init-time">
-                                <div className="p-2 text-left w-full flex">
+                            <div id="input-init-time" className="mx-auto">
+                                <div className="pb-2 text-left w-full flex">
                                     Initial time:
                                 </div>
 
@@ -410,8 +457,8 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
                                 />
                             </div>
 
-                            <div id="input-final-time">
-                                <div className="p-2 text-left w-full flex">
+                            <div id="input-final-time" className="mx-auto">
+                                <div className="pb-2 text-left w-full flex">
                                     Final time:
                                 </div>
 
@@ -424,8 +471,8 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
                                 />
                             </div>
 
-                            <div id="input-elapsed-time">
-                                <div className="p-2 text-left w-full flex">
+                            <div id="input-elapsed-time" className="mx-auto">
+                                <div className="pb-2 text-left w-full flex">
                                     Elapsed time:
                                 </div>
 
@@ -438,36 +485,6 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
                                 />
                             </div>
 
-                            <div className="mt-auto">
-
-                                <span
-                                    id="empty-time"
-                                    className={warnClass}
-                                >
-                                    Stopwatch haven't being started.
-                                </span>
-                            </div>
-
-                            <div>
-
-                                <span
-                                    id="not-stopped"
-                                    className={warnClass}
-                                >
-                                    Stopwatch still running.
-                                </span>
-                            </div>
-
-                            <div>
-
-                                <span
-                                    id="empty-tasks"
-                                    className={warnClass}
-                                >
-                                    Tasks is empty.
-                                </span>
-
-                            </div>
 
                         </div>
 
