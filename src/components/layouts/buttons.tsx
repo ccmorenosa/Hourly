@@ -107,6 +107,7 @@ React.Component<IDarkModeButtonProps, IDarkModeButtonState> {
 interface IBaseButtonProps {
     id?: string;
     text?: string;
+    title?: string;
     disabled?: boolean;
     style?: string;
     type?: "submit" | "button" | "reset";
@@ -230,6 +231,8 @@ React.Component<PROPS, STATE> {
         // Return the node for normal button.
         return (
             <button
+                id={this.props.id}
+                title={this.props.title}
                 className={this.state.btnStyle}
                 onClick={this.props.action}
                 type={this.props.type}
@@ -302,6 +305,7 @@ BaseButton<IBaseButtonProps, IBaseButtonState> {
         return (
             <button
                 id={this.props.id}
+                title={this.props.title}
                 className={btnClass}
                 onClick={this.props.action}
                 type={type}
