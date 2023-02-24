@@ -70,6 +70,10 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
      * Disable edit buttons and text area..
      */
     enableEdit() {
+        // Update status.
+        this.props.setStatus("Editing...");
+
+        // Enabled text area.
         $("#tasks-edit textarea").prop('disabled', false);
 
         // Change edit state.
@@ -82,6 +86,10 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
      * Disable edit buttons and text area..
      */
     disableEdit() {
+        // Update status.
+        this.props.setStatus("Ready");
+
+        // Disabled text area.
         $("#tasks-edit textarea").prop('disabled', true);
 
         // Change edit state.
