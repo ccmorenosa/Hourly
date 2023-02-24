@@ -37,6 +37,9 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
         // Bind actions.
         this.getEntries = this.getEntries.bind(this);
         this.showTasks = this.showTasks.bind(this);
+        this.enableEdit = this.enableEdit.bind(this);
+        this.disableEdit = this.disableEdit.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
 
         // Set state.
         this.state = {
@@ -58,17 +61,57 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
     }
 
     /**
+     * Disable edit buttons and text area..
+     */
+    enableEdit() {
+        $("#tasks-edit textarea").prop('disabled', false);
+    }
+
+    /**
+     * Disable edit buttons and text area..
+     */
+    disableEdit() {
+        $("#tasks-edit textarea").prop('disabled', true);
+    }
+
+    /**
      * Show the tasks of the entry in the tasks box.
      */
     showTasks(event: any) {
 
+        // Get the target.
+        let target = event.currentTarget;
+
         // Get entry ID.
-        let entryId: number = event.currentTarget.parentNode.parentNode.id;
+        let entryId: number = target.parentNode.parentNode.id;
 
         // Show the tasks.
         this.setState({
             tasks: this.state.entries[entryId - 1].task}
         );
+
+        if (target.parentNode.classList.contains("edit-btn")) {
+
+            this.enableEdit();
+
+        } else {
+
+            this.disableEdit();
+
+        }
+
+    }
+
+    /**
+     * Update value when changing task input.
+     * @param event {any} - Event when changing an input.
+     */
+    handleInputChange(event: any) {
+
+        // Update state with the new value.
+        this.setState({
+            tasks: event.target.value
+        });
 
     }
 
@@ -143,7 +186,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
                         <div className="p-2 col-span-3 border-r">
                             {elapsedTime}
                         </div>
-                        <div className="p-2 border-r">
+                        <div className="p-2 border-r show-btn">
                             <Layout.buttons.SimpleButton
                                 size="sm"
                                 style="option-1"
@@ -162,10 +205,11 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
 
                             </Layout.buttons.SimpleButton>
                         </div>
-                        <div className="p-2">
+                        <div className="p-2 edit-btn">
                             <Layout.buttons.SimpleButton
                                 size="sm"
                                 style="option-6"
+                                action={this.showTasks}
                             >
 
                                 <img
@@ -252,7 +296,6 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
                             <Layout.buttons.SimpleButton
                                 size="md"
                                 style="option-1"
-                                disabled
                             >
 
                                 <img
@@ -272,7 +315,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
                             <Layout.buttons.SimpleButton
                                 size="md"
                                 style="danger"
-                                disabled
+                                action={this.disableEdit}
                             >
 
                                 <img
@@ -287,6 +330,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
                         <textarea
                             className={textAreaClass}
                             value={this.state.tasks}
+                            onChange={this.handleInputChange}
                             name="tasks"
                             id="tasks"
                             disabled
