@@ -13,6 +13,7 @@ interface IWorkspaceDashboardProps {
     handleNewEntry: (
         initTime: string, finalTime: string, elapsedTime: string, task: string
     ) => void;
+    checkProject: () => Promise<boolean>;
     getEntries: () => Promise<IEntriesDB[]>;
     setStatus: (newStatus: string) => void;
     project: string;
@@ -49,7 +50,7 @@ React.Component<IWorkspaceDashboardProps, IWorkspaceDashboardState> {
 
         // Set state.
         this.state = {
-            view: "history",
+            view: "home",
 
             home: <></>,
 
@@ -78,13 +79,18 @@ React.Component<IWorkspaceDashboardProps, IWorkspaceDashboardState> {
      * Set dash to new entry view.
      * @param event {any} - Button that was clicked.
      */
-    setView(event: any): void {
+    async setView(event: any): Promise<void> {
 
-        this.setState({
-            view: event.target.id,
-        });
+        // Check that a project is opened
+        if (event.target.id == "home" || await this.props.checkProject()) {
 
-        this.render();
+            this.setState({
+                view: event.target.id,
+            });
+
+            this.render();
+
+        }
 
     }
 

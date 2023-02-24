@@ -44,6 +44,7 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
         this.handleOpenProject = this.handleOpenProject.bind(this);
         this.handleNewEntry = this.handleNewEntry.bind(this);
         this.closeModal = this.closeModal.bind(this);
+        this.checkProject = this.checkProject.bind(this);
         this.setProject = this.setProject.bind(this);
         this.setStatus = this.setStatus.bind(this);
         this.createProject = this.createProject.bind(this);
@@ -223,6 +224,26 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
     }
 
     /**
+     * Check that a project is opened.
+     */
+    async checkProject(): Promise<boolean> {
+        // Check if a project if opened.
+        if (!this.state.project) {
+
+            // Check if any project exists.
+            if ((await this.getProjects()).length > 0) {
+                this.handleOpenProject();
+            } else {
+                this.handleNewProject();
+            }
+
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
      * Set the project.
      * @param proj {string} - Project name.
      */
@@ -328,6 +349,7 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
                     <WorkspaceDashboard
                         handleLogOut={this.handleLogOut}
                         handleNewEntry={this.handleNewEntry}
+                        checkProject={this.checkProject}
                         getEntries={this.getEntries}
                         setStatus={this.setStatus}
                         project={this.state.project}
