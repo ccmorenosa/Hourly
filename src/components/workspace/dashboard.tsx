@@ -9,11 +9,12 @@ import NewEntryView from "./NewEntry";
 import HistoryView from "./History";
 
 interface IWorkspaceDashboardProps {
+    getView: () => "home" | "newEntry" | "history" | "report" | "settings" ;
     handleLogOut: () => void;
     handleNewEntry: (
         initTime: string, finalTime: string, elapsedTime: string, task: string
     ) => void;
-    checkProject: () => Promise<boolean>;
+    setView: (event: any) => Promise<void>;
     getEntries: () => Promise<IEntriesDB[]>;
     setStatus: (newStatus: string) => void;
     createModal: (modal: React.ReactNode, status: string) => void;
@@ -21,7 +22,6 @@ interface IWorkspaceDashboardProps {
 }
 
 interface IWorkspaceDashboardState {
-    view: "home" | "newEntry" | "history" | "report" | "settings" ;
     home: React.ReactNode;
     newEntry: React.ReactNode;
     history: React.ReactNode;
@@ -47,12 +47,10 @@ React.Component<IWorkspaceDashboardProps, IWorkspaceDashboardState> {
         super(props);
 
         // Bind actions.
-        this.setView = this.setView.bind(this);
+        // this.func = this.func.bind(this);
 
         // Set state.
         this.state = {
-            view: "home",
-
             home: <></>,
 
             newEntry: (
@@ -74,25 +72,6 @@ React.Component<IWorkspaceDashboardProps, IWorkspaceDashboardState> {
             report: <></>,
             settings: <></>,
         };
-
-    }
-
-    /**
-     * Set dash to new entry view.
-     * @param event {any} - Button that was clicked.
-     */
-    async setView(event: any): Promise<void> {
-
-        // Check that a project is opened
-        if (event.target.id == "home" || await this.props.checkProject()) {
-
-            this.setState({
-                view: event.target.id,
-            });
-
-            this.render();
-
-        }
 
     }
 
@@ -121,31 +100,31 @@ React.Component<IWorkspaceDashboardProps, IWorkspaceDashboardState> {
                     <Layout.buttons.SidebarButton
                         text="Home" icon="home"
                         id="home"
-                        action={this.setView}
+                        action={this.props.setView}
                     />
 
                     <Layout.buttons.SidebarButton
                         text="New entry" icon="stopwatch"
                         id="newEntry"
-                        action={this.setView}
+                        action={this.props.setView}
                     />
 
                     <Layout.buttons.SidebarButton
                         text="History" icon="history"
                         id="history"
-                        action={this.setView}
+                        action={this.props.setView}
                     />
 
                     <Layout.buttons.SidebarButton
                         text="Report" icon="file"
                         id="report"
-                        action={this.setView}
+                        action={this.props.setView}
                     />
 
                     <Layout.buttons.SidebarButton
                         text="Settings" icon="setting"
                         id="settings"
-                        action={this.setView}
+                        action={this.props.setView}
                     />
 
                     <div className="mt-auto"></div>
@@ -159,7 +138,7 @@ React.Component<IWorkspaceDashboardProps, IWorkspaceDashboardState> {
 
                 <div className="w-full">
 
-                    {this.state[this.state.view]}
+                    {this.state[this.props.getView()]}
 
                 </div>
 

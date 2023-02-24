@@ -15,6 +15,7 @@ interface IWorkSpaceProps {
 }
 
 interface IWorkSpaceState {
+    view: "home" | "newEntry" | "history" | "report" | "settings" ;
     warningZ: string;
     opacity: string;
     project?: string;
@@ -51,9 +52,11 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
         this.createProject = this.createProject.bind(this);
         this.getProjects = this.getProjects.bind(this);
         this.getEntries = this.getEntries.bind(this);
+        this.setView = this.setView.bind(this);
 
         // Set state.
         this.state = {
+            view: "home",
             warningZ: "z-0",
             opacity: "opacity-100",
             status: "Ready",
@@ -63,12 +66,31 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
     }
 
     /**
+     * Set dash to new entry view.
+     * @param event {any} - Button that was clicked.
+     */
+    async setView(event: any): Promise<void> {
+
+        // Check that a project is opened
+        if (event.target.id == "home" || await this.checkProject()) {
+
+            this.setState({
+                view: event.target.id,
+            });
+
+            this.render();
+
+        }
+
+    }
+
+    /**
      * Show a custom modal.
      * @param modal {React.ReactNode} - Modal to be shown.
      * @param status {string} - Status of the footer.
      */
     createModal(modal: React.ReactNode, status: string) {
-       this.setState({
+        this.setState({
             warningZ: "z-[2]",
             opacity: "opacity-80",
             status: status,
@@ -257,6 +279,7 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
     setProject(proj: string) {
         // Set project.
         this.setState({
+            view: "home",
             project: proj,
         });
     }
@@ -354,7 +377,8 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
                     <WorkspaceDashboard
                         handleLogOut={this.handleLogOut}
                         handleNewEntry={this.handleNewEntry}
-                        checkProject={this.checkProject}
+                        setView={this.setView}
+                        getView={() => {return this.state.view;}}
                         getEntries={this.getEntries}
                         setStatus={this.setStatus}
                         createModal={this.createModal}
