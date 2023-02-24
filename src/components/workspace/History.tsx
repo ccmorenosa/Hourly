@@ -87,7 +87,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
 
         // Show the tasks.
         this.setState({
-            tasks: this.state.entries[entryId - 1].task}
+            tasks: this.state.entries[entryId].task}
         );
 
         if (target.parentNode.classList.contains("edit-btn")) {
@@ -123,7 +123,8 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
         /** @typedef {string} - Class for the textarea. */
         let textAreaClass: string = (
             "h-full text-gray-1000 dark:text-gray-1000 rounded-xl p-3 " +
-            "bg-gray-100 border-4 border-gray-500"
+            "bg-gray-100 disabled:bg-gray-300 " +
+            "border-4 border-gray-500"
         );
 
         /** @typedef {string} - Class for the entries of the table. */
@@ -162,7 +163,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
                 return (
                     <div
                         className={rowClass}
-                        id={entry.id.toString()}
+                        id={i.toString()}
                         key={i}
                     >
                         <div className="p-2 border-r">
@@ -174,7 +175,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
                                 id={"checkbox-" + entry.id.toString()}
                             />
                             <div className="inline">
-                                {entry.id}
+                                {i + 1}
                             </div>
                         </div>
                         <div className="p-2 col-span-3 border-r">
