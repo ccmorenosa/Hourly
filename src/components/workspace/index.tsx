@@ -93,8 +93,6 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
                 />
             ),
         });
-
-        this.render();
     }
 
     /**
@@ -133,8 +131,6 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
                 />
             ),
         });
-
-        this.render();
     }
 
     /**
@@ -194,8 +190,6 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
                 />
             ),
         });
-
-        this.render();
     }
 
     /**
@@ -234,8 +228,6 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
             status: "Ready",
             modal: <></>,
         });
-
-        this.render();
     }
 
     /**
@@ -278,8 +270,6 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
         this.setState({
             status: newStatus,
         });
-
-        this.render();
     }
 
     /**
