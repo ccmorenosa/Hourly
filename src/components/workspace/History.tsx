@@ -42,6 +42,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
         this.getEntries = this.getEntries.bind(this);
         this.showTasks = this.showTasks.bind(this);
         this.editTask = this.editTask.bind(this);
+        this.removeEntries = this.removeEntries.bind(this);
         this.enableEdit = this.enableEdit.bind(this);
         this.disableEdit = this.disableEdit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -162,6 +163,54 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
                         this.props.closeModal();
                     }}
                 />, "Saving edition..."
+            );
+
+        }
+
+    }
+
+    /**
+     * Remove entries task.
+     */
+    removeEntries() {
+
+        /** @typedef {number[]} - Get ID checked.. */
+        let IDs: number[] = [];
+
+        $("input:checkbox[name=entry]:checked").each(
+            (i, entry) => {
+                IDs.push(+(entry as HTMLInputElement).value);
+            }
+        );
+
+        /** @typedef {string} - Get ID checked.. */
+        let message: string = (
+            "Are you sure you want to delete the selected entries?"
+        );
+
+        if (IDs.length > 0) {
+
+            this.props.createModal(
+                <Layout.modals.WarningModal
+                    title="Remove items item"
+                    message={message}
+                    cancel={this.props.closeModal}
+                    proceed={() =>{
+                        // Change item.
+                        window.EntriesAPI.deleteEntries(IDs);
+
+                        // Uncheck all.
+                        $("input:checkbox[name=entry]:checked").prop(
+                            'checked', false
+                        );
+
+                        // Update entries.
+                        this.getEntries();
+
+                        // Close modal.
+                        this.props.closeModal();
+                    }}
+                />, "Deleting entries..."
             );
 
         }
@@ -318,6 +367,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
                             <Layout.buttons.SimpleButton
                                 size="md"
                                 style="danger"
+                                action={this.removeEntries}
                             >
 
                                 <img
