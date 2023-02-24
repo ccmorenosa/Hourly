@@ -10,7 +10,6 @@ import moment from 'moment';
 interface IHistoryViewProps {
     getEntries: () => Promise<IEntriesDB[]>;
     setStatus: (newStatus: string) => void;
-    project: string;
 }
 
 interface IHistoryViewState {
@@ -82,7 +81,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
             "grid grid-cols-12 border-b min-w-[50rem] text-center"
         );
 
-        /** @typedef {string[]} - List of projects for the active user. */
+        /** @typedef {string[]} - List of entires for the active user. */
         let entries: IEntriesDB[] = this.state.entries;
 
         // Get options.

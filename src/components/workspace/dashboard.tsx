@@ -16,7 +16,6 @@ interface IWorkspaceDashboardProps {
     checkProject: () => Promise<boolean>;
     getEntries: () => Promise<IEntriesDB[]>;
     setStatus: (newStatus: string) => void;
-    project: string;
 }
 
 interface IWorkspaceDashboardState {
@@ -65,7 +64,6 @@ React.Component<IWorkspaceDashboardProps, IWorkspaceDashboardState> {
                 <HistoryView
                     setStatus={this.props.setStatus}
                     getEntries={this.props.getEntries}
-                    project={this.props.project}
                 />
             ),
 

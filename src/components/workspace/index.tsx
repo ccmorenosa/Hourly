@@ -352,7 +352,6 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
                         checkProject={this.checkProject}
                         getEntries={this.getEntries}
                         setStatus={this.setStatus}
-                        project={this.state.project}
                     />
 
                     <Layout.Footer
