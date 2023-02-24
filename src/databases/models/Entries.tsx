@@ -2,7 +2,7 @@
  * Entries model containing user and name.
  */
 
-const { DataTypes, Model } = require('sequelize');
+const { DataTypes, Model, Op } = require('sequelize');
 import { ipcMain } from "electron";
 
 // Define attributes for Entries model.
@@ -73,11 +73,40 @@ ipcMain.handle("database:entries:createEntry", async (
     event, ...args: {
         initTime: string, finalTime: string, elapsedTime: string,
         task: string, name: string
-}[]
-) => {
+}[]) => {
 
     // Create the new user.
     Entries.create(args[0]);
+
+});
+
+// Handle the event to edit the task of an entry.
+ipcMain.handle("database:entries:editEntryTask", async (
+    event, ...args: {id: number, task: string}[]
+) => {
+
+    // Edit entry.
+    Entries.update(
+        {task: args[0].task}, {
+            where: {
+                id: args[0].id
+            }
+        }
+    );
+
+});
+
+// Handle the event to delete an entry.
+ipcMain.handle("database:entries:deleteEntries", async (
+    event, ...args: {id: number[]}[]
+) => {
+
+    // Delete entry.
+    Entries.destroy({
+        where: {
+            id: {[Op.or]: args[0].id}
+        }
+    });
 
 });
 

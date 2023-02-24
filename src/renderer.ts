@@ -53,6 +53,8 @@ export interface IEntriesAPI {
         initTime: string, finalTime: string, elapsedTime: string,
         task: string, name: string
     ) => Promise<void>,
+    editEntryTask: (id: number, task: string) => Promise<void>,
+    deleteEntries: (id: number[]) => Promise<void>,
 }
 
 // Declare new attribute of window.

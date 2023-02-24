@@ -50,4 +50,10 @@ contextBridge.exposeInMainWorld('EntriesAPI', {
             elapsedTime: elapsedTime, task: task, name: name
         }
     ),
+    editEntryTask: (id: number, task: string) => ipcRenderer.invoke(
+        "database:entries:editEntryTask", {id: id, task: task}
+    ),
+    deleteEntries: (id: number[]) => ipcRenderer.invoke(
+        "database:entries:deleteEntries", {id: id}
+    ),
 });
