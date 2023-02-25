@@ -359,135 +359,132 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
 
         // return the node.
         return (
-            <div className="h-full p-4">
+            <div className="h-full p-4 grid grid-rows-2 gap-5">
 
-                <div className="h-full grid grid-rows-2 gap-5">
+                <form
+                    id="entries-table"
+                    className="flex flex-col"
+                >
 
-                    <form
-                        id="entries-table"
-                        className="flex flex-col"
-                    >
+                    <div className="mb-5 flex">
+                        <div
+                            className="text-2xl font-bold mr-auto">
+                                History
+                        </div>
 
-                        <div className="mb-5 flex">
-                            <div
-                                className="text-2xl font-bold mr-auto">
-                                    History
+                        <Layout.buttons.SimpleButton
+                            size="md"
+                            style="danger"
+                            title="Remove selected entries."
+                            action={this.removeEntries}
+                        >
+
+                            <img
+                                className="w-6 inline"
+                                src="icons/minus-circle-dark.svg"
+                            />
+
+                        </Layout.buttons.SimpleButton>
+
+                    </div>
+
+                    <div id="table-rows" className={tableClass}>
+
+                        <div
+                            className={rowClass}
+                        >
+                            <div className="p-2 border-r">
+                                ID
                             </div>
+                            <div className="p-2 col-span-3 border-r">
+                                Initial Time
+                            </div>
+                            <div className="p-2 col-span-3 border-r">
+                                Final Time
+                            </div>
+                            <div className="p-2 col-span-3 border-r">
+                                Elapsed Time
+                            </div>
+                            <div className="p-2 border-r">
+                                Tasks
+                            </div>
+                            <div className="p-2">
+                                Edit
+                            </div>
+                        </div>
 
-                            <Layout.buttons.SimpleButton
-                                size="md"
-                                style="danger"
-                                title="Remove selected entries."
-                                action={this.removeEntries}
+                        {entriesRows}
+
+                    </div>
+
+                </form>
+
+                <form
+                    id="tasks-edit"
+                    className="flex flex-col"
+                >
+                    <div className="mb-5 flex">
+                        <div className="mr-auto">
+                            Tasks:
+
+                            <span
+                                id="empty-tasks"
+                                className={warnClass}
                             >
-
-                                <img
-                                    className="w-6 inline"
-                                    src="icons/minus-circle-dark.svg"
-                                />
-
-                            </Layout.buttons.SimpleButton>
+                                Tasks is empty.
+                            </span>
 
                         </div>
 
-                        <div id="table-rows" className={tableClass}>
+                        <Layout.buttons.SimpleButton
+                            size="md"
+                            style="option-1"
+                            title="Save edition."
+                            action={this.editTask}
+                        >
 
-                            <div
-                                className={rowClass}
-                            >
-                                <div className="p-2 border-r">
-                                    ID
-                                </div>
-                                <div className="p-2 col-span-3 border-r">
-                                    Initial Time
-                                </div>
-                                <div className="p-2 col-span-3 border-r">
-                                    Final Time
-                                </div>
-                                <div className="p-2 col-span-3 border-r">
-                                    Elapsed Time
-                                </div>
-                                <div className="p-2 border-r">
-                                    Tasks
-                                </div>
-                                <div className="p-2">
-                                    Edit
-                                </div>
-                            </div>
+                            <img
+                                className="w-6 hidden dark:inline"
+                                src="icons/save-dark.svg"
+                            />
 
-                            {entriesRows}
+                            <img
+                                className="w-6 dark:hidden inline"
+                                src="icons/save.svg"
+                            />
 
-                        </div>
+                        </Layout.buttons.SimpleButton>
 
-                    </form>
+                        <div className="w-3"></div>
 
-                    <form
-                        id="tasks-edit"
-                        className="flex flex-col"
-                    >
-                        <div className="mb-5 flex">
-                            <div className="mr-auto">
-                                Tasks:
+                        <Layout.buttons.SimpleButton
+                            size="md"
+                            style="danger"
+                            title="Cancel edition."
+                            action={this.disableEdit}
+                        >
 
-                                <span
-                                    id="empty-tasks"
-                                    className={warnClass}
-                                >
-                                    Tasks is empty.
-                                </span>
+                            <img
+                                className="w-6 inline"
+                                src="icons/times-circle-dark.svg"
+                            />
 
-                            </div>
+                        </Layout.buttons.SimpleButton>
 
-                            <Layout.buttons.SimpleButton
-                                size="md"
-                                style="option-1"
-                                title="Save edition."
-                                action={this.editTask}
-                            >
+                    </div>
 
-                                <img
-                                    className="w-6 hidden dark:inline"
-                                    src="icons/save-dark.svg"
-                                />
-
-                                <img
-                                    className="w-6 dark:hidden inline"
-                                    src="icons/save.svg"
-                                />
-
-                            </Layout.buttons.SimpleButton>
-
-                            <div className="w-3"></div>
-
-                            <Layout.buttons.SimpleButton
-                                size="md"
-                                style="danger"
-                                title="Cancel edition."
-                                action={this.disableEdit}
-                            >
-
-                                <img
-                                    className="w-6 inline"
-                                    src="icons/times-circle-dark.svg"
-                                />
-
-                            </Layout.buttons.SimpleButton>
-
-                        </div>
-
-                        <textarea
-                            className={textAreaClass}
-                            value={this.state.tasks}
-                            onChange={this.handleInputChange}
-                            name="tasks"
-                            id="tasks"
-                            disabled
-                        />
-                    </form>
-
-                </div>
+                    <textarea
+                        className={textAreaClass}
+                        value={this.state.tasks}
+                        onChange={this.handleInputChange}
+                        name="tasks"
+                        id="tasks"
+                        disabled
+                    />
+                </form>
 
             </div>
+
         );
     }
 
