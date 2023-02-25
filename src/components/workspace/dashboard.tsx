@@ -9,13 +9,16 @@ import NewEntryView from "./NewEntry";
 import HistoryView from "./History";
 
 interface IWorkspaceDashboardProps {
+    user: string;
     getView: () => "home" | "newEntry" | "history" | "report" | "settings" ;
     handleLogOut: () => void;
     handleNewEntry: (
         initTime: string, finalTime: string, elapsedTime: string, task: string
     ) => void;
     setView: (event: any) => Promise<void>;
-    getEntries: () => Promise<IEntriesDB[]>;
+    getProjects: () => Promise<string[]>;
+    getEntriesByProject: () => Promise<IEntriesDB[]>;
+    getEntriesByUser: () => Promise<IEntriesDB[]>;
     setStatus: (newStatus: string) => void;
     createModal: (modal: React.ReactNode, status: string) => void;
     closeModal: () => void;
@@ -63,7 +66,7 @@ React.Component<IWorkspaceDashboardProps, IWorkspaceDashboardState> {
             history: (
                 <HistoryView
                     setStatus={this.props.setStatus}
-                    getEntries={this.props.getEntries}
+                    getEntriesByProject={this.props.getEntriesByProject}
                     createModal={this.props.createModal}
                     closeModal={this.props.closeModal}
                 />

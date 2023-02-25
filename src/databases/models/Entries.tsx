@@ -38,7 +38,7 @@ class Entries extends Model {}
 
 // Handle the event to request the entries in the database according to
 // project.
-ipcMain.handle("database:entries:getEntries", async (
+ipcMain.handle("database:entries:getEntriesByProject", async (
     event, ...args: {project: string}[]
 ) => {
 
@@ -47,7 +47,41 @@ ipcMain.handle("database:entries:getEntries", async (
         attributes: ["id", "initTime", "finalTime", "elapsedTime", "task"],
         where: {
             "name": args[0].project
-        }
+        },
+        order: [["initTime", "DESC"]]
+    });
+
+    /** @type {string[]} - List of entries. */
+    let entriesList: {}[] = [];
+
+    // Store the entriesList.
+    for (let i = 0; i < entries.length; i++) {
+        entriesList.push({
+            id: entries[i].id,
+            initTime: entries[i].initTime,
+            finalTime: entries[i].finalTime,
+            elapsedTime: entries[i].elapsedTime,
+            task: entries[i].task
+        });
+    }
+
+    return entriesList;
+
+});
+
+// Handle the event to request the entries in the database according to
+// user.
+ipcMain.handle("database:entries:getEntriesByUser", async (
+    event, ...args: {username: string}[]
+) => {
+
+    // Query the entries.
+    let entries = await Entries.findAll({
+        attributes: ["id", "initTime", "finalTime", "elapsedTime", "task"],
+        where: {
+            "username": args[0].username
+        },
+        order: [["initTime", "DESC"]]
     });
 
     /** @type {string[]} - List of entries. */
@@ -72,7 +106,7 @@ ipcMain.handle("database:entries:getEntries", async (
 ipcMain.handle("database:entries:createEntry", async (
     event, ...args: {
         initTime: string, finalTime: string, elapsedTime: string,
-        task: string, name: string
+        task: string, name: string, username: string
 }[]) => {
 
     // Create the new user.

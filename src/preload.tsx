@@ -6,9 +6,9 @@ import { contextBridge, ipcRenderer } from 'electron';
 //  Set the User API to communicate with the database.
 contextBridge.exposeInMainWorld('UserAPI', {
     getUsers: () => ipcRenderer.invoke("database:user:getUsers"),
-    getName: (
-        username: string
-    ) => ipcRenderer.invoke("database:user:getName", {username: username}),
+    getName: (username: string) => ipcRenderer.invoke(
+        "database:user:getName", {username: username}
+    ),
     createUser: (
         name: string, username: string, password: string
     ) => ipcRenderer.invoke(
@@ -25,29 +25,31 @@ contextBridge.exposeInMainWorld('UserAPI', {
 
 //  Set the Project API to communicate with the database.
 contextBridge.exposeInMainWorld('ProjectAPI', {
-    getProjects: (
-        username: string
-    ) => ipcRenderer.invoke("database:project:getProjects", {username: username}),
-    createProject: (
-        username: string, name: string
-    ) => ipcRenderer.invoke(
+    getProjects: (username: string) => ipcRenderer.invoke(
+        "database:project:getProjects", {username: username}
+    ),
+    createProject: (username: string, name: string) => ipcRenderer.invoke(
         "database:project:createProject", {username: username, name: name}
     ),
 });
 
 //  Set the Entries API to communicate with the database.
 contextBridge.exposeInMainWorld('EntriesAPI', {
-    getEntries: (
-        project: string
-    ) => ipcRenderer.invoke("database:entries:getEntries", {project: project}),
+    getEntriesByProject: (project: string) => ipcRenderer.invoke(
+        "database:entries:getEntriesByProject", {project: project}
+    ),
+    getEntriesByUser: (username: string) => ipcRenderer.invoke(
+        "database:entries:getEntriesByUser", {username: username}
+    ),
     createEntry: (
         initTime: string, finalTime: string, elapsedTime: string,
-        task: string, name: string
+        task: string, name: string, username: string
     ) => ipcRenderer.invoke(
         "database:entries:createEntry",
         {
             initTime: initTime, finalTime: finalTime,
-            elapsedTime: elapsedTime, task: task, name: name
+            elapsedTime: elapsedTime, task: task, name: name,
+            username: username
         }
     ),
     editEntryTask: (id: number, task: string) => ipcRenderer.invoke(

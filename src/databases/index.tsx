@@ -62,6 +62,14 @@ ProjectModel.model.hasMany(EntriesModel.model, {
 });
 EntriesModel.model.belongsTo(ProjectModel.model);
 
+// Associate Users to Projects with One-To-Many model.
+UserModel.model.hasMany(EntriesModel.model, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+    foreignKey: 'username',
+});
+EntriesModel.model.belongsTo(UserModel.model);
+
 // // Synchronize the tables.
 // (async () => {
 //     await sequelize.sync({ alter: true })

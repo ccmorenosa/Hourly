@@ -48,10 +48,11 @@ export interface IProjectAPI {
 
 // Export interface IEntriesAPI.
 export interface IEntriesAPI {
-    getEntries: (project: string) => Promise<IEntriesDB[]>,
+    getEntriesByProject: (project: string) => Promise<IEntriesDB[]>,
+    getEntriesByUser: (project: string) => Promise<IEntriesDB[]>,
     createEntry: (
         initTime: string, finalTime: string, elapsedTime: string,
-        task: string, name: string
+        task: string, name: string, username: string
     ) => Promise<void>,
     editEntryTask: (id: number, task: string) => Promise<void>,
     deleteEntries: (id: number[]) => Promise<void>,

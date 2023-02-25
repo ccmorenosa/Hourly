@@ -51,7 +51,8 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
         this.setStatus = this.setStatus.bind(this);
         this.createProject = this.createProject.bind(this);
         this.getProjects = this.getProjects.bind(this);
-        this.getEntries = this.getEntries.bind(this);
+        this.getEntriesByProject = this.getEntriesByProject.bind(this);
+        this.getEntriesByUser = this.getEntriesByUser.bind(this);
         this.setView = this.setView.bind(this);
 
         // Set state.
@@ -235,7 +236,8 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
 
         // Create new entry.
         window.EntriesAPI.createEntry(
-            initTime, finalTime, elapsedTime, task, this.state.project
+            initTime, finalTime, elapsedTime, task, this.state.project,
+            this.props.username
         );
 
     }
@@ -329,16 +331,21 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
      * Get the projects stores in the database.
      */
     async getProjects(): Promise<string[]> {
-
         return await window.ProjectAPI.getProjects(this.props.username);
-
     }
 
     /**
-     * Get list of entries.
+     * Get list of entries by project.
      */
-    async getEntries(): Promise<IEntriesDB[]> {
-        return await window.EntriesAPI.getEntries(this.state.project);
+    async getEntriesByProject(): Promise<IEntriesDB[]> {
+        return await window.EntriesAPI.getEntriesByProject(this.state.project);
+    }
+
+    /**
+     * Get list of entries by user.
+     */
+    async getEntriesByUser(): Promise<IEntriesDB[]> {
+        return await window.EntriesAPI.getEntriesByUser(this.props.username);
     }
 
     /**
@@ -375,11 +382,14 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
                         />
 
                     <WorkspaceDashboard
+                        user={this.props.user}
                         handleLogOut={this.handleLogOut}
                         handleNewEntry={this.handleNewEntry}
                         setView={this.setView}
                         getView={() => {return this.state.view;}}
-                        getEntries={this.getEntries}
+                        getProjects={this.getProjects}
+                        getEntriesByProject={this.getEntriesByProject}
+                        getEntriesByUser={this.getEntriesByUser}
                         setStatus={this.setStatus}
                         createModal={this.createModal}
                         closeModal={this.closeModal}

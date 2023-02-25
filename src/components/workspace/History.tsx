@@ -8,7 +8,7 @@ import Layout from "../layouts";
 import moment from 'moment';
 
 interface IHistoryViewProps {
-    getEntries: () => Promise<IEntriesDB[]>;
+    getEntriesByProject: () => Promise<IEntriesDB[]>;
     setStatus: (newStatus: string) => void;
     createModal: (modal: React.ReactNode, status: string) => void;
     closeModal: () => void;
@@ -39,7 +39,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
         super(props);
 
         // Bind actions.
-        this.getEntries = this.getEntries.bind(this);
+        this.getEntriesByProject = this.getEntriesByProject.bind(this);
         this.showTasks = this.showTasks.bind(this);
         this.editTask = this.editTask.bind(this);
         this.removeEntries = this.removeEntries.bind(this);
@@ -54,15 +54,15 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
         };
 
         // Get entries
-        this.getEntries();
+        this.getEntriesByProject();
 
     }
 
     /**
      * Get list of entries.
      */
-    async getEntries() {
-        let res = await this.props.getEntries();
+    async getEntriesByProject() {
+        let res = await this.props.getEntriesByProject();
         this.setState({entries: res});
     }
 
@@ -165,7 +165,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
                         this.disableEdit();
 
                         // Update entries.
-                        this.getEntries();
+                        this.getEntriesByProject();
 
                         // Close modal.
                         this.props.closeModal();
@@ -213,7 +213,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
                         );
 
                         // Update entries.
-                        this.getEntries();
+                        this.getEntriesByProject();
 
                         // Close modal.
                         this.props.closeModal();
