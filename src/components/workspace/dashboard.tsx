@@ -84,9 +84,11 @@ React.Component<IWorkspaceDashboardProps, IWorkspaceDashboardState> {
      */
     render(): React.ReactNode {
         /** @typedef {string} - Class for the main div. */
-        let dashClass = (
-            "h-full text-lg flex bg-gray-100 dark:bg-gray-900 " +
-            "scrollbar overflow-x-scroll scrollbar-h-2 " +
+        let dashClass = "text-lg flex bg-gray-100 dark:bg-gray-900 ";
+
+        /** @typedef {string} - Class for scroll. */
+        let scroll: string = (
+            "h-full w-full scrollbar overflow-x-scroll scrollbar-h-2 " +
             "overflow-y-scroll scrollbar-w-2 " +
             "scrollbar-thumb-celeste-900 scrollbar-track-rounded-full " +
             "scrollbar-track-celeste-100 scrollbar-thumb-rounded-full "

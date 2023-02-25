@@ -252,7 +252,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
 
         /** @typedef {string} - Class for the entries of the table. */
         let tableClass: string = (
-            "lg:h-60 md:h-44 lg:w-[70rem] md:w-[40rem] justify-center " +
+            "min-w-[40rem] justify-center " +
             "overflow-y-scroll overflow-x-scroll scrollbar-w-2 scrollbar " +
             "scrollbar-h-2 scrollbar-thumb-celeste-900 " +
             "scrollbar-track-celeste-100 scrollbar-thumb-rounded-full " +
