@@ -28,6 +28,11 @@ let EntriesAttributes = {
     task: {
         type: DataTypes.TEXT,
         allowNull: false,
+    },
+    fav: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+        allowNull: false,
     }
 };
 
