@@ -73,7 +73,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
      * Set check to true/false for all the checkbox
      * @param event {any} - The favorite button.
      */
-    favorite(event: any)  {
+    favorite(event: any) {
         // Get current button.
         let btn = event.currentTarget;
 
@@ -105,7 +105,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
      * Set check to true/false for all the checkbox.
      * @param event {any} - The general checkbox change event.
      */
-    checkAll(event: any)  {
+    checkAll(event: any) {
 
         if (event.currentTarget.checked) {
 
@@ -129,7 +129,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
      * Set check to true/false the general checkbox.
      * @param event {any} - The list checkbox change event.
      */
-    check()  {
+    check() {
 
         if (
             $("input:checkbox[name=entry]").length ==
