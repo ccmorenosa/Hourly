@@ -44,6 +44,7 @@ export interface IUserAPI {
 export interface IProjectAPI {
     getProjects: (username: string) => Promise<string[]>,
     createProject: (username: string, name: string) => Promise<void>,
+    deleteProject: (name: string) => Promise<void>,
 }
 
 // Export interface IEntriesAPI.

@@ -31,6 +31,9 @@ contextBridge.exposeInMainWorld('ProjectAPI', {
     createProject: (username: string, name: string) => ipcRenderer.invoke(
         "database:project:createProject", {username: username, name: name}
     ),
+    deleteProject: (name: string) => ipcRenderer.invoke(
+        "database:project:deleteProject", {name: name}
+    ),
 });
 
 //  Set the Entries API to communicate with the database.

@@ -55,6 +55,20 @@ ipcMain.handle("database:project:createProject", async (
 
 });
 
+// Handle the event to delete a project.
+ipcMain.handle("database:project:deleteProject", async (
+    event, ...args: {name: string}[]
+) => {
+
+    // Delete entry.
+    Project.destroy({
+        where: {
+            name: args[0].name
+        }
+    });
+
+});
+
 /** @typedef {object} - Group Project variables for the model */
 const ProjectModel = {
     model: Project,
