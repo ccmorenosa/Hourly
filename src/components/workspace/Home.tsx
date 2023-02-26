@@ -157,12 +157,12 @@ React.Component<IHomeViewProps, IHomeViewState> {
 
             /** @typedef {string} - Set the modal message. */
             let message: string = (
-                `Are you sure you want to delete "${proj}" project`
+                `Are you sure you want to delete "${proj}" project?`
             );
 
             this.props.createModal(
                 <Layout.modals.DangerModal
-                    title="Remove items"
+                    title="Remove project"
                     message={message}
                     cancel={this.props.closeModal}
                     proceed={() =>{

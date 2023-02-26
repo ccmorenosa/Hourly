@@ -281,7 +281,7 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
             this.props.createModal(
                 <Layout.modals.SuccessModal
                     title="Entry saved"
-                    message="The entry has been saved successfully."
+                    message="The entry has been saved successfully!"
                     proceed={this.props.closeModal}
                 />, "Ready."
             );
