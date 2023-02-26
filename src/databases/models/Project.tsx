@@ -10,7 +10,6 @@ let ProjectAttributes = {
     name: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
         primaryKey: true
     }
 };
@@ -57,15 +56,16 @@ ipcMain.handle("database:project:createProject", async (
 
 // Handle the event to delete a project.
 ipcMain.handle("database:project:deleteProject", async (
-    event, ...args: {name: string}[]
+    event, ...args: {username: string, name: string}[]
 ) => {
 
     // Delete entry.
     Project.destroy({
         where: {
+            username: args[0].username,
             name: args[0].name
         }
-    });
+    }).catch((e: any) => {console.log(e);});
 
 });
 
