@@ -357,6 +357,22 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
             }
         );
 
+        if (entriesRows.length == 0) {
+
+            let badgeClass : string = (
+                "m-auto py-1 px-3 text-xs font-bold rounded-full " +
+                "bg-gray-300 dark:bg-gray-700"
+            );
+
+            entriesRows = [<div className="flex p-2" key={0}>
+
+                <div className={badgeClass}>
+                    You don't have any entry in this project.
+                </div>
+
+            </div>];
+        }
+
         // return the node.
         return (
             <div className="h-full p-4 grid grid-rows-2 gap-5">
