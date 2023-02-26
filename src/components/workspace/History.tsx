@@ -83,10 +83,16 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
 
         if (btn.id == ("fav-" + entryIndex.toString())) {
 
+            // Activate fav.
+            window.EntriesAPI.changeFav(entryID, 1);
+
             $("#fav-" + entryIndex.toString()).addClass("hidden");
             $("#fav-active-" + entryIndex.toString()).removeClass("hidden");
 
         } else {
+
+            // Deactivate fav.
+            window.EntriesAPI.changeFav(entryID, 0);
 
             $("#fav-" + entryIndex.toString()).removeClass("hidden");
             $("#fav-active-" + entryIndex.toString()).addClass("hidden");
@@ -369,6 +375,13 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
                     entry.elapsedTime
                 ).format("HH:mm:ss");
 
+                // Set fav button display.
+                let fav: string = "", favActive: string = "hidden";
+
+                if (entry.fav) {
+                    fav = "hidden", favActive = "";
+                }
+
                 return (
                     <div
                         className={rowClass}
@@ -391,7 +404,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
 
                             <Layout.buttons.SimpleButton
                                 id={"fav-" + i.toString()}
-                                className=""
+                                className={fav}
                                 size="sm"
                                 style="fav"
                                 title=""
@@ -412,7 +425,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
 
                             <Layout.buttons.SimpleButton
                                 id={"fav-active-" + i.toString()}
-                                className="hidden"
+                                className={favActive}
                                 size="sm"
                                 style="fav"
                                 title=""
