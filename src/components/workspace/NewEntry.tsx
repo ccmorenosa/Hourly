@@ -369,8 +369,6 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
             "font-bold text-sm"
         );
 
-        console.log(this.state.fav);
-
         // return the node.
         return (
             <form
