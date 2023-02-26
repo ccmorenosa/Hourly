@@ -27,6 +27,7 @@ interface IHomeViewState {
     workedTime: string;
     lastEntry: string;
     entriesProj: IEntriesDB[];
+    favoritesProj: number;
     workedTimeProj: string;
     lastEntryProj: string;
 }
@@ -59,6 +60,7 @@ React.Component<IHomeViewProps, IHomeViewState> {
             workedTime: "",
             lastEntry: "",
             entriesProj: [],
+            favoritesProj: 0,
             workedTimeProj: "",
             lastEntryProj: "",
         };
@@ -72,7 +74,7 @@ React.Component<IHomeViewProps, IHomeViewState> {
      * @param entries {IEntriesDB[]} - List of entries for the project or user.
      */
     computeStats(entries: IEntriesDB[])
-    : {workedTime: string, lastEntry: string} {
+    : {favorites: number, workedTime: string, lastEntry: string} {
 
         /** @typedef {string} - Get last entry time. */
         let lastEntry: string = "-";
@@ -82,8 +84,9 @@ React.Component<IHomeViewProps, IHomeViewState> {
             ).format("YY-MM-DD");
         }
 
-        /** @typedef {number} - Total worked seconds. */
+        /** @typedef {number} - Total worked seconds and favorites count. */
         let totalSec: number = 0;
+        let favorites: number = 0;
 
         entries.forEach((entry, i) => {
             totalSec += (
@@ -91,9 +94,12 @@ React.Component<IHomeViewProps, IHomeViewState> {
                 entry.elapsedTime.getMinutes() * 60 +
                 entry.elapsedTime.getSeconds()
             );
+
+            favorites += entry.fav;
         });
 
         return {
+            favorites: favorites,
             workedTime: (
                 "HH:mm:ss".replace(
                     "HH",
@@ -133,6 +139,7 @@ React.Component<IHomeViewProps, IHomeViewState> {
             workedTime: statsU.workedTime,
             lastEntry: statsU.lastEntry,
             entriesProj: entriesP,
+            favoritesProj: statsP.favorites,
             workedTimeProj: statsP.workedTime,
             lastEntryProj: statsP.lastEntry,
         });
@@ -211,7 +218,7 @@ React.Component<IHomeViewProps, IHomeViewState> {
 
         /** @typedef {string} - Class for scroll. */
         let tableBoxClass: string = (
-            "grid grid-cols-2 bg-gray-200 dark:bg-gray-800 rounded-lg p-3 "
+            "grid grid-cols-2 bg-gray-200 dark:bg-gray-800 rounded-lg p-5 "
         );
 
         /** @typedef {React.ReactNode[]} - List of projects for the user. */
@@ -321,6 +328,13 @@ React.Component<IHomeViewProps, IHomeViewState> {
                     }</div>
 
                     <div className="border-b p-3">
+                        Favorite entries:
+                    </div>
+                    <div className="border-b p-3">{
+                        this.state.favoritesProj
+                    }</div>
+
+                    <div className="border-b p-3">
                         Time worked:
                     </div>
                     <div className="border-b p-3">{
@@ -393,6 +407,13 @@ React.Component<IHomeViewProps, IHomeViewState> {
                         moment(
                             lastItem.elapsedTime
                         ).format("HH:mm:ss")
+                    }</div>
+
+                    <div className="border-b p-3">
+                        Favorite:
+                    </div>
+                    <div className="border-b p-3">{
+                        lastItem.fav ? "Yes" : "No"
                     }</div>
 
                     <div className=" p-3 col-span-2 ">
