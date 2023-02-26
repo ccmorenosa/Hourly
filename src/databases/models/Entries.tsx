@@ -61,7 +61,7 @@ ipcMain.handle("database:entries:getEntriesByProject", async (
             initTime: entries[i].initTime,
             finalTime: entries[i].finalTime,
             elapsedTime: entries[i].elapsedTime,
-            task: entries[i].task
+            task: entries[i].task,
         });
     }
 
@@ -97,7 +97,8 @@ ipcMain.handle("database:entries:getEntriesByUser", async (
             initTime: entries[i].initTime,
             finalTime: entries[i].finalTime,
             elapsedTime: entries[i].elapsedTime,
-            task: entries[i].task
+            task: entries[i].task,
+            name: entries[i].name,
         });
     }
 
