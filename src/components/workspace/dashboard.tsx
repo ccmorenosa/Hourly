@@ -78,6 +78,8 @@ React.Component<IWorkspaceDashboardProps, IWorkspaceDashboardState> {
                 <NewEntryView
                     setStatus={this.props.setStatus}
                     handleNewEntry={this.props.handleNewEntry}
+                    createModal={this.props.createModal}
+                    closeModal={this.props.closeModal}
                 />
             ),
 

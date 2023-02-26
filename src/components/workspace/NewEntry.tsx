@@ -12,6 +12,8 @@ interface INewEntryViewProps {
         initTime: string, finalTime: string, elapsedTime: string, task: string
     ) => void;
     setStatus: (newStatus: string) => void;
+    createModal: (modal: React.ReactNode, status: string) => void;
+    closeModal: () => void;
 }
 
 interface INewEntryViewState {
@@ -275,6 +277,14 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
 
             // Show success and reset form.
             $("#success").removeClass("hidden");
+
+            this.props.createModal(
+                <Layout.modals.SuccessModal
+                    title="Entry saved"
+                    message="The entry has been saved successfully."
+                    proceed={this.props.closeModal}
+                />, "Ready."
+            );
 
             this.resetForm();
 
