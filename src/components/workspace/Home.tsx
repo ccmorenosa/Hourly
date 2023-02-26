@@ -347,7 +347,7 @@ React.Component<IHomeViewProps, IHomeViewState> {
                     <Layout.boxes.BoxBase
                         style="gray"
                         title="No active project"
-                        value="Create or  select a project
+                        value="Open a project
                         to see more stats"
                     />
                     </div>
@@ -364,44 +364,44 @@ React.Component<IHomeViewProps, IHomeViewState> {
             LastEntry = (
                 <div className={entriesClass + scroll}>
 
-                    <div className="border-b py-3">
+                    <div className="border-b p-3">
                         Project:
                     </div>
-                    <div className="border-b py-3">{lastItem.name}</div>
+                    <div className="border-b p-3">{lastItem.name}</div>
 
-                    <div className="border-b py-3">
+                    <div className="border-b p-3">
                         Init time:
                     </div>
-                    <div className="border-b py-3">{
+                    <div className="border-b p-3">{
                         moment(
                             lastItem.initTime
                         ).format("YYYY-MM-DD HH:mm:ss")
                     }</div>
 
-                    <div className="border-b py-3">
+                    <div className="border-b p-3">
                         Final time:
                     </div>
-                    <div className="border-b py-3">{
+                    <div className="border-b p-3">{
                         moment(
                             lastItem.finalTime
                         ).format("YYYY-MM-DD HH:mm:ss")
                     }</div>
 
-                    <div className="border-b py-3">
+                    <div className="border-b p-3">
                         Elapsed time:
                     </div>
-                    <div className="border-b py-3">{
+                    <div className="border-b p-3">{
                         moment(
                             lastItem.elapsedTime
                         ).format("HH:mm:ss")
                     }</div>
 
-                    <div className="border-b py-3 col-span-2 ">
+                    <div className=" p-3 col-span-2 ">
                         Tasks:
                     </div>
                     <div
                         className={
-                            "border-b py-3 col-span-2 whitespace-pre-wrap"
+                            "border-b p-3 col-span-2 whitespace-pre-wrap"
                         }
                     >
                         {lastItem.task}
