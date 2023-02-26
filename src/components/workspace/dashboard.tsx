@@ -10,7 +10,7 @@ import HistoryView from "./History";
 
 interface IWorkspaceDashboardProps {
     user: string;
-    getView: () => "home" | "newEntry" | "history" | "report" | "settings" ;
+    getView: () => "changing" | "home" | "newEntry" | "history" | "report" | "settings" ;
     handleLogOut: () => void;
     handleNewEntry: (
         initTime: string, finalTime: string, elapsedTime: string, task: string
@@ -25,6 +25,7 @@ interface IWorkspaceDashboardProps {
 }
 
 interface IWorkspaceDashboardState {
+    changing: React.ReactNode;
     home: React.ReactNode;
     newEntry: React.ReactNode;
     history: React.ReactNode;
@@ -54,6 +55,8 @@ React.Component<IWorkspaceDashboardProps, IWorkspaceDashboardState> {
 
         // Set state.
         this.state = {
+            changing: <div></div>,
+
             home: <></>,
 
             newEntry: (
@@ -99,8 +102,16 @@ React.Component<IWorkspaceDashboardProps, IWorkspaceDashboardState> {
          * Active view. */
         let view = this.props.getView();
 
+        if (view === "changing") {
+            setTimeout(
+                () => {this.props.setView({target: {id: "home"}});},
+                1
+            );
+        }
+
         // Active status buttons.
         let isActive = {
+            changing: "inactive",
             home: "inactive",
             newEntry: "inactive",
             history: "inactive",

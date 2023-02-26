@@ -15,7 +15,7 @@ interface IWorkSpaceProps {
 }
 
 interface IWorkSpaceState {
-    view: "home" | "newEntry" | "history" | "report" | "settings" ;
+    view: "changing" | "home" | "newEntry" | "history" | "report" | "settings" ;
     warningZ: string;
     opacity: string;
     project?: string;
@@ -281,9 +281,10 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
     setProject(proj: string) {
         // Set project.
         this.setState({
-            view: "home",
+            view: "changing",
             project: proj,
         });
+
     }
 
     /**
