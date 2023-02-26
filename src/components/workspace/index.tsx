@@ -339,7 +339,13 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
      * Get list of entries by project.
      */
     async getEntriesByProject(): Promise<IEntriesDB[]> {
-        return await window.EntriesAPI.getEntriesByProject(this.state.project);
+        if (this.state.project) {
+            return await window.EntriesAPI.getEntriesByProject(
+                this.state.project
+            );
+        } else {
+            return [];
+        }
     }
 
     /**
@@ -380,7 +386,7 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
                         project={this.state.project}
                         newProject={this.handleNewProject}
                         openProject={this.handleOpenProject}
-                        />
+                    />
 
                     <WorkspaceDashboard
                         user={this.props.user}
@@ -388,6 +394,8 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
                         handleNewEntry={this.handleNewEntry}
                         setView={this.setView}
                         getView={() => {return this.state.view;}}
+                        getCurrentProject={() => {return this.state.project;}}
+                        setProject={this.setProject}
                         getProjects={this.getProjects}
                         getEntriesByProject={this.getEntriesByProject}
                         getEntriesByUser={this.getEntriesByUser}

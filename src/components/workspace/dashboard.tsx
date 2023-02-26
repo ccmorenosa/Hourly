@@ -7,15 +7,18 @@ import React from "react";
 import Layout from "../layouts";
 import NewEntryView from "./NewEntry";
 import HistoryView from "./History";
+import HomeView from "./Home";
 
 interface IWorkspaceDashboardProps {
     user: string;
     getView: () => "changing" | "home" | "newEntry" | "history" | "report" | "settings" ;
+    getCurrentProject: () => string;
     handleLogOut: () => void;
     handleNewEntry: (
         initTime: string, finalTime: string, elapsedTime: string, task: string
     ) => void;
     setView: (event: any) => Promise<void>;
+    setProject: (proj: string) => void;
     getProjects: () => Promise<string[]>;
     getEntriesByProject: () => Promise<IEntriesDB[]>;
     getEntriesByUser: () => Promise<IEntriesDB[]>;
@@ -57,7 +60,19 @@ React.Component<IWorkspaceDashboardProps, IWorkspaceDashboardState> {
         this.state = {
             changing: <div></div>,
 
-            home: <></>,
+            home: (
+                <HomeView
+                    user={this.props.user}
+                    setStatus={this.props.setStatus}
+                    getCurrentProject={this.props.getCurrentProject}
+                    setProject={this.props.setProject}
+                    getProjects={this.props.getProjects}
+                    getEntriesByProject={this.props.getEntriesByProject}
+                    getEntriesByUser={this.props.getEntriesByUser}
+                    createModal={this.props.createModal}
+                    closeModal={this.props.closeModal}
+                />
+            ),
 
             newEntry: (
                 <NewEntryView
