@@ -4,43 +4,35 @@
  * It renders the boxes to hold messages.
  */
 
-import React from "react";
+import React, { PropsWithChildren } from "react";
 
-interface IHomeBoxProps {
+interface IBoxBaseProps {
     style?: string;
     title: string;
     value: string;
-    icon: string;
 }
 
-interface IHomeBoxState { }
+interface IBoxBaseState {
+    boxStyle?: string;
+}
 
 
 /**
  * Class representing a box base.
  * @extends {React.Component}
  */
-class HomeBox extends React.Component<IHomeBoxProps, IHomeBoxState> {
+class BoxBase<PROPS extends IBoxBaseProps, STATE extends IBoxBaseState> extends
+React.Component<PROPS, STATE> {
 
     /**
      * Create the component.
      * @param props {object} - Properties of the component.
      */
-    constructor(props: IHomeBoxProps) {
+    constructor(props: PROPS) {
 
         // Create superior class.
         super(props);
 
-        // Set state.
-        this.state = { };
-
-    }
-
-    /**
-     * Render the component.
-     * @returns {React.ReactNode} the box node.
-     */
-    render(): React.ReactNode {
         /** @typedef {string} - Box color and style. */
         let boxStyle: string = (
             "flex flex-col lg:p-4 md:p-2 rounded-lg font-bold "
@@ -49,40 +41,112 @@ class HomeBox extends React.Component<IHomeBoxProps, IHomeBoxState> {
         // Set button style.
         switch (this.props.style) {
             case "green":
-                boxStyle += "bg-celadon-300 dark:bg-celadon-900 ";
+                boxStyle += "bg-celadon-300 dark:bg-celadon-700 ";
                 break;
 
-            case "gay":
-                boxStyle += "bg-gray-300 dark:bg-gray-900 ";
+            case "gray":
+                boxStyle += "bg-gray-300 dark:bg-gray-700 ";
                 break;
 
             case "yellow":
-                boxStyle += "bg-honey-300 dark:bg-honey-900 ";
+                boxStyle += "bg-honey-300 dark:bg-honey-700 ";
                 break;
 
             case "red":
-                boxStyle += "bg-vermilion-300 dark:bg-vermilion-900 ";
+                boxStyle += "bg-vermilion-300 dark:bg-vermilion-700 ";
                 break;
 
             case "blue":
-                boxStyle += "bg-celeste-300 dark:bg-celeste-900 ";
+                boxStyle += "bg-celeste-300 dark:bg-celeste-700 ";
                 break;
 
             case "purple":
-                boxStyle += "bg-purple-300 dark:bg-purple-900 ";
+                boxStyle += "bg-purple-300 dark:bg-purple-700 ";
                 break;
 
             default:
-                boxStyle += "bg-celadon-300 dark:bg-celadon-900 ";
+                boxStyle += "bg-celadon-300 dark:bg-celadon-700 ";
                 break;
         }
+
+        // Set state.
+        this.state = {
+            boxStyle: boxStyle,
+        } as STATE;
+
+    }
+
+    /**
+     * Render the component.
+     * @returns {React.ReactNode} the box node.
+     */
+    render(): React.ReactNode {
+
+        // return the node.
+        return (
+            <div className={this.state.boxStyle}>
+
+                <span className="lg:text-lg md:text-base justify-center">
+                    {this.props.title}
+                </span>
+
+                <div className="flex">
+
+                    <span className="lg:text-3xl md:text-xl m-auto whitespace-pre-line">
+                        {this.props.value}
+                    </span>
+
+                </div>
+
+        </div>
+        );
+
+    }
+
+}
+
+
+interface IStatsBoxProps {
+    style?: string;
+    title: string;
+    value: string;
+    icon: string;
+}
+
+interface IStatsBoxState {
+    boxStyle?: string;
+}
+
+
+/**
+ * Class representing a box base.
+ * @extends {React.Component}
+ */
+class StatsBox extends BoxBase<IStatsBoxProps, IStatsBoxState> {
+
+    /**
+     * Create the component.
+     * @param props {object} - Properties of the component.
+     */
+    constructor(props: IStatsBoxProps) {
+
+        // Create superior class.
+        super(props);
+
+    }
+
+    /**
+     * Render the component.
+     * @returns {React.ReactNode} the box node.
+     */
+    render(): React.ReactNode {
 
         /** @typedef {string} - Images. */
         let icon: string = `icons/${this.props.icon}`;
 
         // return the node.
         return (
-            <div className={boxStyle}>
+            <div className={this.state.boxStyle}>
 
                 <span className="lg:text-lg md:text-base">
                     {this.props.title}
@@ -112,7 +176,8 @@ class HomeBox extends React.Component<IHomeBoxProps, IHomeBoxState> {
 
 /** @typedef {object} - Group boxes components */
 const boxes = {
-    HomeBox: HomeBox,
+    BoxBase: BoxBase,
+    StatsBox: StatsBox,
 };
 
 // Export boxes.
