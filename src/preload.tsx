@@ -58,6 +58,9 @@ contextBridge.exposeInMainWorld('EntriesAPI', {
     editEntryTask: (id: number, task: string) => ipcRenderer.invoke(
         "database:entries:editEntryTask", {id: id, task: task}
     ),
+    changeFav: (id: number, fav: 0 | 1) => ipcRenderer.invoke(
+        "database:entries:changeFav", {id: id, fav: fav}
+    ),
     deleteEntries: (id: number[]) => ipcRenderer.invoke(
         "database:entries:deleteEntries", {id: id}
     ),

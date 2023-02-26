@@ -143,6 +143,22 @@ ipcMain.handle("database:entries:editEntryTask", async (
 
 });
 
+// Handle the event to change fav status of an entry.
+ipcMain.handle("database:entries:changeFav", async (
+    event, ...args: {id: number, fav: 0 | 1}[]
+) => {
+
+    // Edit entry.
+    Entries.update(
+        {fav: args[0].fav}, {
+            where: {
+                id: args[0].id
+            }
+        }
+    );
+
+});
+
 // Handle the event to delete an entry.
 ipcMain.handle("database:entries:deleteEntries", async (
     event, ...args: {id: number[]}[]

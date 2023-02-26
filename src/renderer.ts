@@ -56,6 +56,7 @@ export interface IEntriesAPI {
         task: string, name: string, username: string, fav?: 0 | 1
     ) => Promise<void>,
     editEntryTask: (id: number, task: string) => Promise<void>,
+    changeFav: (id: number, fav: 0 | 1) => Promise<void>,
     deleteEntries: (id: number[]) => Promise<void>,
 }
 
