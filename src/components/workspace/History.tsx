@@ -109,7 +109,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
 
         if (event.currentTarget.checked) {
 
-            // Uncheck all.
+            // Check all.
             $("input:checkbox[name=entry]").prop(
                 'checked', true
             );
@@ -136,14 +136,14 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
             $("input:checkbox[name=entry]:checked").length
         ) {
 
-            // Uncheck all.
+            // Check general.
             $("input:checkbox[name=entry-all]").prop(
                 'checked', true
             );
 
         } else {
 
-            // Uncheck all.
+            // Uncheck general.
             $("input:checkbox[name=entry-all]").prop(
                 'checked', false
             );
@@ -295,6 +295,11 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
 
                         // Uncheck all.
                         $("input:checkbox[name=entry]:checked").prop(
+                            'checked', false
+                        );
+
+                        // Uncheck general.
+                        $("input:checkbox[name=entry-all]").prop(
                             'checked', false
                         );
 
