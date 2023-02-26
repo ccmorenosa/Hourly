@@ -74,6 +74,7 @@ declare global {
         finalTime: Date;
         elapsedTime: Date;
         task: string;
+        name?: string;
     }
 }
 

@@ -77,7 +77,10 @@ ipcMain.handle("database:entries:getEntriesByUser", async (
 
     // Query the entries.
     let entries = await Entries.findAll({
-        attributes: ["id", "initTime", "finalTime", "elapsedTime", "task"],
+        attributes: [
+            "id", "initTime", "finalTime", "elapsedTime",
+            "task", "name"
+        ],
         where: {
             "username": args[0].username
         },
