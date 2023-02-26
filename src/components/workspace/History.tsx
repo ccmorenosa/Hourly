@@ -182,7 +182,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
      */
     removeEntries() {
 
-        /** @typedef {number[]} - Get ID checked.. */
+        /** @typedef {number[]} - Get ID checked. */
         let IDs: number[] = [];
 
         $("input:checkbox[name=entry]:checked").each(
@@ -191,12 +191,12 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
             }
         );
 
-        /** @typedef {string} - Get ID checked.. */
-        let message: string = (
-            "Are you sure you want to delete the selected entries?"
-        );
-
         if (IDs.length > 0) {
+
+            /** @typedef {string} - Set the message for the modal. */
+            let message: string = (
+                "Are you sure you want to delete the selected entries?"
+            );
 
             this.props.createModal(
                 <Layout.modals.DangerModal
@@ -204,7 +204,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
                     message={message}
                     cancel={this.props.closeModal}
                     proceed={() =>{
-                        // Change item.
+                        // Delete entries.
                         window.EntriesAPI.deleteEntries(IDs);
 
                         // Uncheck all.
