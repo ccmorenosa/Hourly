@@ -108,6 +108,7 @@ interface IBaseButtonProps {
     id?: string;
     text?: string;
     title?: string;
+    className?: string;
     disabled?: boolean;
     style?: string;
     type?: "submit" | "button" | "reset";
@@ -139,7 +140,9 @@ React.Component<PROPS, STATE> {
         super(props);
 
         /** @typedef {string} - Button color and style. */
-        let btnStyle: string = "disabled:opacity-50 disabled:dark:opacity-30 ";
+        let btnStyle: string = (
+            " disabled:opacity-50 disabled:dark:opacity-30 "
+        );
 
         // Set button style.
         switch (this.props.style) {
@@ -199,6 +202,12 @@ React.Component<PROPS, STATE> {
                 );
                 break;
 
+            case "fav":
+                btnStyle += (
+                    "bg-transparent "
+                );
+                break;
+
             case "danger":
                 btnStyle += (
                     "bg-vermilion-500 enabled:hover:bg-vermilion-400 " +
@@ -217,7 +226,7 @@ React.Component<PROPS, STATE> {
 
         // Set state.
         this.state = {
-            btnStyle: btnStyle
+            btnStyle: this.props.className + btnStyle
         } as STATE;
 
     }
