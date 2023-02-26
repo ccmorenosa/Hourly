@@ -40,6 +40,9 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
 
         // Bind actions.
         this.getEntriesByProject = this.getEntriesByProject.bind(this);
+        this.favorite = this.favorite.bind(this);
+        this.checkAll = this.checkAll.bind(this);
+        this.check = this.check.bind(this);
         this.showTasks = this.showTasks.bind(this);
         this.editTask = this.editTask.bind(this);
         this.removeEntries = this.removeEntries.bind(this);
@@ -64,6 +67,83 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
     async getEntriesByProject() {
         let res = await this.props.getEntriesByProject();
         this.setState({entries: res});
+    }
+
+    /**
+     * Set check to true/false for all the checkbox
+     * @param event {any} - The favorite button.
+     */
+    favorite(event: any)  {
+        // Get current button.
+        let btn = event.currentTarget;
+
+        /** @typedef {number} - Index and id of the entry */
+        let entryIndex = btn.parentNode.parentNode.id;
+        let entryID = this.state.entries[entryIndex].id;
+
+        if (btn.id == ("fav-" + entryIndex.toString())) {
+
+            $("#fav-" + entryIndex.toString()).addClass("hidden");
+            $("#fav-active-" + entryIndex.toString()).removeClass("hidden");
+
+        } else {
+
+            $("#fav-" + entryIndex.toString()).removeClass("hidden");
+            $("#fav-active-" + entryIndex.toString()).addClass("hidden");
+
+        }
+
+    }
+
+    /**
+     * Set check to true/false for all the checkbox.
+     * @param event {any} - The general checkbox change event.
+     */
+    checkAll(event: any)  {
+
+        if (event.currentTarget.checked) {
+
+            // Uncheck all.
+            $("input:checkbox[name=entry]").prop(
+                'checked', true
+            );
+
+        } else {
+
+            // Uncheck all.
+            $("input:checkbox[name=entry]").prop(
+                'checked', false
+            );
+
+        }
+
+    }
+
+    /**
+     * Set check to true/false the general checkbox.
+     * @param event {any} - The list checkbox change event.
+     */
+    check()  {
+
+        if (
+            $("input:checkbox[name=entry]").length ==
+            $("input:checkbox[name=entry]:checked").length
+        ) {
+
+            // Uncheck all.
+            $("input:checkbox[name=entry-all]").prop(
+                'checked', true
+            );
+
+        } else {
+
+            // Uncheck all.
+            $("input:checkbox[name=entry-all]").prop(
+                'checked', false
+            );
+
+        }
+
     }
 
     /**
@@ -113,7 +193,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
         // Get task id.
         let id: number = target.id;
 
-        if (target.parentNode.classList.contains("edit-btn")) {
+        if (target.id) {
 
             this.enableEdit();
 
@@ -252,7 +332,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
 
         /** @typedef {string} - Class for the entries of the table. */
         let tableClass: string = (
-            "min-w-[40rem] justify-center " +
+            "min-w-[65rem] justify-center " +
             "overflow-y-scroll overflow-x-scroll scrollbar-w-2 scrollbar " +
             "scrollbar-h-2 scrollbar-thumb-celeste-900 " +
             "scrollbar-track-celeste-100 scrollbar-thumb-rounded-full " +
@@ -261,7 +341,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
 
         /** @typedef {string} - Class for the rows of the table. */
         let rowClass: string = (
-            "grid grid-cols-12 border-b min-w-[50rem] text-center"
+            "grid grid-cols-10 border-b min-w-[50rem] text-center"
         );
 
         /** @typedef {string} - Warning class. */
@@ -295,28 +375,85 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
                         id={i.toString()}
                         key={i}
                     >
+
                         <div className="p-2 border-r">
                             <input
                                 className="mr-2"
                                 type="checkbox"
                                 name="entry"
                                 value={entry.id.toString()}
+                                onChange={this.check}
                                 id={"checkbox-" + entry.id.toString()}
                             />
+                        </div>
+
+                        <div className="p-2 border-r">
+
+                            <Layout.buttons.SimpleButton
+                                id={"fav-" + i.toString()}
+                                className=""
+                                size="sm"
+                                style="fav"
+                                title=""
+                                action={this.favorite}
+                            >
+
+                                <img
+                                    className="w-6 hidden dark:inline"
+                                    src="icons/favorite-dark.svg"
+                                />
+
+                                <img
+                                    className="w-6 dark:hidden inline"
+                                    src="icons/favorite.svg"
+                                />
+
+                            </Layout.buttons.SimpleButton>
+
+                            <Layout.buttons.SimpleButton
+                                id={"fav-active-" + i.toString()}
+                                className="hidden"
+                                size="sm"
+                                style="fav"
+                                title=""
+                                action={this.favorite}
+                            >
+
+                                <img
+                                    className="w-6 hidden dark:inline"
+                                    src="icons/favorite-active-dark.svg"
+                                />
+
+                                <img
+                                    className="w-6 dark:hidden inline"
+                                    src="icons/favorite-active.svg"
+                                />
+
+                            </Layout.buttons.SimpleButton>
+
+                        </div>
+
+                        <div className="p-2 border-r">
                             <div className="inline">
                                 {i + 1}
                             </div>
                         </div>
-                        <div className="p-2 col-span-3 border-r">
+
+                        <div className="p-2 col-span-2 border-r">
                             {initTime}
                         </div>
-                        <div className="p-2 col-span-3 border-r">
+
+                        <div className="p-2 col-span-2 border-r">
                             {finalTime}
                         </div>
-                        <div className="p-2 col-span-3 border-r">
+
+                        <div className="p-2 col-span-2 border-r">
                             {elapsedTime}
                         </div>
-                        <div className="p-2 border-r show-btn">
+
+                        <div className={
+                            "p-2 border-r show-btn grid grid-cols-2 gap-2"
+                        }>
                             <Layout.buttons.SimpleButton
                                 size="sm"
                                 style="option-1"
@@ -335,8 +472,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
                                 />
 
                             </Layout.buttons.SimpleButton>
-                        </div>
-                        <div className="p-2 edit-btn">
+
                             <Layout.buttons.SimpleButton
                                 id={entry.id.toString()}
                                 size="sm"
@@ -352,6 +488,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
 
                             </Layout.buttons.SimpleButton>
                         </div>
+
                     </div>
                 );
             }
@@ -409,24 +546,41 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
                         <div
                             className={rowClass}
                         >
+
+                            <div className="p-2 border-r">
+                                <input
+                                    className="mr-2"
+                                    type="checkbox"
+                                    name="entry-all"
+                                    id="checkbox-all"
+                                    onChange={this.checkAll}
+                                />
+                            </div>
+
+                            <div className="p-2 border-r">
+                                Favorite
+                            </div>
+
                             <div className="p-2 border-r">
                                 ID
                             </div>
-                            <div className="p-2 col-span-3 border-r">
+
+                            <div className="p-2 col-span-2 border-r">
                                 Initial Time
                             </div>
-                            <div className="p-2 col-span-3 border-r">
+
+                            <div className="p-2 col-span-2 border-r">
                                 Final Time
                             </div>
-                            <div className="p-2 col-span-3 border-r">
+
+                            <div className="p-2 col-span-2 border-r">
                                 Elapsed Time
                             </div>
+
                             <div className="p-2 border-r">
-                                Tasks
+                                Options
                             </div>
-                            <div className="p-2">
-                                Edit
-                            </div>
+
                         </div>
 
                         {entriesRows}
