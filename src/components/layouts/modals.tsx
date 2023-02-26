@@ -38,7 +38,7 @@ class ModalBase extends React.Component<IModalBaseProps, IModalBaseState> {
         super(props);
 
         /** @typedef {string} - Title color and style. */
-        let titleStyle: string = "my-5 mx-auto p-2 rounded-lg ";
+        let titleStyle: string = "my-3 mx-auto p-2 rounded-lg ";
         let cancelStyle: string;
         let proceedStyle: string;
 
@@ -97,11 +97,11 @@ class ModalBase extends React.Component<IModalBaseProps, IModalBaseState> {
                     {this.props.title}
                 </div>
 
-                <div className="my-5">
+                <div className="my-3 whitespace-pre-line">
                     {this.props.message}
                 </div>
 
-                <div className="grid grid-cols-2 gap-10 mt-10">
+                <div className="grid grid-cols-2 gap-10 my-3">
                     <Layout.buttons.SimpleButton
                         text="cancel" style={this.state.cancelStyle}
                         action={this.props.cancel}
@@ -390,7 +390,7 @@ extends React.Component<PROPS, STATE> {
 
         /** @typedef {string} - Warning class. */
         let warnClass: string = (
-            "hidden text-vermilion-500 dark:text-vermilion-300 ml-1 font-bold"
+            "hidden text-vermilion-500 dark:text-vermilion-300 mb-3 font-bold"
         );
 
         /** @typedef {React.ReactNode} - Form base to show in the modal. */
@@ -402,12 +402,12 @@ extends React.Component<PROPS, STATE> {
                 onSubmit={this.submit}
             >
 
-                <span
+                <div
                     id="invalid"
                     className={warnClass}
                 >
                     {this.props.invalid}
-                </span>
+                </div>
                 {this.props.inputs}
 
             </form>
