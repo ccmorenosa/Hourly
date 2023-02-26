@@ -53,7 +53,7 @@ export interface IEntriesAPI {
     getEntriesByUser: (project: string) => Promise<IEntriesDB[]>,
     createEntry: (
         initTime: string, finalTime: string, elapsedTime: string,
-        task: string, name: string, username: string, fav?: 0 | 1
+        task: string, fav: 0 | 1, name: string, username: string
     ) => Promise<void>,
     editEntryTask: (id: number, task: string) => Promise<void>,
     changeFav: (id: number, fav: 0 | 1) => Promise<void>,

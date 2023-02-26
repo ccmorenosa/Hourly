@@ -46,7 +46,7 @@ contextBridge.exposeInMainWorld('EntriesAPI', {
     ),
     createEntry: (
         initTime: string, finalTime: string, elapsedTime: string,
-        task: string, name: string, username: string, fav?: 0 | 1
+        task: string, fav: 0 | 1, name: string, username: string
     ) => ipcRenderer.invoke(
         "database:entries:createEntry",
         {
