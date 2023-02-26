@@ -135,7 +135,8 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
             modal: (
                 <Layout.modals.FormModal
                     title="Create new project"
-                    invalid="Project already exists."
+                    invalid="Invalid project name.
+                    Either empty or already used."
                     inputs={[
                         <div id="input-name" key="0">
                             <div className="mb-2 text-left w-full flex">
@@ -181,7 +182,7 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
             modal: (
                 <Layout.modals.FormModal
                     title="Open project"
-                    invalid="Project already exists."
+                    invalid="No project selected."
                     inputs={[
                         <div id="input-name" key="0">
                             <div className="mb-2 text-left w-full flex">
