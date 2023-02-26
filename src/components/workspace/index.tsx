@@ -224,7 +224,8 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
      * @param task {string} - Task done on the entry.
      */
     handleNewEntry(
-        initTime: string, finalTime: string, elapsedTime: string, task: string
+        initTime: string, finalTime: string, elapsedTime: string, task: string,
+        fav: 0 | 1
     ) {
 
         // Check that a project is selected.
@@ -237,7 +238,7 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
 
         // Create new entry.
         window.EntriesAPI.createEntry(
-            initTime, finalTime, elapsedTime, task, this.state.project,
+            initTime, finalTime, elapsedTime, task, fav, this.state.project,
             this.props.username
         );
 

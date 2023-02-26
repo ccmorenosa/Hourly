@@ -16,7 +16,8 @@ interface IWorkspaceDashboardProps {
     getCurrentProject: () => string;
     handleLogOut: () => void;
     handleNewEntry: (
-        initTime: string, finalTime: string, elapsedTime: string, task: string
+        initTime: string, finalTime: string, elapsedTime: string, task: string,
+        fav: 0 | 1
     ) => void;
     setView: (event: any) => Promise<void>;
     setProject: (proj: string) => void;

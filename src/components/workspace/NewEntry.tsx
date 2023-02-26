@@ -9,7 +9,8 @@ import moment from 'moment';
 
 interface INewEntryViewProps {
     handleNewEntry: (
-        initTime: string, finalTime: string, elapsedTime: string, task: string
+        initTime: string, finalTime: string, elapsedTime: string, task: string,
+        fav: 0 | 1
     ) => void;
     setStatus: (newStatus: string) => void;
     createModal: (modal: React.ReactNode, status: string) => void;
@@ -23,6 +24,7 @@ interface INewEntryViewState {
     elapsedTime: string;
     update: number;
     tasks: string;
+    fav: 0 | 1;
 }
 
 
@@ -43,6 +45,7 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
         super(props);
 
         // Bind actions.
+        this.favorite = this.favorite.bind(this);
         this.getElapsedTime = this.getElapsedTime.bind(this);
         this.initStopwatch = this.initStopwatch.bind(this);
         this.pauseStopwatch = this.pauseStopwatch.bind(this);
@@ -60,7 +63,40 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
             elapsedTime: "",
             update: -1,
             tasks: "",
+            fav: 0,
         };
+
+    }
+
+    /**
+     * Set check to true/false for all the checkbox
+     * @param event {any} - The favorite button.
+     */
+    favorite(event: any) {
+        // Get current button.
+        let btn = event.currentTarget;
+
+        if (btn.id == ("fav")) {
+
+            // Activate fav. Update state.
+            this.setState({
+                fav: 1,
+            });
+
+            $("#fav").addClass("hidden");
+            $("#fav-active").removeClass("hidden");
+
+        } else {
+
+            // Deactivate fav. Update state.
+            this.setState({
+                fav: 0,
+            });
+
+            $("#fav").removeClass("hidden");
+            $("#fav-active").addClass("hidden");
+
+        }
 
     }
 
@@ -186,7 +222,11 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
             finalTime: "",
             elapsedTime: "",
             tasks: "",
+            fav: 0,
         });
+
+        $("#fav").removeClass("hidden");
+        $("#fav-active").addClass("hidden");
 
     }
 
@@ -272,7 +312,8 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
                 values.initTime,
                 values.finalTime,
                 "2000-01-01 " + values.elapsedTime,
-                values.tasks
+                values.tasks,
+                values.fav
             );
 
             // Show success and reset form.
@@ -328,6 +369,8 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
             "font-bold text-sm"
         );
 
+        console.log(this.state.fav);
+
         // return the node.
         return (
             <form
@@ -348,6 +391,48 @@ React.Component<INewEntryViewProps, INewEntryViewState> {
                             id="buttons-menu"
                             className="grid grid-cols-10 gap-2 mb-5"
                         >
+
+                            <Layout.buttons.SimpleButton
+                                id="fav"
+                                className={!this.state.fav ? "" : "hidden"}
+                                size="sm"
+                                style="fav"
+                                title=""
+                                action={this.favorite}
+                            >
+
+                                <img
+                                    className="w-6 hidden dark:inline"
+                                    src="icons/favorite-dark.svg"
+                                />
+
+                                <img
+                                    className="w-6 dark:hidden inline"
+                                    src="icons/favorite.svg"
+                                />
+
+                            </Layout.buttons.SimpleButton>
+
+                            <Layout.buttons.SimpleButton
+                                id="fav-active"
+                                className={!this.state.fav ? "hidden" : ""}
+                                size="sm"
+                                style="fav"
+                                title=""
+                                action={this.favorite}
+                            >
+
+                                <img
+                                    className="w-6 hidden dark:inline"
+                                    src="icons/favorite-active-dark.svg"
+                                />
+
+                                <img
+                                    className="w-6 dark:hidden inline"
+                                    src="icons/favorite-active.svg"
+                                />
+
+                            </Layout.buttons.SimpleButton>
 
                             <Layout.buttons.SimpleButton
                                 size="sm" style="option-4"
