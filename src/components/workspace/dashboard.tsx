@@ -123,7 +123,7 @@ React.Component<IWorkspaceDashboardProps, IWorkspaceDashboardState> {
 
         // Return the node.
         return (
-            <div className={dashClass}>
+            <div className={dashClass + scroll}>
 
                 <div className={
                     "w-52 bg-gray-300 dark:bg-gray-800 flex flex-col"
@@ -173,7 +173,7 @@ React.Component<IWorkspaceDashboardProps, IWorkspaceDashboardState> {
 
                 </div>
 
-                <div className="w-full">
+                <div className={scroll}>
 
                     {this.state[view]}
 
