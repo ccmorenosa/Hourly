@@ -49,7 +49,9 @@ ipcMain.handle("database:entries:getEntriesByProject", async (
 
     // Query the entries.
     let entries = await Entries.findAll({
-        attributes: ["id", "initTime", "finalTime", "elapsedTime", "task"],
+        attributes: [
+            "id", "initTime", "finalTime", "elapsedTime", "task", "fav"
+        ],
         where: {
             "name": args[0].project
         },
@@ -67,6 +69,7 @@ ipcMain.handle("database:entries:getEntriesByProject", async (
             finalTime: entries[i].finalTime,
             elapsedTime: entries[i].elapsedTime,
             task: entries[i].task,
+            fav: entries[i].fav,
         });
     }
 
@@ -84,7 +87,7 @@ ipcMain.handle("database:entries:getEntriesByUser", async (
     let entries = await Entries.findAll({
         attributes: [
             "id", "initTime", "finalTime", "elapsedTime",
-            "task", "name"
+            "task", "fav", "name"
         ],
         where: {
             "username": args[0].username
@@ -104,6 +107,7 @@ ipcMain.handle("database:entries:getEntriesByUser", async (
             elapsedTime: entries[i].elapsedTime,
             task: entries[i].task,
             name: entries[i].name,
+            fav: entries[i].fav,
         });
     }
 
@@ -115,7 +119,7 @@ ipcMain.handle("database:entries:getEntriesByUser", async (
 ipcMain.handle("database:entries:createEntry", async (
     event, ...args: {
         initTime: string, finalTime: string, elapsedTime: string,
-        task: string, name: string, username: string
+        task: string, fav?: 0 | 1, name: string, username: string
 }[]) => {
 
     // Create the new user.

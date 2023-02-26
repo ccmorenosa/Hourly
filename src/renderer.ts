@@ -53,7 +53,7 @@ export interface IEntriesAPI {
     getEntriesByUser: (project: string) => Promise<IEntriesDB[]>,
     createEntry: (
         initTime: string, finalTime: string, elapsedTime: string,
-        task: string, name: string, username: string
+        task: string, name: string, username: string, fav?: 0 | 1
     ) => Promise<void>,
     editEntryTask: (id: number, task: string) => Promise<void>,
     deleteEntries: (id: number[]) => Promise<void>,
@@ -76,6 +76,7 @@ declare global {
         elapsedTime: Date;
         task: string;
         name?: string;
+        fav: 0 | 1;
     }
 }
 
