@@ -11,6 +11,7 @@ import HomeView from "./Home";
 
 interface IWorkspaceDashboardProps {
     user: string;
+    username: string;
     getView: () => "changing" | "home" | "newEntry" | "history" | "report" | "settings" ;
     getCurrentProject: () => string;
     handleLogOut: () => void;
@@ -63,6 +64,7 @@ React.Component<IWorkspaceDashboardProps, IWorkspaceDashboardState> {
             home: (
                 <HomeView
                     user={this.props.user}
+                    username={this.props.username}
                     setStatus={this.props.setStatus}
                     getCurrentProject={this.props.getCurrentProject}
                     setProject={this.props.setProject}

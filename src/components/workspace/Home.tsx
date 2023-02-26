@@ -10,6 +10,7 @@ import moment from 'moment';
 
 interface IHomeViewProps {
     user: string;
+    username: string;
     setStatus: (newStatus: string) => void;
     getCurrentProject: () => string;
     setProject: (proj: string) => void;
@@ -166,7 +167,9 @@ React.Component<IHomeViewProps, IHomeViewState> {
                     cancel={this.props.closeModal}
                     proceed={() =>{
                         // Delete project.
-                        window.ProjectAPI.deleteProject(proj);
+                        window.ProjectAPI.deleteProject(
+                            this.props.username, proj
+                        );
 
                         // Update entries.
                         this.getStats();
