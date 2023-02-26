@@ -8,10 +8,10 @@ import React from "react";
 import Layout from ".";
 
 interface IModalBaseProps {
-    style?: "info" | "warning" | "danger";
+    style?: "success" | "info" | "warning" | "danger";
     title: string | React.ReactNode;
     message: string | React.ReactNode;
-    cancel: (event: any) => any;
+    cancel?: null | ((event: any) => any);
     proceed: (event: any) => any;
 }
 
@@ -44,6 +44,12 @@ class ModalBase extends React.Component<IModalBaseProps, IModalBaseState> {
 
         // Set button style.
         switch (this.props.style) {
+            case "success":
+                titleStyle += "bg-celadon-500 text-lg px-5 text-gray-1000";
+                cancelStyle = "danger";
+                proceedStyle = "success";
+                break;
+
             case "info":
                 titleStyle += "bg-celeste-500 text-lg px-5 text-gray-1000";
                 cancelStyle = "danger";
@@ -89,6 +95,23 @@ class ModalBase extends React.Component<IModalBaseProps, IModalBaseState> {
             "border-4 border-gray-500 dark:border-0 flex flex-col text-center"
         );
 
+        /** @typedef {React.ReactNode} - Div for the buttons. */
+        let cancelBtn: React.ReactNode = <></>;
+        let proceedBtn: string = "col-span-2";
+
+        if (this.props.cancel) {
+            cancelBtn = (
+                <div>
+                    <Layout.buttons.SimpleButton
+                        text="cancel" style={this.state.cancelStyle}
+                        action={this.props.cancel}
+                    />
+                </div>
+            );
+
+            proceedBtn = "col-span-1";
+        }
+
         // return the node.
         return (
             <div className={modalClass}>
@@ -101,15 +124,16 @@ class ModalBase extends React.Component<IModalBaseProps, IModalBaseState> {
                     {this.props.message}
                 </div>
 
-                <div className="grid grid-cols-2 gap-10 my-3">
-                    <Layout.buttons.SimpleButton
-                        text="cancel" style={this.state.cancelStyle}
-                        action={this.props.cancel}
-                    />
-                    <Layout.buttons.SimpleButton
-                        text="Ok!" style={this.state.proceedStyle}
-                        action={this.props.proceed}
-                    />
+                <div className="grid grid-cols-2 gap-3 my-3">
+
+                    {cancelBtn}
+
+                    <div className={proceedBtn}>
+                        <Layout.buttons.SimpleButton
+                            text="Continue" style={this.state.proceedStyle}
+                            action={this.props.proceed}
+                        />
+                    </div>
                 </div>
 
             </div>
@@ -120,10 +144,66 @@ class ModalBase extends React.Component<IModalBaseProps, IModalBaseState> {
 }
 
 
+interface ISuccessModalProps {
+    title: string | React.ReactNode;
+    message: string | React.ReactNode;
+    proceed: (event: any) => any;
+}
+
+interface ISuccessModalState { }
+
+
+/**
+ * Class representing a modal for success message.
+ * @extends {React.Component}
+ */
+class SuccessModal extends
+React.Component<ISuccessModalProps, ISuccessModalState> {
+
+    /**
+     * Create the component.
+     * @param props {object} - Properties of the component.
+     */
+    constructor(props: ISuccessModalProps) {
+
+        // Create superior class.
+        super(props);
+
+    }
+
+    /**
+     * Render the component.
+     * @returns {React.ReactNode} the modal node.
+     */
+    render(): React.ReactNode {
+
+        /** @typedef {React.ReactNode} - Icons showed in the title. */
+        let titleIcons: React.ReactNode = (
+            <img className="w-7 inline mx-2" src="icons/check-circle.svg" />
+        );
+
+        // return the node.
+        return (
+            <ModalBase
+                style="success"
+                title={<>
+                    {titleIcons}
+                    {this.props.title}
+                    {titleIcons}
+                </>}
+                message={this.props.message}
+                proceed={this.props.proceed}
+            />
+        );
+
+    }
+
+}
+
+
 interface IInfoModalProps {
     title: string | React.ReactNode;
     message: string | React.ReactNode;
-    cancel: (event: any) => any;
     proceed: (event: any) => any;
 }
 
@@ -168,7 +248,6 @@ class InfoModal extends React.Component<IInfoModalProps, IInfoModalState> {
                     {titleIcons}
                 </>}
                 message={this.props.message}
-                cancel={this.props.cancel}
                 proceed={this.props.proceed}
             />
         );
@@ -432,6 +511,7 @@ extends React.Component<PROPS, STATE> {
 /** @typedef {object} - Group modals components */
 const modals = {
     ModalBase: ModalBase,
+    SuccessModal: SuccessModal,
     InfoModal: InfoModal,
     WarningModal: WarningModal,
     DangerModal: DangerModal,
