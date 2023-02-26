@@ -210,8 +210,8 @@ React.Component<IHomeViewProps, IHomeViewState> {
         );
 
         /** @typedef {string} - Class for scroll. */
-        let entriesClass: string = (
-            "grid grid-cols-2 bg-gray-200 dark:bg-gray-800 rounded-lg p-5 "
+        let tableBoxClass: string = (
+            "grid grid-cols-2 bg-gray-200 dark:bg-gray-800 rounded-lg p-3 "
         );
 
         /** @typedef {React.ReactNode[]} - List of projects for the user. */
@@ -306,34 +306,33 @@ React.Component<IHomeViewProps, IHomeViewState> {
         if (proj) {
 
             currentProj = (
-                <div className="grid grid-cols-2 gap-2">
+                <div className={tableBoxClass + scroll}>
 
-                    <Layout.boxes.StatsBox
-                        title="Project name"
-                        value={proj}
-                        icon="bag"
-                    />
+                    <div className="border-b p-3">
+                        Project:
+                    </div>
+                    <div className="border-b p-3">{proj}</div>
 
-                    <Layout.boxes.StatsBox
-                        style="blue"
-                        title="Entries"
-                        value={this.state.entriesProj.length.toString()}
-                        icon="list"
-                    />
+                    <div className="border-b p-3">
+                        Entries:
+                    </div>
+                    <div className="border-b p-3">{
+                        this.state.entriesProj.length.toString()
+                    }</div>
 
-                    <Layout.boxes.StatsBox
-                        title="Time worked"
-                        style="yellow"
-                        value={this.state.workedTimeProj}
-                        icon="clock"
-                    />
+                    <div className="border-b p-3">
+                        Time worked:
+                    </div>
+                    <div className="border-b p-3">{
+                        this.state.workedTimeProj
+                    }</div>
 
-                    <Layout.boxes.StatsBox
-                        style="purple"
-                        title="Last entry"
-                        value={this.state.lastEntryProj}
-                        icon="history"
-                    />
+                    <div className="border-b p-3">
+                        Last entry:
+                    </div>
+                    <div className="border-b p-3">{
+                        this.state.lastEntryProj
+                    }</div>
 
                 </div>
             );
@@ -362,7 +361,7 @@ React.Component<IHomeViewProps, IHomeViewState> {
             let lastItem: IEntriesDB = this.state.entries[0];
 
             LastEntry = (
-                <div className={entriesClass + scroll}>
+                <div className={tableBoxClass + scroll}>
 
                     <div className="border-b p-3">
                         Project:
@@ -482,11 +481,7 @@ React.Component<IHomeViewProps, IHomeViewState> {
                 <div className="flex flex-col">
                     <span className="mb-5"> Current project: </span>
 
-                    <div className="h-full">
-
-                        {currentProj}
-
-                    </div>
+                    {currentProj}
 
                 </div>
 
