@@ -365,14 +365,14 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
         /** @typedef {string} - Class for the main div. */
         let viewClass: string = (
             "h-screen w-screen flex flex-col justify-center " +
-            "text-gray-1000 dark:text-celeste-100 z-[1] fixed " +
+            "text-gray-1000 dark:text-gray-100 z-[1] fixed " +
             this.state.opacity
         );
 
         /** @typedef {string} - Class for the warning main div. */
         let warningClass: string = (
             this.state.warningZ + " h-screen w-screen flex fixed inset-0 " +
-            "text-gray-1000 dark:text-celeste-100 font-bold "
+            "text-gray-1000 dark:text-gray-100 font-bold "
         );
 
         // Return the node.

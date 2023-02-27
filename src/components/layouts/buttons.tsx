@@ -211,7 +211,7 @@ React.Component<PROPS, STATE> {
             case "danger":
                 btnStyle += (
                     "bg-vermilion-500 enabled:hover:bg-vermilion-400 " +
-                        "text-celeste-100 "
+                    "text-gray-100 "
                 );
                 break;
 

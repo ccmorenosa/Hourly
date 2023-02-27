@@ -131,7 +131,7 @@ class LogIn extends React.Component<ILogInProps, ILogInState> {
         /** @typedef {string} - Class for the main div. */
         let viewClass = (
             "h-screen flex flex-col justify-center bg-gray-300 " +
-            "dark:bg-purple-600 text-gray-1000 dark:text-celeste-100"
+            "dark:bg-purple-600 text-gray-1000 dark:text-gray-100"
         );
 
         /** @typedef {string} - Class for the box div. */
