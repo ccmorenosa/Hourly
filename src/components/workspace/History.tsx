@@ -48,7 +48,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
         this.removeEntries = this.removeEntries.bind(this);
         this.enableEdit = this.enableEdit.bind(this);
         this.disableEdit = this.disableEdit.bind(this);
-        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleTextAreaChange = this.handleTextAreaChange.bind(this);
 
         // Set state.
         this.state = {
@@ -320,7 +320,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
      * Update value when changing task input.
      * @param event {any} - Event when changing an input.
      */
-    handleInputChange(event: any) {
+    handleTextAreaChange(event: any) {
 
         // Update state with the new value.
         this.setState({
@@ -336,9 +336,9 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
     render(): React.ReactNode {
         /** @typedef {string} - Class for the textarea. */
         let textAreaClass: string = (
-            "h-full text-gray-1000 dark:text-gray-1000 rounded-xl p-3 " +
+            "h-72 text-gray-1000 dark:text-gray-1000 rounded-xl p-3 " +
             "bg-gray-100 disabled:bg-gray-300 " +
-            "border-4 border-gray-500"
+            "border-4 border-gray-500 mb-5"
         );
 
         /** @typedef {string} - Class for the entries of the table. */
@@ -530,7 +530,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
 
         // return the node.
         return (
-            <div className="h-full p-4 grid grid-rows-2 gap-5">
+            <div className="h-full p-4 grid grid-cols-1 gap-5">
 
                 <form
                     id="entries-table"
@@ -538,13 +538,13 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
                 >
 
                     <div className="mb-5 flex">
-                        <div
-                            className="text-2xl font-bold mr-auto">
+                        <div className="text-2xl font-bold mr-3 my-auto">
                                 History
                         </div>
 
                         <Layout.buttons.SimpleButton
                             size="md"
+                            className="ml-auto"
                             style="danger"
                             title="Remove selected entries."
                             action={this.removeEntries}
@@ -664,7 +664,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
                     <textarea
                         className={textAreaClass}
                         value={this.state.tasks}
-                        onChange={this.handleInputChange}
+                        onChange={this.handleTextAreaChange}
                         name="tasks"
                         id="tasks"
                         disabled
