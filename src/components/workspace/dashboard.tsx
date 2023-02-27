@@ -193,7 +193,7 @@ React.Component<IWorkspaceDashboardProps, IWorkspaceDashboardState> {
 
                 </div>
 
-                <div className={scroll}>
+                <div id="dashboard" className={scroll}>
 
                     {this.state[view]}
 

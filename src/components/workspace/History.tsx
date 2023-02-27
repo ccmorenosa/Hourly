@@ -209,6 +209,11 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
 
         }
 
+        $("#dashboard").animate(
+            {scrollTop: $("#tasks-edit").offset().top},
+            500
+        );
+
         // Show the tasks.
         this.setState({
             tasks: this.state.entries[entryId].task,
