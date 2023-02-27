@@ -125,7 +125,7 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
         /** @typedef {string} - Class for the input tags. */
         let inputClass = (
             "w-full form-input px-4 py-3 rounded-full " +
-            "bg-celeste-100 dark:bg-celadon-300 text-gray-1000"
+            "bg-celeste-100 dark:bg-celadon-100 text-gray-1000"
         );
 
        this.setState({
@@ -164,7 +164,7 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
         /** @typedef {string} - Class for the input tags. */
         let inputClass = (
             "w-full form-input px-4 py-3 rounded-full " +
-            "bg-celeste-100 dark:bg-celadon-300 text-gray-1000"
+            "bg-celeste-100 dark:bg-celadon-100 text-gray-1000"
         );
 
         /** @typedef {string[]} - List of projects for the active user. */
