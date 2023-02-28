@@ -38,9 +38,11 @@ contextBridge.exposeInMainWorld('ProjectAPI', {
 
 //  Set the Entries API to communicate with the database.
 contextBridge.exposeInMainWorld('EntriesAPI', {
-    getEntriesByProject: (project: string, query?: IEntryQuery) => ipcRenderer.invoke(
+    getEntriesByProject: (
+        username: string, project: string, query?: IEntryQuery
+    ) => ipcRenderer.invoke(
         "database:entries:getEntriesByProject",
-        {project: project, query: query}
+        {username: username, project: project, query: query}
     ),
     getEntriesByUser: (username: string) => ipcRenderer.invoke(
         "database:entries:getEntriesByUser", {username: username}

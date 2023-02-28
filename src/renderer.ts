@@ -50,7 +50,7 @@ export interface IProjectAPI {
 // Export interface IEntriesAPI.
 export interface IEntriesAPI {
     getEntriesByProject: (
-        project: string, query?: IEntryQuery
+        username: string, project: string, query?: IEntryQuery
     ) => Promise<IEntriesDB[]>,
     getEntriesByUser: (project: string) => Promise<IEntriesDB[]>,
     createEntry: (

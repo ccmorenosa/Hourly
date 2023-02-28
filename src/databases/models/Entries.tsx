@@ -44,11 +44,13 @@ class Entries extends Model {}
 // Handle the event to request the entries in the database according to
 // project.
 ipcMain.handle("database:entries:getEntriesByProject", async (
-    event, ...args: {project: string, query?: IEntryQuery}[]
+    event, ...args: {username: string, project: string, query?: IEntryQuery}[]
 ) => {
 
     // Set the where options
-    let where: {[key: string]: any} = {"name": args[0].project};
+    let where: {[key: string]: any} = {
+        "username": args[0].username, "name": args[0].project
+    };
 
     // Add queries if any.
     if (args[0].query) {

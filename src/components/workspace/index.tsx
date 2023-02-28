@@ -345,7 +345,7 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
     ): Promise<IEntriesDB[]> {
         if (this.state.project) {
             return await window.EntriesAPI.getEntriesByProject(
-                this.state.project, query
+                this.props.username, this.state.project, query
             );
         } else {
             return [];
