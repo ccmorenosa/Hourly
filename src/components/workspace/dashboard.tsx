@@ -22,7 +22,7 @@ interface IWorkspaceDashboardProps {
     setView: (event: any) => Promise<void>;
     setProject: (proj: string) => void;
     getProjects: () => Promise<string[]>;
-    getEntriesByProject: () => Promise<IEntriesDB[]>;
+    getEntriesByProject: (query?: IEntryQuery) => Promise<IEntriesDB[]>;
     getEntriesByUser: () => Promise<IEntriesDB[]>;
     setStatus: (newStatus: string) => void;
     createModal: (modal: React.ReactNode, status: string) => void;

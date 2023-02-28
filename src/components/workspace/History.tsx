@@ -8,7 +8,7 @@ import Layout from "../layouts";
 import moment from 'moment';
 
 interface IHistoryViewProps {
-    getEntriesByProject: () => Promise<IEntriesDB[]>;
+    getEntriesByProject: (query?: IEntryQuery) => Promise<IEntriesDB[]>;
     setStatus: (newStatus: string) => void;
     createModal: (modal: React.ReactNode, status: string) => void;
     closeModal: () => void;
@@ -19,6 +19,11 @@ interface IHistoryViewState {
     tasksID?: number;
     editing?: boolean;
     entries: IEntriesDB[];
+    fav: boolean;
+    from: string;
+    to: string;
+    minElapsed: string[];
+    maxElapsed: string[];
 }
 
 
@@ -48,12 +53,22 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
         this.removeEntries = this.removeEntries.bind(this);
         this.enableEdit = this.enableEdit.bind(this);
         this.disableEdit = this.disableEdit.bind(this);
+        this.search = this.search.bind(this);
+        this.reset = this.reset.bind(this);
+        this.handleFavChange = this.handleFavChange.bind(this);
+        this.handleDateChange = this.handleDateChange.bind(this);
+        this.handleTimeChange = this.handleTimeChange.bind(this);
         this.handleTextAreaChange = this.handleTextAreaChange.bind(this);
 
         // Set state.
         this.state = {
             tasks: "",
             entries: [],
+            fav: false,
+            from: "",
+            to: "",
+            minElapsed: ["", "", ""],
+            maxElapsed: ["", "", ""],
         };
 
         // Get entries
@@ -66,7 +81,11 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
      */
     async getEntriesByProject() {
         let res = await this.props.getEntriesByProject();
-        this.setState({entries: res});
+        this.setState({
+            entries: res,
+            from: moment(res[res.length - 1].initTime).format("YYYY-MM-DD"),
+            to: moment(res[0].finalTime).format("YYYY-MM-DD"),
+        });
     }
 
     /**
@@ -322,6 +341,171 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
     }
 
     /**
+     * Apply the filters to query the entries.
+     */
+    async search() {
+        /** @typedef {IHistoryViewState} - Actual state. */
+        let state: IHistoryViewState = this.state;
+
+
+        for (let i = 0; i < 3; i++) {
+            if (state.maxElapsed[i].length == 0)
+            state.maxElapsed[i] = i == 0 ? "23" : "59";
+
+            state.minElapsed[i].padStart(2, "0");
+            state.maxElapsed[i].padStart(2, "0");
+        }
+
+        /** @typedef {IEntryQuery} - Query instance. */
+        let query: IEntryQuery = {
+            fav: state.fav ? [1] : [0, 1],
+            from: state.from + " 00:00:00",
+            to: state.to + " 23:59:59",
+            minElapsed: "2000-01-01 " + state.minElapsed.join(":"),
+            maxElapsed: "2000-01-01 " + state.maxElapsed.join(":"),
+        };
+
+        // Make the query.
+        let res = await this.props.getEntriesByProject(query);
+        this.setState({
+            entries: res,
+        });
+
+    }
+
+    /**
+     * Reset the filters to the entries.
+     */
+    async reset() {
+        // Reset the entries list.
+        await this.getEntriesByProject();
+        this.setState({
+            fav: false,
+            minElapsed: ["", "", ""],
+            maxElapsed: ["", "", ""],
+        });
+
+        $("#fav-filter").removeClass("hidden");
+        $("#fav-active-filter").addClass("hidden");
+
+    }
+
+    /**
+     * Update value when changing fav button.
+     * @param event {any} - Event when changing an input.
+     */
+    handleFavChange(event: any) {
+
+        // Get target button.
+        let btn = event.currentTarget;
+
+        if (btn.id == ("fav-filter")) {
+
+            // Activate fav.
+            this.setState({
+                fav: true,
+            });
+
+            $("#fav-filter").addClass("hidden");
+            $("#fav-active-filter").removeClass("hidden");
+
+        } else {
+
+            // Deactivate fav.
+            this.setState({
+                fav: false,
+            });
+
+            $("#fav-filter").removeClass("hidden");
+            $("#fav-active-filter").addClass("hidden");
+
+        }
+
+    }
+
+    /**
+     * Update value when changing a date input.
+     * @param event {any} - Event when changing an input.
+     */
+    handleDateChange(event: any) {
+
+        // Get target.
+        let target = event.target;
+
+        /** @typedef {string} - New value. */
+        let value: string = target.value;
+
+
+        // Update state with the new value.
+        this.setState({
+            [target.name]: value
+        } as Pick<IHistoryViewState, keyof IHistoryViewState>);
+
+    }
+
+    /**
+     * Update value when changing a date input.
+     * @param event {any} - Event when changing an input.
+     */
+    handleTimeChange(event: any) {
+
+        // Get target.
+        let target = event.target;
+
+        /** @typedef {string} - New value. */
+        let value: string = target.value;
+
+        switch (true) {
+            case /^(00\d|\d\d\d)$/g.test(value):
+                value = value[2];
+                break;
+
+            case /^0\d\d$/g.test(value):
+                value = value[1] + value[2];
+                break;
+
+            case /^00\d$/g.test(value):
+                value = value[2];
+                break;
+
+            default:
+                break;
+
+        }
+
+        /** @typedef {string[]} - Get actual string. */
+        let timeValue: string[] = this.state[
+            target.name as "minElapsed" | "maxElapsed"
+        ];
+
+        switch (target.id) {
+            case target.name + "Hour":
+                timeValue[0] = parseInt(value) < 24 ? value : "";
+                if (timeValue[0].length == 2)
+                $("#" + target.name + "Minute").trigger("focus");
+                break;
+
+            case target.name + "Minute":
+                timeValue[1] = parseInt(value) < 60 ? value : ""
+                if (timeValue[1].length == 2)
+                $("#" + target.name + "Second").trigger("focus");
+                break;
+
+            case target.name + "Second":
+                timeValue[2] = parseInt(value) < 60 ? value : ""
+                if (timeValue[2].length == 2)
+                $("#search").trigger("focus");
+                break;
+
+        }
+
+        this.setState({
+            [target.name]: timeValue,
+        } as Pick<IHistoryViewState, keyof IHistoryViewState>);
+
+    }
+
+    /**
      * Update value when changing task input.
      * @param event {any} - Event when changing an input.
      */
@@ -343,12 +527,18 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
         let textAreaClass: string = (
             "h-72 text-gray-1000 dark:text-gray-1000 rounded-xl p-3 " +
             "bg-gray-100 disabled:bg-gray-300 " +
-            "border-4 border-gray-500 mb-5"
+            "border-4 border-gray-500 mb-5 "
+        );
+
+        /** @typedef {string} - Class for the input tags. */
+        let inputClass = (
+            "h-4/5 form-input px-3 rounded-full " +
+            "bg-celeste-100 dark:bg-celadon-100 text-gray-1000 "
         );
 
         /** @typedef {string} - Class for the entries of the table. */
         let tableClass: string = (
-            "min-w-[65rem] justify-center " +
+            "h-72 justify-center " +
             "overflow-y-scroll overflow-x-scroll scrollbar-w-2 scrollbar " +
             "scrollbar-h-2 scrollbar-thumb-celeste-900 " +
             "scrollbar-track-celeste-100 scrollbar-thumb-rounded-full " +
@@ -357,7 +547,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
 
         /** @typedef {string} - Class for the rows of the table. */
         let rowClass: string = (
-            "grid grid-cols-10 border-b min-w-[50rem] text-center"
+            "grid grid-cols-10 border-b text-center "
         );
 
         /** @typedef {string} - Warning class. */
@@ -388,7 +578,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
                 // Set fav button display.
                 let fav: string = "", favActive: string = "hidden";
 
-                if (entry.fav) {
+                if (entry.fav == 1) {
                     fav = "hidden", favActive = "";
                 }
 
@@ -396,7 +586,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
                     <div
                         className={rowClass}
                         id={i.toString()}
-                        key={i}
+                        key={entry.id}
                     >
 
                         <div className="p-2 border-r">
@@ -527,7 +717,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
             entriesRows = [<div className="flex p-2" key={0}>
 
                 <div className={badgeClass}>
-                    You don't have any entry in this project.
+                    No entry was found.
                 </div>
 
             </div>];
@@ -535,7 +725,7 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
 
         // return the node.
         return (
-            <div className="h-full p-4 grid grid-cols-1 gap-5">
+            <div className="h-full min-w-[65rem] p-4 grid grid-cols-1 gap-5">
 
                 <form
                     id="entries-table"
@@ -561,6 +751,230 @@ React.Component<IHistoryViewProps, IHistoryViewState> {
                             />
 
                         </Layout.buttons.SimpleButton>
+
+                    </div>
+
+                    <div>
+                        filters:
+
+                        <Layout.buttons.SimpleButton
+                            id="reset"
+                            className="ml-3"
+                            size="sm"
+                            style="option-1"
+                            text="Reset filters"
+                            action={this.reset}
+                        />
+
+                    </div>
+
+                    <div className={
+                        "mb-5 grid grid-cols-10 gap-3 text-center"
+                    }>
+
+                        <div>Fav:</div>
+
+                        <div className="col-span-2">From:</div>
+                        <div className="col-span-2">To:</div>
+                        <div className="col-span-2">Min duration:</div>
+                        <div className="col-span-2">Max duration:</div>
+
+                        <div>Search</div>
+
+                        <div>
+
+                            <Layout.buttons.SimpleButton
+                                id="fav-filter"
+                                className=""
+                                size="sm"
+                                style="fav"
+                                title=""
+                                action={this.handleFavChange}
+                            >
+
+                                <img
+                                    className="w-6 hidden dark:inline"
+                                    src="icons/favorite-dark.svg"
+                                />
+
+                                <img
+                                    className="w-6 dark:hidden inline"
+                                    src="icons/favorite.svg"
+                                />
+
+                            </Layout.buttons.SimpleButton>
+
+                            <Layout.buttons.SimpleButton
+                                id="fav-active-filter"
+                                className="hidden"
+                                size="sm"
+                                style="fav"
+                                title=""
+                                action={this.handleFavChange}
+                            >
+
+                                <img
+                                    className="w-6 hidden dark:inline"
+                                    src="icons/favorite-active-dark.svg"
+                                />
+
+                                <img
+                                    className="w-6 dark:hidden inline"
+                                    src="icons/favorite-active.svg"
+                                />
+
+                            </Layout.buttons.SimpleButton>
+
+                        </div>
+
+                        <input
+                            type="date"
+                            name="from"
+                            max={this.state.to}
+                            value={this.state.from}
+                            onChange={this.handleDateChange}
+                            className={inputClass + " col-span-2"}
+                        />
+
+                        <input
+                            type="date"
+                            name="to"
+                            min={this.state.from}
+                            value={this.state.to}
+                            onChange={this.handleDateChange}
+                            className={inputClass + " col-span-2"}
+                        />
+
+                        <div className="grid grid-cols-11 col-span-2 gap-0">
+
+                            <input
+                                type="number"
+                                id="minElapsedHour"
+                                name="minElapsed"
+                                min={0}
+                                max={23}
+                                value={this.state.minElapsed[0]}
+                                placeholder="hh"
+                                onChange={this.handleTimeChange}
+                                onFocus={(event : any) => {
+                                    event.currentTarget.select();
+                                }}
+                                className={inputClass + " col-span-3"}
+                            />
+
+                            <div className="m-0 p-0">:</div>
+
+                            <input
+                                type="number"
+                                id="minElapsedMinute"
+                                name="minElapsed"
+                                min={0}
+                                max={59}
+                                value={this.state.minElapsed[1]}
+                                placeholder="mm"
+                                onChange={this.handleTimeChange}
+                                onFocus={(event : any) => {
+                                    event.currentTarget.select();
+                                }}
+                                className={inputClass + " col-span-3"}
+                            />
+
+                            <div className="m-0 p-0">:</div>
+
+                            <input
+                                type="number"
+                                id="minElapsedSecond"
+                                name="minElapsed"
+                                min={0}
+                                max={59}
+                                value={this.state.minElapsed[2]}
+                                placeholder="ss"
+                                onChange={this.handleTimeChange}
+                                onFocus={(event : any) => {
+                                    event.currentTarget.select();
+                                }}
+                                className={inputClass + " col-span-3"}
+                            />
+
+                        </div>
+
+                        <div className="grid grid-cols-11 col-span-2 gap-0">
+
+                            <input
+                                type="number"
+                                id="maxElapsedHour"
+                                name="maxElapsed"
+                                min={0}
+                                max={23}
+                                value={this.state.maxElapsed[0]}
+                                placeholder="hh"
+                                onChange={this.handleTimeChange}
+                                onFocus={(event : any) => {
+                                    event.currentTarget.select();
+                                }}
+                                className={inputClass + " col-span-3"}
+                            />
+
+                            <div className="m-0 p-0">:</div>
+
+                            <input
+                                type="number"
+                                id="maxElapsedMinute"
+                                name="maxElapsed"
+                                min={0}
+                                max={59}
+                                value={this.state.maxElapsed[1]}
+                                placeholder="mm"
+                                onChange={this.handleTimeChange}
+                                onFocus={(event : any) => {
+                                    event.currentTarget.select();
+                                }}
+                                className={inputClass + " col-span-3"}
+                            />
+
+                            <div className="m-0 p-0">:</div>
+
+                            <input
+                                type="number"
+                                id="maxElapsedSecond"
+                                name="maxElapsed"
+                                min={0}
+                                max={59}
+                                value={this.state.maxElapsed[2]}
+                                placeholder="ss"
+                                onChange={this.handleTimeChange}
+                                onFocus={(event : any) => {
+                                    event.currentTarget.select();
+                                }}
+                                className={inputClass + " col-span-3"}
+                            />
+
+                        </div>
+
+                        <div>
+
+                            <Layout.buttons.SimpleButton
+                                id="search"
+                                className=""
+                                size="md"
+                                style="option-1"
+                                title=""
+                                action={this.search}
+                            >
+
+                                <img
+                                    className="w-6 hidden dark:inline"
+                                    src="icons/search-dark.svg"
+                                />
+
+                                <img
+                                    className="w-6 dark:hidden inline"
+                                    src="icons/search.svg"
+                                />
+
+                            </Layout.buttons.SimpleButton>
+
+                        </div>
 
                     </div>
 

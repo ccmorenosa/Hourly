@@ -340,10 +340,12 @@ class Workspace extends React.Component<IWorkSpaceProps, IWorkSpaceState> {
     /**
      * Get list of entries by project.
      */
-    async getEntriesByProject(): Promise<IEntriesDB[]> {
+    async getEntriesByProject(
+        query?: IEntryQuery
+    ): Promise<IEntriesDB[]> {
         if (this.state.project) {
             return await window.EntriesAPI.getEntriesByProject(
-                this.state.project
+                this.state.project, query
             );
         } else {
             return [];
