@@ -49,7 +49,9 @@ export interface IProjectAPI {
 
 // Export interface IEntriesAPI.
 export interface IEntriesAPI {
-    getEntriesByProject: (project: string) => Promise<IEntriesDB[]>,
+    getEntriesByProject: (
+        project: string, query?: IEntryQuery
+    ) => Promise<IEntriesDB[]>,
     getEntriesByUser: (project: string) => Promise<IEntriesDB[]>,
     createEntry: (
         initTime: string, finalTime: string, elapsedTime: string,
@@ -78,6 +80,16 @@ declare global {
         task: string;
         name?: string;
         fav: 0 | 1;
+    }
+}
+
+declare global {
+    export interface IEntryQuery {
+        fav: (0 | 1)[];
+        from: string;
+        to: string;
+        minElapsed: string;
+        maxElapsed: string;
     }
 }
 

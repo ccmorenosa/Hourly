@@ -44,17 +44,38 @@ class Entries extends Model {}
 // Handle the event to request the entries in the database according to
 // project.
 ipcMain.handle("database:entries:getEntriesByProject", async (
-    event, ...args: {project: string}[]
+    event, ...args: {project: string, query?: IEntryQuery}[]
 ) => {
+
+    // Set the where options
+    let where: {[key: string]: any} = {"name": args[0].project};
+
+    // Add queries if any.
+    if (args[0].query) {
+        // Fav flag.
+        where["fav"] = args[0].query.fav;
+
+        // Time ranges.
+        where["initTime"] = {
+            [Op.between] : [args[0].query.from, args[0].query.to]
+        };
+        where["finalTime"] = {
+            [Op.between] : [args[0].query.from, args[0].query.to]
+        };
+
+        // Elapsed time.
+        where["elapsedTime"] = {
+            [Op.between] : [args[0].query.minElapsed, args[0].query.maxElapsed]
+        };
+
+    }
 
     // Query the entries.
     let entries = await Entries.findAll({
         attributes: [
             "id", "initTime", "finalTime", "elapsedTime", "task", "fav"
         ],
-        where: {
-            "name": args[0].project
-        },
+        where: where,
         order: [["initTime", "DESC"]]
     });
 
