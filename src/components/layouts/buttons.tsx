@@ -141,7 +141,7 @@ React.Component<PROPS, STATE> {
 
         /** @typedef {string} - Button color and style. */
         let btnStyle: string = (
-            " disabled:opacity-50 disabled:dark:opacity-30 "
+            " disabled:opacity-50 disabled:dark:opacity-30 font-bold "
         );
 
         // Set button style.
@@ -156,7 +156,7 @@ React.Component<PROPS, STATE> {
 
             case "option-1":
                 btnStyle += (
-                    "bg-celeste-300 dark:bg-celeste-700 " +
+                    "bg-celeste-300 dark:bg-celeste-800 " +
                     "enabled:hover:bg-celeste-200 " +
                     "enabled:hover:dark:bg-celeste-600 "
                 );
@@ -196,7 +196,7 @@ React.Component<PROPS, STATE> {
 
             case "option-6":
                 btnStyle += (
-                    "bg-honey-300 dark:bg-honey-500 " +
+                    "bg-honey-300 dark:bg-honey-500 text-gray-1000 " +
                     "enabled:hover:bg-honey-200 " +
                     "enabled:hover:dark:bg-honey-600 "
                 );
